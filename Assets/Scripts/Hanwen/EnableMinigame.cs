@@ -4,9 +4,19 @@ using TMPro;
 public class EnableMinigame : MonoBehaviour
 {
     [SerializeField] TMP_Text canInteract;
-    private void OnTriggerStay2D(Collider2D collision)
+
+    private void OnMouseEnter()
     {
-        if (collision.CompareTag("NPC")) { canInteract.text = "'E' to interact"; }
-        else { canInteract.text = ""; }
+        canInteract.text = "'Click' to interact";
+    }
+
+    private void OnMouseExit()
+    {
+        canInteract.text = "";
+    }
+
+    private void OnMouseDown()
+    {
+        Debug.Log("interact");
     }
 }
