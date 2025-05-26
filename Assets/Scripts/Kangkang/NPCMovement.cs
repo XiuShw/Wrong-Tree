@@ -8,11 +8,11 @@ public class NPCMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        npcTransform = GetComponentInParent<Transform>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+	// Update is called once per frame
+	void Update()
+	{
+		transform.Rotate(0, 1, 0);
     }
 }
