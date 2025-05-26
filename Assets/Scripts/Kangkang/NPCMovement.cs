@@ -14,6 +14,5 @@ public class NPCMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
