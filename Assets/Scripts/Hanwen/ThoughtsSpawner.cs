@@ -1,10 +1,10 @@
 using System.Diagnostics.Contracts;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Windows;
 
 public class ThoughtsSpawner : MonoBehaviour
 {
-    public int count = 0;
     float timer;
     [SerializeField] GameObject thoughts;
     [SerializeField] TMP_Text showCircumstance;
@@ -13,21 +13,34 @@ public class ThoughtsSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Instantiate(thoughts, gameObject.transform.position, Quaternion.identity);
-        timer = Random.Range(5, 7);
+        timer = Random.Range(0, 5);
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer < 0 && count < 2)
+        Debug.Log(timer);
+        if (LevelManager.minigameStart)
         {
-            count++;
-            Instantiate(thoughts, gameObject.transform.position, Quaternion.identity);
-            timer = Random.Range(5, 7);
+            timer -= Time.deltaTime;
+            if (timer < 0)
+            {
+                timer = Random.Range(5, 7);
+                if (LevelManager.thoughtsCount <= 3)
+                {
+                    LevelManager.thoughtsCount++;
+                    Instantiate(thoughts, gameObject.transform.position, Quaternion.identity);
+                }
+            }
+
+            showCircumstance.text = circumstance.ToString();
         }
 
-        showCircumstance.text = circumstance.ToString();
+        if (circumstance >= 2 || circumstance <= -2)
+        {
+            LevelManager.minigameStart = false;
+            circumstance = 0;
+            showCircumstance.text = "";
+        }
     }
 }

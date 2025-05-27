@@ -24,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
         Vector2 moveDirection = ((Vector2)transform.right * inputX + (Vector2)transform.up * inputY).normalized;
+        if (LevelManager.minigameStart)
+        {
+            moveDirection = new Vector2 (0, 0);
+        }
         rigidbody.linearVelocity = moveDirection * speed;
 
         if (moveDirection != Vector2.zero)

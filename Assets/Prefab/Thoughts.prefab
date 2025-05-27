@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3256544670894673426}
   - component: {fileID: 2303894148064419411}
   - component: {fileID: 5114921261191438810}
+  - component: {fileID: -2945870888219771782}
   m_Layer: 0
   m_Name: Thoughts
   m_TagString: Thoughts
@@ -28,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2895862141459026852}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -6.42, y: 4.01, z: 8.09}
-  m_LocalScale: {x: 3.0000002, y: 0.48503232, z: 2.1193337}
+  m_LocalScale: {x: 1, y: 0.16167742, z: 0.7064445}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &1921150139751996637
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -198,6 +199,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9df7221b9c94aa49be16c28f5479ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialForce: 3.5
-  thoughtsSpawner: {fileID: 4274376197433109256, guid: d1e042cff42882a478c22d67c8445826, type: 3}
+  initialForce: 3.7
   threshold: 17
+  isPositive: 0
+--- !u!114 &-2945870888219771782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2895862141459026852}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5356005be39b2d84dbaeca9f443feeb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minScale: {x: 0.8, y: 0.8, z: 0.8}
+  maxScale: {x: 1.2, y: 1.2, z: 1.2}
+  scaleDuration: 2
+  useInitialScaleAsMin: 0
+  useMultiplierForMaxScale: 0
+  maxScaleMultiplier: 1.5

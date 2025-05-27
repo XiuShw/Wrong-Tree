@@ -18,14 +18,18 @@ public class MinigamePlayerMovement : MonoBehaviour
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
         Vector2 moveDirection = ((Vector2)transform.right * inputX + (Vector2)transform.up * inputY).normalized;
+        if (!LevelManager.minigameStart)
+        {
+            moveDirection = new Vector2(0, 0);
+        }
         rigidbody.linearVelocity = moveDirection * speed;
+
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Thoughts"))
+        if (collision.gameObject.CompareTag("Thoughts"))
         {
-            thoughtsSpawner.count--;
             if (collision.gameObject.GetComponent<ThoughtsMovement>().isPositive)
             {
                 thoughtsSpawner.circumstance++;
@@ -35,7 +39,6 @@ public class MinigamePlayerMovement : MonoBehaviour
                 thoughtsSpawner.circumstance--;
             }
             Destroy(collision.gameObject);
-
         }
     }
 }
