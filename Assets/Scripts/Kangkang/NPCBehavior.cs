@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCMBehavior : MonoBehaviour
 {
 	// The list of possible states for the NPC
-	private enum NPCState
+	public enum NPCState
 	{
 		Idle = 0,
 		Wander = 1,
@@ -13,7 +13,7 @@ public class NPCMBehavior : MonoBehaviour
 		Flee = 3, // Aka. being stolen
 		Interact_Share = 4,
 		Interact_Steal = 5,
-		Dead = 6
+		Dead = 6,
 	}
 	private void SetState(NPCState newState)
 	{
@@ -62,16 +62,13 @@ public class NPCMBehavior : MonoBehaviour
 				if (firstFrameInState)
 				{
 					timer = UnityEngine.Random.Range(1f, 2f);
-					Vector2 dir;
-					do {
-						dir = UnityEngine.Random.insideUnitCircle;   // 位置分布更均匀
-					} while (dir.sqrMagnitude < 0.01f);  // 避免极小向量
-					walkDirection = dir.normalized;
+					walkDirection = NPCStateUtils.GetRandomWalkDirection(); // Get a random walk direction
 				}
-				transform.position += (Vector3)walkDirection * walkSpeed * Time.deltaTime;
+				transform.position += Time.deltaTime * walkSpeed * (Vector3)walkDirection;
 				if (timer <= 0)
 				{
-					SetState(NPCState.Idle);
+					NPCState _nextState = NPCStateUtils.DecideIdleShareSteal();
+					SetState(_nextState);
 				}
 				break;
 			case NPCState.Smile:
@@ -105,7 +102,7 @@ public class NPCMBehavior : MonoBehaviour
 				}
 				if (timer <= 0)
 				{
-					SetState(NPCState.Smile);
+					SetState(NPCState.Idle);
 				}
 				break;
 			case NPCState.Interact_Steal:
@@ -116,7 +113,7 @@ public class NPCMBehavior : MonoBehaviour
 				}
 				if (timer <= 0)
 				{
-					SetState(NPCState.Flee);
+					SetState(NPCState.Idle);
 				}
 				break;
 			case NPCState.Dead:
