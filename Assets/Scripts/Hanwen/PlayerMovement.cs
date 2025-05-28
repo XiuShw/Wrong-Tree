@@ -11,6 +11,13 @@ public class PlayerMovement : MonoBehaviour
     float inputX, inputY;
     float stopX, stopY;
 
+    public static PlayerMovement Instance { get; private set; }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();

@@ -18,21 +18,137 @@ public static class NPCStateUtils
 		return lastDir;
 	}
 
-	public static NPCMBehavior.NPCState DecideIdleShareSteal()
+	// 决定闲逛、分享或偷窃的状态
+	static public int playerShareCount = 0;
+	static public int playerStealCount = 0;
+	public static NPCBehavior.NPCState DecideIdleShareSteal()
 	{
-		// 随机决定是闲逛、分享还是偷窃
 		int randomValue = Random.Range(0, 100);
 		if (randomValue < 50)
 		{
-			return NPCMBehavior.NPCState.Idle; // 闲逛
+			return NPCBehavior.NPCState.Idle; // 闲逛
 		}
-		else if (randomValue < 80)
+		else if (randomValue < 50)
 		{
-			return NPCMBehavior.NPCState.Interact_Share; // 分享
+			return NPCBehavior.NPCState.Interact_Share; // 分享
 		}
 		else
 		{
-			return NPCMBehavior.NPCState.Interact_Steal; // 偷窃
+			return NPCBehavior.NPCState.Interact_Steal; // 偷窃
 		}
+	}
+
+	// 分享逻辑：小型FSM，先接近玩家，再放大缩小，最后结束
+	public enum ShareState { Approaching, Scaling, Done }
+	private static ShareState shareState = ShareState.Approaching;
+	private static float shareScaleTimer = 0f;
+
+	public static bool Share(NPCBehavior npc, PlayerMovement target)
+	{
+		switch (shareState)
+		{
+			case ShareState.Approaching:
+				if (Vector3.Distance(npc.transform.position, target.transform.position) > 1f)
+				{
+					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
+					npc.transform.position += direction * Time.deltaTime * npc.WalkSpeed;
+					return false;
+				}
+				else
+				{
+					shareState = ShareState.Scaling;
+					shareScaleTimer = 0f;
+					return false;
+				}
+			case ShareState.Scaling:
+				// 0~0.5秒放大到1.5x，0.5~1秒缩回1x，不再旋转
+				float scaleDuration = 0.5f;
+				float totalDuration = 1f;
+				shareScaleTimer += Time.deltaTime;
+				float t = shareScaleTimer;
+				if (t <= scaleDuration)
+				{
+					float scale = Mathf.Lerp(1f, 1.5f, t / scaleDuration);
+					npc.transform.localScale = new Vector3(scale, scale, 1f);
+				}
+				else if (t <= totalDuration)
+				{
+					float scale = Mathf.Lerp(1.5f, 1f, (t - scaleDuration) / scaleDuration);
+					npc.transform.localScale = new Vector3(scale, scale, 1f);
+				}
+				if (shareScaleTimer >= totalDuration)
+				{
+					npc.transform.localScale = Vector3.one; // 确保回到1x
+					shareState = ShareState.Done;
+					return true;
+				}
+				return false;
+			case ShareState.Done:
+			default:
+				return true;
+		}
+	}
+
+	public static void ResetShareFSM()
+	{
+		shareState = ShareState.Approaching;
+		shareScaleTimer = 0f;
+	}
+
+	// 偷窃逻辑：小型FSM，先跑步接近玩家，再缩小再恢复，最后结束
+	public enum StealState { Approaching, Scaling, Done }
+	private static StealState stealState = StealState.Approaching;
+	private static float stealScaleTimer = 0f;
+
+	public static bool Steal(NPCBehavior npc, PlayerMovement target)
+	{
+		switch (stealState)
+		{
+			case StealState.Approaching:
+				if (Vector3.Distance(npc.transform.position, target.transform.position) > 1f)
+				{
+					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
+					npc.transform.position += direction * Time.deltaTime * npc.RunSpeed; // 跑步速度
+					return false;
+				}
+				else
+				{
+					stealState = StealState.Scaling;
+					stealScaleTimer = 0f;
+					return false;
+				}
+			case StealState.Scaling:
+				// 0~0.5秒缩小到0.5x，0.5~1秒恢复1x
+				float scaleDuration = 0.5f;
+				float totalDuration = 1f;
+				stealScaleTimer += Time.deltaTime;
+				float t = stealScaleTimer;
+				if (t <= scaleDuration)
+				{
+					float scale = Mathf.Lerp(1f, 0.5f, t / scaleDuration);
+					npc.transform.localScale = new Vector3(scale, scale, 1f);
+				}
+				else if (t <= totalDuration)
+				{
+					float scale = Mathf.Lerp(0.5f, 1f, (t - scaleDuration) / scaleDuration);
+					npc.transform.localScale = new Vector3(scale, scale, 1f);
+				}
+				if (stealScaleTimer >= totalDuration)
+				{
+					npc.transform.localScale = Vector3.one; // 确保回到1x
+					stealState = StealState.Done;
+					return true;
+				}
+				return false;
+			case StealState.Done:
+			default:
+				return true;
+		}
+	}
+
+	public static void ResetStealFSM()
+	{
+		stealState = StealState.Approaching;
+		stealScaleTimer = 0f;
 	}
 }

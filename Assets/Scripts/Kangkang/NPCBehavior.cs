@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class NPCMBehavior : MonoBehaviour
+public class NPCBehavior : MonoBehaviour
 {
 	// The list of possible states for the NPC
 	public enum NPCState
@@ -19,7 +20,13 @@ public class NPCMBehavior : MonoBehaviour
 	{
 		currentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
+		npcStateText.text = $"{newState}"; // Update the text to show the current state
 		animator.SetInteger("State", (int)newState);
+		Debug.Log($"NPC state changed to: {newState}"); // Log the state change
+	}
+	public NPCState GetState()
+	{
+		return currentState;
 	}
 
 	// Some variables / properties
@@ -27,9 +34,12 @@ public class NPCMBehavior : MonoBehaviour
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
 	private float walkSpeed = 2f; // Speed for walking
+	public float WalkSpeed => walkSpeed;
 	private float runSpeed = 5f; // Speed for running
+	public float RunSpeed => runSpeed;
 	[SerializeField] private float timer; // for timing different states
 	[SerializeField] private Vector2 walkDirection = new Vector2(1, 0); // Current walking direction
+	[SerializeField] private TMP_Text npcStateText; // Text to display the current state of the NPC
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -98,20 +108,24 @@ public class NPCMBehavior : MonoBehaviour
 				// Interacting to share
 				if (firstFrameInState)
 				{
-					timer = UnityEngine.Random.Range(1f, 2f);
+					NPCStateUtils.ResetShareFSM(); // Reset the share FSM
 				}
-				if (timer <= 0)
+				// Call the sub FSM for sharing
+				bool isDone = NPCStateUtils.Share(this, PlayerMovement.Instance);
+				if (isDone)
 				{
-					SetState(NPCState.Idle);
+					SetState(NPCState.Smile);
 				}
 				break;
 			case NPCState.Interact_Steal:
 				// Interacting to steal
 				if (firstFrameInState)
 				{
-					timer = UnityEngine.Random.Range(1f, 2f);
+					NPCStateUtils.ResetStealFSM(); // Reset the steal FSM
 				}
-				if (timer <= 0)
+				// Call the sub FSM for stealing
+				bool stealDone = NPCStateUtils.Steal(this, PlayerMovement.Instance);
+				if (stealDone)
 				{
 					SetState(NPCState.Idle);
 				}
@@ -120,6 +134,11 @@ public class NPCMBehavior : MonoBehaviour
 				// NPC is dead, stop all movement
 				timer = 0; // Stop the timer
 				break;
+		}
+		// Update the NPCStateText position
+		if (npcStateText != null)
+		{
+			npcStateText.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.5f, 0));
 		}
 	}
 }
