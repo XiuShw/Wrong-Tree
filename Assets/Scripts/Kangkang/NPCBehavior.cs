@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCMovement : MonoBehaviour
+public class NPCMBehavior : MonoBehaviour
 {
 	// The list of possible states for the NPC
 	private enum NPCState
