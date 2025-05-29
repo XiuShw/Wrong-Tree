@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class LevelManager : MonoBehaviour
     public static bool minigameStart;
     [SerializeField] GameObject minigameWindow;
     [SerializeField] Camera mainCamera;
+    [SerializeField] TMP_Text showLight;
+
+    public static float maxLight = 3f;
+    public static float minLight = 1f;
+    public static int lightOwn = 1;
 
     public static int thoughtsCount = 0;
 
@@ -22,6 +28,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        showLight.text = "Light: " + lightOwn;
         if (minigameStart)
         { 
             minigameWindow.SetActive(true);

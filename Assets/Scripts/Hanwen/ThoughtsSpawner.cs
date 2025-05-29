@@ -19,7 +19,6 @@ public class ThoughtsSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(timer);
         if (LevelManager.minigameStart)
         {
             timer -= Time.deltaTime;
@@ -36,9 +35,21 @@ public class ThoughtsSpawner : MonoBehaviour
             showCircumstance.text = circumstance.ToString();
         }
 
-        if (circumstance >= 2 || circumstance <= -2)
+        if (circumstance >= 2)
         {
             LevelManager.minigameStart = false;
+            LevelManager.maxLight -= 4f;
+            LevelManager.minLight -= 2f;
+            LevelManager.lightOwn -= 2;
+            circumstance = 0;
+            showCircumstance.text = "";
+        }
+        else if (circumstance <= -2)
+        {
+            LevelManager.minigameStart = false;
+            LevelManager.maxLight += 5f;
+            LevelManager.minLight += 2.5f;
+            LevelManager.lightOwn += 3;
             circumstance = 0;
             showCircumstance.text = "";
         }

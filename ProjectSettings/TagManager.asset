@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - Thoughts
+  - Light Grass
   layers:
   - Default
   - TransparentFX

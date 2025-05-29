@@ -42,26 +42,6 @@ public class FlickeringLight : MonoBehaviour
     void Awake()
     {
         pointLight = GetComponent<Light>();
-        //// If pointLight is not assigned in Inspector, try to get Light component on this GameObject
-        //if (pointLight == null)
-        //{
-            
-        //}
-
-        //// Check if Light component exists and is a Point Light
-        //if (pointLight == null)
-        //{
-        //    Debug.LogError("FlickeringLight: No Light component found. Attach this script to a GameObject with a Light, or assign one in the Inspector.", this);
-        //    enabled = false;
-        //    return;
-        //}
-
-        //if (pointLight.type != LightType.Point)
-        //{
-        //    Debug.LogError("FlickeringLight: The assigned Light is not a Point Light. This script only works with Point Lights.", this);
-        //    enabled = false;
-        //    return;
-        //}
     }
 
     void OnEnable()
@@ -120,16 +100,9 @@ public class FlickeringLight : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && maxIntensity < 21) 
-        {
-            maxIntensity += 2;
-            minIntensity += 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && minIntensity > 3) 
-        {
-            maxIntensity -= 2;
-            minIntensity -= 1;
-        }
+        maxIntensity = LevelManager.maxLight;
+        minIntensity = LevelManager.minLight;
+
 
         // Do nothing if script is disabled or no valid light
         if (!enabled || pointLight == null)
