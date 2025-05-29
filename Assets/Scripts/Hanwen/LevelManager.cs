@@ -18,6 +18,8 @@ public class LevelManager : MonoBehaviour
 
     public static int thoughtsCount = 0;
 
+    public static float count_help = 0;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
