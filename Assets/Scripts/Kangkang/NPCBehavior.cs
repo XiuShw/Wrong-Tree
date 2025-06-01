@@ -70,6 +70,10 @@ public class NPCBehavior : MonoBehaviour
 	public float RunSpeed => properties != null ? properties.runSpeed : 5f;
 	[SerializeField] private float timer; // for timing different states
 	[SerializeField] private Vector2 walkDirection = new Vector2(1, 0); // Current walking direction
+	[SerializeField] private float maxWanderDistance = 5f; // Maximum distance from anchor for wandering
+	[SerializeField] [Range(0f, 1f)] private float wanderBias = 0.5f; // Bias towards anchor when wandering
+	public Vector2 AnchorPosition => properties != null ? properties.anchorPosition : new Vector2(transform.position.x, transform.position.y);
+	
 	// 关于血条和光条（光度值）
 	// [SerializeField] private float health = 100f; // 移除本地 health
 	public float Health => properties != null ? properties.health : 100f;
@@ -112,9 +116,26 @@ public class NPCBehavior : MonoBehaviour
 				if (firstFrameInState)
 				{
 					timer = UnityEngine.Random.Range(1f, 2f);
-					walkDirection = NPCStateUtils.GetRandomWalkDirection(); // Get a random walk direction
+					// Calculate biased random direction towards anchor
+					Vector2 randomDir = NPCStateUtils.GetRandomWalkDirection();
+					Vector2 toAnchor = (AnchorPosition - (Vector2)transform.position).normalized;
+					if (Vector2.Distance(transform.position, AnchorPosition) > maxWanderDistance)
+						walkDirection = toAnchor;
+					else
+						walkDirection = Vector2.Lerp(randomDir, toAnchor, wanderBias).normalized;
 				}
-				transform.position += Time.deltaTime * WalkSpeed * (Vector3)walkDirection;
+				// Move NPC and clamp within max distance
+				{
+					Vector2 currentPos2D = new Vector2(transform.position.x, transform.position.y);
+					Vector2 newPos2D = currentPos2D + walkDirection * WalkSpeed * Time.deltaTime;
+					Vector2 offset = newPos2D - AnchorPosition;
+					if (offset.magnitude > maxWanderDistance)
+					{
+						newPos2D = AnchorPosition + offset.normalized * maxWanderDistance;
+						walkDirection = (AnchorPosition - currentPos2D).normalized;
+					}
+					transform.position = new Vector3(newPos2D.x, newPos2D.y, transform.position.z);
+				}
 				if (timer <= 0)
 				{
 					NPCState _nextState = NPCStateUtils.DecideIdleShareSteal();

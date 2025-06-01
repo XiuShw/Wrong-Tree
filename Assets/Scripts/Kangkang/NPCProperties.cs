@@ -8,6 +8,7 @@ public class NPCProperties : MonoBehaviour
 	public float interactionRange = 1.5f; // Range for interaction with player
 	public float shareCooldown = 3f; // Cooldown time for sharing action
 	public float stealCooldown = 2f; // Cooldown time for stealing action
+	public Vector2 anchorPosition;
 
 	[Header("NPC State")]
 	public NPCBehavior.NPCState currentState = NPCBehavior.NPCState.Idle; // Current state of the NPC
@@ -19,6 +20,7 @@ public class NPCProperties : MonoBehaviour
 	private void Start()
 	{
 		// Initialize any necessary properties or states here
+		anchorPosition = new Vector2(transform.position.x, transform.position.y);
 	}
 
 	private void Update()
