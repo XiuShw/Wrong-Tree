@@ -5,6 +5,7 @@ public class NPCText : MonoBehaviour
 {
 	[SerializeField] private TMP_Text npcStateText; // Text to display the current state of the NPC
 	private NPCBehavior npcBehavior;
+	private NPCProperties npcProperties; // Reference to the NPCProperties component
 
 	void Start()
 	{
@@ -17,6 +18,10 @@ public class NPCText : MonoBehaviour
 		{
 			Debug.LogError("NPCBehavior component not found on this GameObject!");
 		}
+		
+		// Get reference to NPCProperties
+		npcProperties = GetComponent<NPCProperties>();
+		
 		if (npcStateText != null && npcBehavior != null)
 		{
 			npcStateText.text = npcBehavior.GetState().ToString();

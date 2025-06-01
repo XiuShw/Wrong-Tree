@@ -1,3 +1,4 @@
+// filepath: c:\Users\IWMAI\OneDrive - University of Toronto\Programs\Wrong-Tree\Assets\Scripts\Kangkang\NPCBehavior.cs
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,14 +17,23 @@ public class NPCBehavior : MonoBehaviour
 		Interact_Steal = 5,
 		Dead = 6,
 	}
+	
+	private NPCProperties properties; // Reference to the NPCProperties component
+
 	private void SetState(NPCState newState)
 	{
 		currentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
 		// npcStateText.text = $"{newState}"; // 移除文本更新逻辑
 		animator.SetInteger("State", (int)newState);
+		// Update NPCProperties current state
+		if (properties != null)
+		{
+			properties.currentState = newState;
+		}
 		// Debug.Log($"NPC state changed to: {newState}"); // Log the state change
 	}
+	
 	public NPCState GetState()
 	{
 		return currentState;
@@ -34,17 +44,26 @@ public class NPCBehavior : MonoBehaviour
 	public NPCState CurrentState => currentState; // Expose the current state
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
-	private float walkSpeed = 2f; // Speed for walking
-	public float WalkSpeed => walkSpeed;
-	private float runSpeed = 5f; // Speed for running
-	public float RunSpeed => runSpeed;
+	// Use properties from NPCProperties instead of local variables
+	public float WalkSpeed => properties != null ? properties.walkSpeed : 2f;
+	public float RunSpeed => properties != null ? properties.runSpeed : 5f;
 	[SerializeField] private float timer; // for timing different states
 	[SerializeField] private Vector2 walkDirection = new Vector2(1, 0); // Current walking direction
+	// 关于血条和光条（光度值）
+	[SerializeField] private float health = 100f;
+	public float Health => health;
+	[SerializeField] private float lightValue = 1f;
+	public float LightValue => lightValue;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
 		animator = GetComponent<Animator>();
+		properties = GetComponent<NPCProperties>(); // Get reference to NPCProperties
+		if (properties == null)
+		{
+			Debug.LogWarning("NPCProperties component not found on NPC. Using default values.");
+		}
 		SetState(NPCState.Idle); // Start with Idle state
 	}
 
@@ -74,7 +93,7 @@ public class NPCBehavior : MonoBehaviour
 					timer = UnityEngine.Random.Range(1f, 2f);
 					walkDirection = NPCStateUtils.GetRandomWalkDirection(); // Get a random walk direction
 				}
-				transform.position += Time.deltaTime * walkSpeed * (Vector3)walkDirection;
+				transform.position += Time.deltaTime * WalkSpeed * (Vector3)walkDirection;
 				if (timer <= 0)
 				{
 					NPCState _nextState = NPCStateUtils.DecideIdleShareSteal();

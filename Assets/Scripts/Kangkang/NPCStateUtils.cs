@@ -1,3 +1,4 @@
+// filepath: c:\Users\IWMAI\OneDrive - University of Toronto\Programs\Wrong-Tree\Assets\Scripts\Kangkang\NPCStateUtils.cs
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -28,7 +29,7 @@ public static class NPCStateUtils
 		{
 			return NPCBehavior.NPCState.Idle; // 闲逛
 		}
-		else if (randomValue < 50)
+		else if (randomValue < 75) // Modified to have a better distribution
 		{
 			return NPCBehavior.NPCState.Interact_Share; // 分享
 		}
@@ -48,7 +49,10 @@ public static class NPCStateUtils
 		switch (shareState)
 		{
 			case ShareState.Approaching:
-				if (Vector3.Distance(npc.transform.position, target.transform.position) > 1f)
+				// Default interaction range
+				float interactionRange = 1f;
+				
+				if (Vector3.Distance(npc.transform.position, target.transform.position) > interactionRange)
 				{
 					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.WalkSpeed;
@@ -105,7 +109,10 @@ public static class NPCStateUtils
 		switch (stealState)
 		{
 			case StealState.Approaching:
-				if (Vector3.Distance(npc.transform.position, target.transform.position) > 1f)
+				// Default interaction range
+				float interactionRange = 1f;
+				
+				if (Vector3.Distance(npc.transform.position, target.transform.position) > interactionRange)
 				{
 					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.RunSpeed; // 跑步速度
