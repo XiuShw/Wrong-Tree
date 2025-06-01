@@ -12,6 +12,10 @@ public class NPCProperties : MonoBehaviour
 	[Header("NPC State")]
 	public NPCBehavior.NPCState currentState = NPCBehavior.NPCState.Idle; // Current state of the NPC
 
+	[Header("NPC Bars")]
+	public float health = 100f;
+	public float lightValue = 1f;
+
 	private void Start()
 	{
 		// Initialize any necessary properties or states here

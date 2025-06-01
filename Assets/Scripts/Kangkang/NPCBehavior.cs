@@ -50,10 +50,10 @@ public class NPCBehavior : MonoBehaviour
 	[SerializeField] private float timer; // for timing different states
 	[SerializeField] private Vector2 walkDirection = new Vector2(1, 0); // Current walking direction
 	// 关于血条和光条（光度值）
-	[SerializeField] private float health = 100f;
-	public float Health => health;
-	[SerializeField] private float lightValue = 1f;
-	public float LightValue => lightValue;
+	// [SerializeField] private float health = 100f; // 移除本地 health
+	public float Health => properties != null ? properties.health : 100f;
+	// [SerializeField] private float lightValue = 1f; // 移除本地 lightValue
+	public float LightValue => properties != null ? properties.lightValue : 1f;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
