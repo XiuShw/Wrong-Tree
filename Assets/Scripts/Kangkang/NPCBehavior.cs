@@ -171,11 +171,15 @@ public class NPCBehavior : MonoBehaviour
 				{
 					NPCStateUtils.ResetShareFSM(); // Reset the share FSM
 				}
-				// Call the sub FSM for sharing
-				bool isDone = NPCStateUtils.Share(this, PlayerMovement.Instance);
-				if (isDone)
+				// Call the sub FSM for sharing with result handling
+				var shareResult = NPCStateUtils.Share(this, PlayerMovement.Instance);
+				if (shareResult == NPCStateUtils.InteractionResult.Success)
 				{
 					SetState(NPCState.Smile);
+				}
+				else if (shareResult == NPCStateUtils.InteractionResult.Fail)
+				{
+					SetState(NPCState.Idle);
 				}
 				break;
 			case NPCState.Interact_Steal:
@@ -184,9 +188,13 @@ public class NPCBehavior : MonoBehaviour
 				{
 					NPCStateUtils.ResetStealFSM(); // Reset the steal FSM
 				}
-				// Call the sub FSM for stealing
-				bool stealDone = NPCStateUtils.Steal(this, PlayerMovement.Instance);
-				if (stealDone)
+				// Call the sub FSM for stealing with result handling
+				var stealResult = NPCStateUtils.Steal(this, PlayerMovement.Instance);
+				if (stealResult == NPCStateUtils.InteractionResult.Success)
+				{
+					SetState(NPCState.Idle);
+				}
+				else if (stealResult == NPCStateUtils.InteractionResult.Fail)
 				{
 					SetState(NPCState.Idle);
 				}

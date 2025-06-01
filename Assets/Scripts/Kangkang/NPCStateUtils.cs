@@ -39,13 +39,16 @@ public static class NPCStateUtils
 		}
 	}
 
+	// Define result type for share/steal sub-FSM
+	public enum InteractionResult { Running, Success, Fail }
+
 	// 分享逻辑：小型FSM，先接近玩家，再放大缩小，最后结束
 	public enum ShareState { Approaching, Scaling, Done }
 	private static ShareState shareState = ShareState.Approaching;
 	private static float shareScaleTimer = 0f;
 	private static float shareVisionRange = 3f; // 可视距离超参数
 
-	public static bool Share(NPCBehavior npc, PlayerMovement target)
+	public static InteractionResult Share(NPCBehavior npc, PlayerMovement target)
 	{
 		switch (shareState)
 		{
@@ -53,22 +56,22 @@ public static class NPCStateUtils
 				// Default interaction range
 				float interactionRange = 1f;
 				float distance = Vector3.Distance(npc.transform.position, target.transform.position);
-				if (distance > shareVisionRange) // 超出可视距离，直接Done
+				if (distance > shareVisionRange) // 超出可视距离，触发Fail
 				{
 					shareState = ShareState.Done;
-					return true;
+					return InteractionResult.Fail;
 				}
 				if (distance > interactionRange)
 				{
 					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.WalkSpeed;
-					return false;
+					return InteractionResult.Running;
 				}
 				else
 				{
 					shareState = ShareState.Scaling;
 					shareScaleTimer = 0f;
-					return false;
+					return InteractionResult.Running;
 				}
 			case ShareState.Scaling:
 				// 0~0.5秒放大到1.5x，0.5~1秒缩回1x，不再旋转
@@ -90,19 +93,13 @@ public static class NPCStateUtils
 				{
 					npc.transform.localScale = Vector3.one; // 确保回到1x
 					shareState = ShareState.Done;
-					return true;
+					return InteractionResult.Success;
 				}
-				return false;
+				return InteractionResult.Running;
 			case ShareState.Done:
 			default:
-				return true;
+				return InteractionResult.Success;
 		}
-	}
-
-	public static void ResetShareFSM()
-	{
-		shareState = ShareState.Approaching;
-		shareScaleTimer = 0f;
 	}
 
 	// 偷窃逻辑：小型FSM，先跑步接近玩家，再缩小再恢复，最后结束
@@ -111,7 +108,7 @@ public static class NPCStateUtils
 	private static float stealScaleTimer = 0f;
 	private static float stealAggroRange = 4f; // 仇恨距离超参数
 
-	public static bool Steal(NPCBehavior npc, PlayerMovement target)
+	public static InteractionResult Steal(NPCBehavior npc, PlayerMovement target)
 	{
 		switch (stealState)
 		{
@@ -119,50 +116,56 @@ public static class NPCStateUtils
 				// Default interaction range
 				float interactionRange = 1f;
 				float distance = Vector3.Distance(npc.transform.position, target.transform.position);
-				if (distance > stealAggroRange) // 超出仇恨距离，直接Done
+				if (distance > stealAggroRange) // 超出仇恨距离，触发Fail
 				{
 					stealState = StealState.Done;
-					return true;
+					return InteractionResult.Fail;
 				}
 				if (distance > interactionRange)
 				{
 					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.RunSpeed; // 跑步速度
-					return false;
+					return InteractionResult.Running;
 				}
 				else
 				{
 					stealState = StealState.Scaling;
 					stealScaleTimer = 0f;
-					return false;
+					return InteractionResult.Running;
 				}
 			case StealState.Scaling:
 				// 0~0.5秒缩小到0.5x，0.5~1秒恢复1x
-				float scaleDuration = 0.5f;
-				float totalDuration = 1f;
+				float scaleDuration2 = 0.5f;
+				float totalDuration2 = 1f;
 				stealScaleTimer += Time.deltaTime;
-				float t = stealScaleTimer;
-				if (t <= scaleDuration)
+				float t2 = stealScaleTimer;
+				if (t2 <= scaleDuration2)
 				{
-					float scale = Mathf.Lerp(1f, 0.5f, t / scaleDuration);
+					float scale = Mathf.Lerp(1f, 0.5f, t2 / scaleDuration2);
 					npc.transform.localScale = new Vector3(scale, scale, 1f);
 				}
-				else if (t <= totalDuration)
+				else if (t2 <= totalDuration2)
 				{
-					float scale = Mathf.Lerp(0.5f, 1f, (t - scaleDuration) / scaleDuration);
+					float scale = Mathf.Lerp(0.5f, 1f, (t2 - scaleDuration2) / scaleDuration2);
 					npc.transform.localScale = new Vector3(scale, scale, 1f);
 				}
-				if (stealScaleTimer >= totalDuration)
+				if (stealScaleTimer >= totalDuration2)
 				{
 					npc.transform.localScale = Vector3.one; // 确保回到1x
 					stealState = StealState.Done;
-					return true;
+					return InteractionResult.Success;
 				}
-				return false;
+				return InteractionResult.Running;
 			case StealState.Done:
 			default:
-				return true;
+				return InteractionResult.Success;
 		}
+	}
+
+	public static void ResetShareFSM()
+	{
+		shareState = ShareState.Approaching;
+		shareScaleTimer = 0f;
 	}
 
 	public static void ResetStealFSM()
