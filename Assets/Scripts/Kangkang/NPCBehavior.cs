@@ -16,12 +16,21 @@ public class NPCBehavior : MonoBehaviour
 		Interact_Share = 4,
 		Interact_Steal = 5,
 		Dead = 6,
+		Narrative = 7 // Narrative state, for storytelling purposes
 	}
 	
 	private NPCProperties properties; // Reference to the NPCProperties component
 
+	// Add narrative control fields
+	[SerializeField] private bool narrativeEnabled = true;
+	private NPCState prevStateBeforeNarrative;
+
 	private void SetState(NPCState newState)
 	{
+		// Prevent entering narrative if disabled
+		if (newState == NPCState.Narrative && !narrativeEnabled)
+			return;
+
 		currentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
 		// npcStateText.text = $"{newState}"; // 移除文本更新逻辑
@@ -37,6 +46,18 @@ public class NPCBehavior : MonoBehaviour
 	public NPCState GetState()
 	{
 		return currentState;
+	}
+
+	public void EnableNarrative()
+	{
+		narrativeEnabled = true;
+	}
+
+	public void DisableNarrative(bool restorePrev = true)
+	{
+		narrativeEnabled = false;
+		if (restorePrev && currentState == NPCState.Narrative)
+			SetState(prevStateBeforeNarrative);
 	}
 
 	// Some variables / properties
