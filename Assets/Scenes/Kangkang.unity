@@ -2360,6 +2360,8 @@ GameObject:
   - component: {fileID: 1610063143}
   - component: {fileID: 1610063146}
   - component: {fileID: 1610063145}
+  - component: {fileID: 1610063147}
+  - component: {fileID: 1610063148}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -2561,10 +2563,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd327343eb40f954185e0c4f74ec21db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  narrativeEnabled: 1
   currentState: 0
   timer: 0
   walkDirection: {x: 1, y: 0}
+  maxWanderDistance: 5
+  wanderBias: 0.5
+--- !u!114 &1610063147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610063137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d05d0f77640bc40a476f14dfe006f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   npcStateText: {fileID: 436979498}
+--- !u!114 &1610063148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610063137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a586a71a9638c0145a144cb52e13bfaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 2
+  runSpeed: 5
+  interactionRange: 1.5
+  shareCooldown: 3
+  stealCooldown: 2
+  anchorPosition: {x: 0, y: 0}
+  currentState: 0
+  health: 100
+  lightValue: 1
 --- !u!1 &1693995624
 GameObject:
   m_ObjectHideFlags: 0
