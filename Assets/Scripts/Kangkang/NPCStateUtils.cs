@@ -43,6 +43,7 @@ public static class NPCStateUtils
 	public enum ShareState { Approaching, Scaling, Done }
 	private static ShareState shareState = ShareState.Approaching;
 	private static float shareScaleTimer = 0f;
+	private static float shareVisionRange = 3f; // 可视距离超参数
 
 	public static bool Share(NPCBehavior npc, PlayerMovement target)
 	{
@@ -51,8 +52,13 @@ public static class NPCStateUtils
 			case ShareState.Approaching:
 				// Default interaction range
 				float interactionRange = 1f;
-				
-				if (Vector3.Distance(npc.transform.position, target.transform.position) > interactionRange)
+				float distance = Vector3.Distance(npc.transform.position, target.transform.position);
+				if (distance > shareVisionRange) // 超出可视距离，直接Done
+				{
+					shareState = ShareState.Done;
+					return true;
+				}
+				if (distance > interactionRange)
 				{
 					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.WalkSpeed;
@@ -103,6 +109,7 @@ public static class NPCStateUtils
 	public enum StealState { Approaching, Scaling, Done }
 	private static StealState stealState = StealState.Approaching;
 	private static float stealScaleTimer = 0f;
+	private static float stealAggroRange = 4f; // 仇恨距离超参数
 
 	public static bool Steal(NPCBehavior npc, PlayerMovement target)
 	{
@@ -111,8 +118,13 @@ public static class NPCStateUtils
 			case StealState.Approaching:
 				// Default interaction range
 				float interactionRange = 1f;
-				
-				if (Vector3.Distance(npc.transform.position, target.transform.position) > interactionRange)
+				float distance = Vector3.Distance(npc.transform.position, target.transform.position);
+				if (distance > stealAggroRange) // 超出仇恨距离，直接Done
+				{
+					stealState = StealState.Done;
+					return true;
+				}
+				if (distance > interactionRange)
 				{
 					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.RunSpeed; // 跑步速度
