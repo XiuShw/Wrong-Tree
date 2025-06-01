@@ -20,9 +20,9 @@ public class NPCBehavior : MonoBehaviour
 	{
 		currentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
-		npcStateText.text = $"{newState}"; // Update the text to show the current state
+		// npcStateText.text = $"{newState}"; // 移除文本更新逻辑
 		animator.SetInteger("State", (int)newState);
-		Debug.Log($"NPC state changed to: {newState}"); // Log the state change
+		// Debug.Log($"NPC state changed to: {newState}"); // Log the state change
 	}
 	public NPCState GetState()
 	{
@@ -31,6 +31,7 @@ public class NPCBehavior : MonoBehaviour
 
 	// Some variables / properties
 	[SerializeField] private NPCState currentState;
+	public NPCState CurrentState => currentState; // Expose the current state
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
 	private float walkSpeed = 2f; // Speed for walking
@@ -39,7 +40,6 @@ public class NPCBehavior : MonoBehaviour
 	public float RunSpeed => runSpeed;
 	[SerializeField] private float timer; // for timing different states
 	[SerializeField] private Vector2 walkDirection = new Vector2(1, 0); // Current walking direction
-	[SerializeField] private TMP_Text npcStateText; // Text to display the current state of the NPC
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -135,10 +135,6 @@ public class NPCBehavior : MonoBehaviour
 				timer = 0; // Stop the timer
 				break;
 		}
-		// Update the NPCStateText position
-		if (npcStateText != null)
-		{
-			npcStateText.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.5f, 0));
-		}
+		// 移除 npcStateText 相关逻辑
 	}
 }
