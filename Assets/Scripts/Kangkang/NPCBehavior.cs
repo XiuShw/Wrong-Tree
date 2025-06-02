@@ -25,7 +25,7 @@ public class NPCBehavior : MonoBehaviour
 	[SerializeField] private bool narrativeEnabled = true;
 	private NPCState prevStateBeforeNarrative;
 
-	private void SetState(NPCState newState)
+	public void SetState(NPCState newState)
 	{
 		// Prevent entering narrative if disabled
 		if (newState == NPCState.Narrative && !narrativeEnabled)
