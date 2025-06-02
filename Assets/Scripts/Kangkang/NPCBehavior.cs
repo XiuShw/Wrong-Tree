@@ -4,21 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// The list of possible states for the NPC
+public enum NPCState
+{
+	Idle = 0,
+	Wander = 1,
+	Smile = 2, // Aka. being shared
+	Flee = 3, // Aka. being stolen
+	Interact_Share = 4,
+	Interact_Steal = 5,
+	Dead = 6,
+	Narrative = 7 // Narrative state, for storytelling purposes
+}
+
 public class NPCBehavior : MonoBehaviour
 {
-	// The list of possible states for the NPC
-	public enum NPCState
-	{
-		Idle = 0,
-		Wander = 1,
-		Smile = 2, // Aka. being shared
-		Flee = 3, // Aka. being stolen
-		Interact_Share = 4,
-		Interact_Steal = 5,
-		Dead = 6,
-		Narrative = 7 // Narrative state, for storytelling purposes
-	}
-	
+
 	private NPCProperties properties; // Reference to the NPCProperties component
 
 	// Add narrative control fields
@@ -32,7 +33,7 @@ public class NPCBehavior : MonoBehaviour
 
 		currentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
-		// npcStateText.text = $"{newState}"; // 移除文本更新逻辑
+								 // npcStateText.text = $"{newState}"; // 移除文本更新逻辑
 		animator.SetInteger("State", (int)newState);
 		// Update NPCProperties current state
 		if (properties != null)
@@ -52,16 +53,9 @@ public class NPCBehavior : MonoBehaviour
 	[SerializeField] private float timer; // for timing different states
 	[SerializeField] private Vector2 walkDirection = new Vector2(1, 0); // Current walking direction
 	[SerializeField] private float maxWanderDistance = 5f; // Maximum distance from anchor for wandering
-	[SerializeField] [Range(0f, 1f)] private float wanderBias = 0.5f; // Bias towards anchor when wandering
+	[SerializeField][Range(0f, 1f)] private float wanderBias = 0.5f; // Bias towards anchor when wandering
 	public Vector2 AnchorPosition => properties != null ? properties.anchorPosition : new Vector2(transform.position.x, transform.position.y);
-	
-	// 关于血条和光条（光度值）
-	// [SerializeField] private float health = 100f; // 移除本地 health
-	public float Health => properties != null ? properties.health : 100f;
-	// [SerializeField] private float lightValue = 1f; // 移除本地 lightValue
-	public float LightValue => properties != null ? properties.lightValue : 1f;
 
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
 		animator = GetComponent<Animator>();

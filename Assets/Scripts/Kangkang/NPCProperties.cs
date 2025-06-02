@@ -11,7 +11,7 @@ public class NPCProperties : MonoBehaviour
 	public Vector2 anchorPosition;
 
 	[Header("NPC State")]
-	public NPCBehavior.NPCState currentState = NPCBehavior.NPCState.Idle; // Current state of the NPC
+	public NPCState currentState = NPCState.Idle; // Current state of the NPC
 
 	[Header("NPC Bars")]
 	public float health = 100f;

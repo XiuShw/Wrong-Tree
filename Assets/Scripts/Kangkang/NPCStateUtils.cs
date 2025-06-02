@@ -22,20 +22,20 @@ public static class NPCStateUtils
 	// 决定闲逛、分享或偷窃的状态
 	static public int playerShareCount = 0;
 	static public int playerStealCount = 0;
-	public static NPCBehavior.NPCState DecideIdleShareSteal()
+	public static NPCState DecideIdleShareSteal()
 	{
 		int randomValue = Random.Range(0, 100);
 		if (randomValue < 50)
 		{
-			return NPCBehavior.NPCState.Idle; // 闲逛
+			return NPCState.Idle; // 闲逛
 		}
 		else if (randomValue < 75) // Modified to have a better distribution
 		{
-			return NPCBehavior.NPCState.Interact_Share; // 分享
+			return NPCState.Interact_Share; // 分享
 		}
 		else
 		{
-			return NPCBehavior.NPCState.Interact_Steal; // 偷窃
+			return NPCState.Interact_Steal; // 偷窃
 		}
 	}
 
