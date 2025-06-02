@@ -14,7 +14,7 @@ public enum NPCState
 	Interact_Share = 4,
 	Interact_Steal = 5,
 	Dead = 6,
-	Narrative = 7 // Narrative state, for storytelling purposes
+	Paused = 7 // Narrative state, for storytelling purposes
 }
 
 public class NPCBehavior : MonoBehaviour
@@ -28,7 +28,7 @@ public class NPCBehavior : MonoBehaviour
 	public void SetState(NPCState newState)
 	{
 		// Prevent entering narrative if disabled
-		if (newState == NPCState.Narrative && !narrativeEnabled)
+		if (newState == NPCState.Paused && !narrativeEnabled)
 			return;
 
 		currentState = newState;
