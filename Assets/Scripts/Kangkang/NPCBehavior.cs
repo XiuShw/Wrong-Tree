@@ -22,8 +22,7 @@ public class NPCBehavior : MonoBehaviour
 	private NPCProperties properties; // Reference to the NPCProperties component
 
 	// Add narrative control fields
-	[SerializeField] private bool narrativeEnabled = true;
-	private NPCState prevStateBeforeNarrative;
+	[SerializeField] public bool narrativeEnabled = false;
 
 	public void SetState(NPCState newState)
 	{
@@ -42,27 +41,9 @@ public class NPCBehavior : MonoBehaviour
 		}
 		// Debug.Log($"NPC state changed to: {newState}"); // Log the state change
 	}
-	
-	public NPCState GetState()
-	{
-		return currentState;
-	}
-
-	public void EnableNarrative()
-	{
-		narrativeEnabled = true;
-	}
-
-	public void DisableNarrative(bool restorePrev = true)
-	{
-		narrativeEnabled = false;
-		if (restorePrev && currentState == NPCState.Narrative)
-			SetState(prevStateBeforeNarrative);
-	}
 
 	// Some variables / properties
-	[SerializeField] private NPCState currentState;
-	public NPCState CurrentState => currentState; // Expose the current state
+	[SerializeField] public NPCState currentState { get; private set; } = NPCState.Idle; // Default state is Idle
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
 	// Use properties from NPCProperties instead of local variables
@@ -204,6 +185,5 @@ public class NPCBehavior : MonoBehaviour
 				timer = 0; // Stop the timer
 				break;
 		}
-		// 移除 npcStateText 相关逻辑
 	}
 }

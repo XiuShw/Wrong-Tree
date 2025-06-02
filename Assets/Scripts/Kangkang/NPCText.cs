@@ -24,7 +24,7 @@ public class NPCText : MonoBehaviour
 		
 		if (npcStateText != null && npcBehavior != null)
 		{
-			npcStateText.text = npcBehavior.GetState().ToString();
+			npcStateText.text = npcBehavior.currentState.ToString();
 		}
 	}
 
@@ -35,7 +35,7 @@ public class NPCText : MonoBehaviour
 			return;
 		}
 		// Update the text to show the current state of the NPC
-		npcStateText.text = npcBehavior.GetState().ToString();
+		npcStateText.text = npcBehavior.currentState.ToString();
 
 		// 将文本固定在屏幕右上角
 		if (Camera.main != null)
