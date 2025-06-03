@@ -40,9 +40,10 @@ public class ThoughtsMovement : MonoBehaviour
             {
                 color.g += 1f * Time.deltaTime;
                 color.b += 1f * Time.deltaTime;
+                GetComponent<SpriteRenderer>().color = color;
             }
         }
-        GetComponent<SpriteRenderer>().color = color;
+
 
         currentSpeedSqr = rb.linearVelocity.sqrMagnitude;
 

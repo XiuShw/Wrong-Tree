@@ -40,7 +40,7 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.minigameStart = false;
             LevelManager.maxLight -= 4f;
             LevelManager.minLight -= 2f;
-            LevelManager.count_help += 1;
+            LevelManager.globalReputation += 1;
             circumstance = 0;
             showCircumstance.text = "";
         }
@@ -50,7 +50,7 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.maxLight += 5f;
             LevelManager.minLight += 2.5f;
             LevelManager.lightOwn += 3;
-            LevelManager.count_help -= 1;
+            LevelManager.globalReputation -= 1;
             circumstance = 0;
             showCircumstance.text = "";
         }

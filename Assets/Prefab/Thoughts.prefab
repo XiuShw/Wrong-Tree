@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3256544670894673426}
   - component: {fileID: 2303894148064419411}
   - component: {fileID: 5114921261191438810}
-  - component: {fileID: -2945870888219771782}
+  - component: {fileID: -6939121704590349862}
   m_Layer: 0
   m_Name: Thoughts
   m_TagString: Thoughts
@@ -202,21 +202,19 @@ MonoBehaviour:
   initialForce: 3.7
   threshold: 17
   isPositive: 0
---- !u!114 &-2945870888219771782
+--- !u!114 &-6939121704590349862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2895862141459026852}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5356005be39b2d84dbaeca9f443feeb3, type: 3}
+  m_Script: {fileID: 11500000, guid: 37ac528d10d1def48830601603630743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minScale: {x: 0.8, y: 0.8, z: 0.8}
-  maxScale: {x: 1.2, y: 1.2, z: 1.2}
-  scaleDuration: 2
-  useInitialScaleAsMin: 0
-  useMultiplierForMaxScale: 0
-  maxScaleMultiplier: 1.5
+  isText: 0
+  startImmediately: 1
+  fadeAmount: 0.7
+  flashDuration: 1.5
