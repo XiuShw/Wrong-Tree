@@ -21,7 +21,11 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/hanwen test.unity
+    m_path: Assets/Scenes/Intro.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/hanwen test 1.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/End.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings:

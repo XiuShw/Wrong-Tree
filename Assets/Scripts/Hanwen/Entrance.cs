@@ -1,30 +1,66 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Entrance : MonoBehaviour
 {
     Color color;
+    public float spd;
+    [SerializeField] float delay = 0;
+    [SerializeField] bool isText;
+    float count;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        color = GetComponent<Image>().color;
+        if (isText)
+        {
+            color = GetComponent<TextMeshProUGUI>().color;
+        }
+        else
+        {
+            color = GetComponent<Image>().color;
+
+        }
+        count = delay;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (LevelManager.gameStart)
+        if (delay != 0)
         {
-            color.a -= 0.3f * Time.deltaTime;
-            GetComponent<Image>().color = color;
+            count -= Time.deltaTime;
+        }
 
-            if (color.a <= 0)
+        if (count <= 0 && !(color.a <= -0.1 || color.a >= 1.1))
+        {
+
+            color.a += spd * Time.deltaTime;
+
+            if (isText)
             {
-                Destroy(gameObject);
+                GetComponent<TextMeshProUGUI>().color = color;
+            }
+            else
+            {
+                GetComponent<Image>().color = color;
             }
         }
 
+        if (color.a < 0)
+        {
+            color.a = 0;
+        }
+        if (color.a > 1.1)
+        {
+            color.a = 1;
+        }
+
+        if (!isText && color.a == 1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }

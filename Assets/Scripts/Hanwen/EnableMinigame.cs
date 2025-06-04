@@ -1,31 +1,38 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class EnableMinigame : MonoBehaviour
 {
-    [SerializeField] TMP_Text canInteract;
+    [SerializeField] Image canInteract;
     [SerializeField] GameObject minigamePlayer;
     [SerializeField] GameObject minigameBackground;
+    [SerializeField] FlashText argue1;
 
-    private void OnMouseEnter()
+
+    void OnTriggerStay2D(Collider2D collision)
     {
-        if (!LevelManager.minigameStart)
+        if (collision.CompareTag("NPC"))
         {
-            canInteract.text = "'Click' to interact";
+            canInteract.enabled = true;
+
+            if (Input.GetKey(KeyCode.F))
+            {
+                if (!LevelManager.isImportantNPC) { argue1.LoadNewText(4); }
+                else
+                {
+                    if (LevelManager.countImportantNPC == 0) { argue1.LoadNewText(1); }
+                    if (LevelManager.countImportantNPC == 1) { argue1.LoadNewText(2); }
+                    if (LevelManager.countImportantNPC == 2) { argue1.LoadNewText(3); }
+                }
+                LevelManager.minigameStart = true;
+                minigamePlayer.transform.position = minigameBackground.transform.position;
+            }
         }
     }
 
-    private void OnMouseExit()
+    void OnTriggerExit2D(Collider2D collision)
     {
-        canInteract.text = "";
-    }
-
-    private void OnMouseDown()
-    {
-        if (!LevelManager.minigameStart)
-        {
-            LevelManager.minigameStart = true;
-            minigamePlayer.transform.position = minigameBackground.transform.position;
-        }
+        canInteract.enabled = false;
     }
 }

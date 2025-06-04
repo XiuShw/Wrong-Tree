@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class RotatingCamera : MonoBehaviour
 {
@@ -21,6 +23,10 @@ public class RotatingCamera : MonoBehaviour
     private bool isRotating = false;   // 标记是否正在旋转
 
     private Vector3 velocity = Vector3.zero;
+
+
+    [SerializeField] Transform gameFinishTarget;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -33,7 +39,7 @@ public class RotatingCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (LevelManager.gameStart)
+        if (!LevelManager.gameFinished)
         {
             if (smoothSpeed > 0.125f)
             {
@@ -73,6 +79,10 @@ public class RotatingCamera : MonoBehaviour
                 }
 
             }
+        }
+        else
+        {
+            transform.DOMove(gameFinishTarget.position, 1f).SetEase(Ease.InCirc);
         }
     }
 }

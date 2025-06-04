@@ -7,7 +7,6 @@ public class ThoughtsSpawner : MonoBehaviour
 {
     float timer;
     [SerializeField] GameObject thoughts;
-    [SerializeField] TMP_Text showCircumstance;
     public int circumstance = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,14 +24,13 @@ public class ThoughtsSpawner : MonoBehaviour
             if (timer < 0)
             {
                 timer = Random.Range(5, 7);
-                if (LevelManager.thoughtsCount <= 3)
+                if (LevelManager.thoughtsCount <= 2)
                 {
                     LevelManager.thoughtsCount++;
                     Instantiate(thoughts, gameObject.transform.position, Quaternion.identity);
                 }
             }
-
-            showCircumstance.text = circumstance.ToString();
+            LevelManager.circumstance = circumstance;
         }
 
         if (circumstance >= 2)
@@ -42,7 +40,6 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.minLight -= 2f;
             LevelManager.globalReputation += 1;
             circumstance = 0;
-            showCircumstance.text = "";
         }
         else if (circumstance <= -2)
         {
@@ -52,7 +49,6 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.lightOwn += 3;
             LevelManager.globalReputation -= 1;
             circumstance = 0;
-            showCircumstance.text = "";
         }
     }
 }

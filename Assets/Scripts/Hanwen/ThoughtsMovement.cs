@@ -28,7 +28,7 @@ public class ThoughtsMovement : MonoBehaviour
         color.a += 0.5f * Time.deltaTime;
         count += Time.deltaTime;
 
-        if (Vector3.Distance(transform.localScale, new Vector3(4.24f, 0.686f, 3f)) > 0.01f)
+        if (Vector3.Distance(transform.localScale, new Vector3(3.7f, 0.598f, 2.614f)) > 0.01f)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(4.24f, 0.686f, 3f), 1 * Time.deltaTime);
         }
