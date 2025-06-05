@@ -23,6 +23,7 @@ public class LightGrass : MonoBehaviour
             LevelManager.minLight += 1.5f;
             LevelManager.lightOwn += 1;
             pointLight.GetComponent<Light>().enabled = false;
+            AudioManager.Instance.PlaySFX("grass");
         }
     }
 }

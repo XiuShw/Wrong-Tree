@@ -54,11 +54,15 @@ public class RotatingCamera : MonoBehaviour
                 {
                     targetRotation = transform.rotation * Quaternion.Euler(0, 0, 90);
                     isRotating = true; // 标记开始旋转
+                    AudioManager.Instance.PlaySFX("placeholder");
+
                 }
                 else if (Input.GetKeyDown(KeyCode.E))
                 {
                     targetRotation = transform.rotation * Quaternion.Euler(0, 0, -90);
                     isRotating = true; // 标记开始旋转
+                    AudioManager.Instance.PlaySFX("placeholder");
+
                 }
             }
 

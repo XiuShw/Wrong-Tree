@@ -30,6 +30,7 @@ public class MinigamePlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Thoughts"))
         {
+            AudioManager.Instance.PlaySFX("thoughtCollision");
             if (collision.gameObject.GetComponent<ThoughtsMovement>().isPositive)
             {
                 thoughtsSpawner.circumstance++;

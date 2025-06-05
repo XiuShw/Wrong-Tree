@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
     float inputX, inputY;
     float stopX, stopY;
+    public AudioSource playerWalk;
+
 
     public static PlayerMovement Instance { get; private set; }
 
@@ -42,10 +44,12 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isMoving", true);
             stopX = inputX;
             stopY = inputY;
+            playerWalk.enabled = true;
         }
         else
         {
             animator.SetBool("isMoving", false);
+            playerWalk.enabled = false;
         }
         animator.SetFloat("InputX", stopX);
         animator.SetFloat("InputY", stopY);

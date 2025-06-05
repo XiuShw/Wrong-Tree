@@ -13,21 +13,18 @@ public class AudioManager : MonoBehaviour
     public AudioSource sfxSource2;
 
     [Header("BGM Clips")]
-    public AudioClip game;
-    public AudioClip gameover;
-    public AudioClip gameWin;
+    public AudioClip background;
 
-    [Header("SFX Clips 1")]
-    public AudioClip pew;
-    public AudioClip explode;
-    public AudioClip losehealth;
+    [Header("Player Walk SFX")]
+    public AudioClip walk;
 
-    [Header("SFX Clips 2")]
-    [SerializeField] AudioClip inputCorrect;
-    [SerializeField] AudioClip inputIncorrect;
-    [SerializeField] AudioClip inputSuccess;
-    [SerializeField] AudioClip optionOn;
-    public AudioClip message;
+    [Header("Other SFX")]
+    public AudioClip thoughtCollision;
+    public AudioClip badResult;
+    public AudioClip goodResult;
+    [SerializeField] AudioClip grass;
+    [SerializeField] AudioClip lightGrass;
+    public AudioClip placeholder;
 
     private string currentBGM = "";
     private bool canPlaySFX = true;
@@ -62,9 +59,7 @@ public class AudioManager : MonoBehaviour
     {
         switch (clip)
         {
-            case "game": bgmSource.clip = game; bgmSource.volume = 0.1f; break;
-            case "gameover": bgmSource.clip = gameover; bgmSource.volume = 0.2f; bgmSource.loop = false; break;
-            case "gameWin": bgmSource.clip = gameWin; bgmSource.volume = 0.5f; bgmSource.loop = false; break;
+            case "background": bgmSource.clip = background; bgmSource.volume = 0.1f; break;
             default: return;
         }
 
@@ -85,16 +80,14 @@ public class AudioManager : MonoBehaviour
 
         switch (clip)
         {
-            //1: for shooter minigame
-            case "pew": selectedClip1 = pew; volume1 = 0.1f; pitch1 = Random.Range(0.5f, 2f); break;
-            case "explode": selectedClip1 = explode; volume1 = 0.2f; break;
-            case "losehealth": selectedClip1 = losehealth; volume1 = 0.3f; break;
-            //2: for messaging
-            case "optionOn": selectedClip2 = optionOn; break;
-            case "inputCorrect": selectedClip2 = inputCorrect; break;
-            case "inputIncorrect": selectedClip2 = inputIncorrect; break;
-            case "inputSuccess": selectedClip2 = inputSuccess; break;
-            case "message": selectedClip2 = message; break;
+            //case "walk": selectedClip1 = walk; volume1 = 1f; break;
+            case "thoughtCollision": selectedClip1 = thoughtCollision; volume1 = 1f; pitch1 = Random.Range(0.5f, 2f); break;
+            case "badResult": selectedClip1 = badResult; volume1 = 1f; break;
+            case "goodResult": selectedClip1 = goodResult; volume1 = 1f; break;
+
+            case "placeholder": selectedClip2 = placeholder; volume2 = 0.3f; break;
+            case "grass": selectedClip2 = grass; volume2 = 1f; break;
+            case "lightGrass": selectedClip2 = lightGrass; volume2 = 1f; break;
             default: return;
         }
 

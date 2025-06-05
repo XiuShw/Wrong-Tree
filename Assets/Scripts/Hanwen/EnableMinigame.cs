@@ -16,7 +16,7 @@ public class EnableMinigame : MonoBehaviour
         {
             canInteract.enabled = true;
 
-            if (Input.GetKey(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 if (!LevelManager.isImportantNPC) { argue1.LoadNewText(4); }
                 else
@@ -26,6 +26,7 @@ public class EnableMinigame : MonoBehaviour
                     if (LevelManager.countImportantNPC == 2) { argue1.LoadNewText(3); }
                 }
                 LevelManager.minigameStart = true;
+                AudioManager.Instance.PlaySFX("lightGrass");
                 minigamePlayer.transform.position = minigameBackground.transform.position;
             }
         }

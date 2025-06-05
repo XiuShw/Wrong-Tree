@@ -40,6 +40,8 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.minLight -= 2f;
             LevelManager.globalReputation += 1;
             circumstance = 0;
+            AudioManager.Instance.PlaySFX("goodResult");
+
         }
         else if (circumstance <= -2)
         {
@@ -49,6 +51,8 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.lightOwn += 3;
             LevelManager.globalReputation -= 1;
             circumstance = 0;
+            AudioManager.Instance.PlaySFX("badResult");
+
         }
     }
 }
