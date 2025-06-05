@@ -9,11 +9,16 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     public AudioSource bgmSource;
+    public AudioSource bgNoise;
     public AudioSource sfxSource1;
     public AudioSource sfxSource2;
 
     [Header("BGM Clips")]
-    public AudioClip background;
+    public AudioClip mainBGM;
+    public AudioClip minigame;
+    public AudioClip goodEnding;
+    public AudioClip badEnding;
+
 
     [Header("Player Walk SFX")]
     public AudioClip walk;
@@ -53,13 +58,20 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         string scene = SceneManager.GetActiveScene().name;
+        if (LevelManager.minigameStart) { bgNoise.enabled = false; }
+        else {  bgNoise.enabled = true; }
     }
 
     public void PlayBGM(string clip)
     {
         switch (clip)
         {
-            case "background": bgmSource.clip = background; bgmSource.volume = 0.1f; break;
+            case "mainBGM": bgmSource.clip = mainBGM; bgmSource.volume = 0.1f; break;
+            case "minigame": bgmSource.clip = minigame; bgmSource.volume = 0.1f; break;
+            case "goodEnding": bgmSource.clip = goodEnding; bgmSource.volume = 0.1f; break;
+            case "badEnding": bgmSource.clip = badEnding; bgmSource.volume = 0.1f; break;
+
+
             default: return;
         }
 

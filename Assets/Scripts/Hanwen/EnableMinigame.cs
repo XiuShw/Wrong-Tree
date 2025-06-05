@@ -27,6 +27,7 @@ public class EnableMinigame : MonoBehaviour
                 }
                 LevelManager.minigameStart = true;
                 AudioManager.Instance.PlaySFX("lightGrass");
+                AudioManager.Instance.PlayBGM("minigame");
                 minigamePlayer.transform.position = minigameBackground.transform.position;
             }
         }

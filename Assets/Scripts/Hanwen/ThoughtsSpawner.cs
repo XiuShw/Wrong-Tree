@@ -41,6 +41,7 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.globalReputation += 1;
             circumstance = 0;
             AudioManager.Instance.PlaySFX("goodResult");
+            AudioManager.Instance.PlayBGM("mainBGM");
 
         }
         else if (circumstance <= -2)
@@ -52,6 +53,7 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.globalReputation -= 1;
             circumstance = 0;
             AudioManager.Instance.PlaySFX("badResult");
+            AudioManager.Instance.PlayBGM("mainBGM");
 
         }
     }
