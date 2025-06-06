@@ -8,6 +8,8 @@ public class EnableMinigame : MonoBehaviour
     [SerializeField] GameObject minigamePlayer;
     [SerializeField] GameObject minigameBackground;
     [SerializeField] FlashText argue1;
+    [SerializeField] GameObject speechBubble;
+    [SerializeField] GameObject exclaimationNotice;
 
 
     void OnTriggerStay2D(Collider2D collision)
@@ -15,6 +17,8 @@ public class EnableMinigame : MonoBehaviour
         if (collision.CompareTag("NPC"))
         {
             canInteract.enabled = true;
+            speechBubble.SetActive(false);
+            exclaimationNotice.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.F))
             {
