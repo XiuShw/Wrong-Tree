@@ -20,6 +20,7 @@ public class EnableMinigame : MonoBehaviour
         if (collision.CompareTag("ImportantNPC"))
         {
             EnableInteract();
+            LevelManager.isImportantNPC = true;
             collision.gameObject.transform.Find("speechBubble").gameObject.SetActive(false);
             collision.gameObject.transform.Find("exclaimationNotice").gameObject.SetActive(true);
         }
@@ -36,13 +37,8 @@ public class EnableMinigame : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (!LevelManager.isImportantNPC) { argue1.LoadNewText(4); }
-            else
-            {
-                if (LevelManager.countImportantNPC == 0) { argue1.LoadNewText(1); }
-                if (LevelManager.countImportantNPC == 1) { argue1.LoadNewText(2); }
-                if (LevelManager.countImportantNPC == 2) { argue1.LoadNewText(3); }
-            }
+            if (!LevelManager.isImportantNPC) { argue1.LoadNewText(5); }
+            else { argue1.LoadNewText(LevelManager.countImportantNPC + 1); }
             LevelManager.minigameStart = true;
             AudioManager.Instance.PlaySFX("lightGrass");
             AudioManager.Instance.PlayBGM("minigame");

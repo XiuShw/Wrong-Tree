@@ -599,8 +599,6 @@ MonoBehaviour:
   minigamePlayer: {fileID: 791635777}
   minigameBackground: {fileID: 737287010}
   argue1: {fileID: 1288700902}
-  speechBubble: {fileID: 0}
-  exclaimationNotice: {fileID: 0}
 --- !u!82 &87006354
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1293,7 +1291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 168051347}
-  bgNoise: {fileID: 168051349}
+  bgNoise: {fileID: 0}
   sfxSource1: {fileID: 168051346}
   sfxSource2: {fileID: 168051345}
   mainBGM: {fileID: 8300000, guid: 16f81f62ecf4ac041b43b27971fe947e, type: 3}
@@ -4284,24 +4282,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df6893524400d5409550a490785d2d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content0:
+  pleaseLeaveEmpty: []
+  NPC1:
+  - 1111
   - 
-  content1:
-  - You are right
-  - But Genshin Inpact
-  - Is a open world game
-  content2:
-  - You are right~
-  - But Legend of Zelda
-  - Is also a open world game
-  content3:
-  - You are right,
-  - But Starfield
-  - It just work
-  content4:
-  - You are right!
-  - But Legend of Zelda
-  - Is also a open world game
+  NPC2: []
+  NPC3: []
+  NPC4: []
+  unimportantNPC: []
   changeDuration: 3
 --- !u!1 &1380990873
 GameObject:

@@ -9,11 +9,12 @@ using UnityEngine.SceneManagement;
 
 public class FlashText : MonoBehaviour
 {
-    [SerializeField] List<string> content0;
-    [SerializeField] List<string> content1;
-    [SerializeField] List<string> content2;
-    [SerializeField] List<string> content3;
-    [SerializeField] List<string> content4;
+    [SerializeField] List<string> pleaseLeaveEmpty;
+    [SerializeField] List<string> NPC1;
+    [SerializeField] List<string> NPC2;
+    [SerializeField] List<string> NPC3;
+    [SerializeField] List<string> NPC4;
+    [SerializeField] List<string> unimportantNPC;
     List<string> workingContent;
     TMP_Text textBox;
     bool canChange = false;
@@ -25,7 +26,7 @@ public class FlashText : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        workingContent = content0;
+        workingContent = pleaseLeaveEmpty;
         timeCounter = changeDuration;
         textBox = GetComponent<TMP_Text>();
         color = GetComponent<TextMeshProUGUI>().color;
@@ -68,11 +69,12 @@ public class FlashText : MonoBehaviour
 
     public void LoadNewText(int index)
     {
-        if (index == 0) { workingContent = content0; }
-        if (index == 1) { workingContent = content1; }
-        if (index == 2) { workingContent = content2; }
-        if (index == 3) { workingContent = content3; }
-        if (index == 4) { workingContent = content4; }
+        if (index == 0) { workingContent = pleaseLeaveEmpty; }
+        if (index == 1) { workingContent = NPC1; }
+        if (index == 2) { workingContent = NPC2; }
+        if (index == 3) { workingContent = NPC3; }
+        if (index == 4) { workingContent = NPC4; }
+        if (index == 4) { workingContent = unimportantNPC; }
         countText = 0;
         textBox.text = workingContent[countText];
         timeCounter = changeDuration;
