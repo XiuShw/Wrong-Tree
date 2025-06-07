@@ -40,13 +40,8 @@ public class NPCBehavior : MonoBehaviour
 
 	public void SetState(NPCState newState)
 	{
-		// Prevent entering narrative if disabled
-		if (newState == NPCState.Paused && !properties.narrativeEnabled)
-			return;
-
 		CurrentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
-								 // npcStateText.text = $"{newState}"; // 移除文本更新逻辑
 		animator.SetInteger("State", (int)newState);
 		// Update NPCProperties current state
 		if (properties != null)
@@ -57,7 +52,7 @@ public class NPCBehavior : MonoBehaviour
 	}
 
 	// Some variables / properties
-	[SerializeField] public NPCState CurrentState { get; private set; } = NPCState.Idle; // Default state is Idle
+	public NPCState CurrentState { get; private set; } = NPCState.Idle; // Default state is Idle
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
 	// Use properties from NPCProperties instead of local variables
@@ -116,6 +111,16 @@ public class NPCBehavior : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (properties == null)
+		{
+			Debug.LogWarning("NPCProperties is null. Cannot update state.");
+			return; // Exit if properties are not set
+		}
+		if (CurrentState == NPCState.Paused)
+		{
+			// If in narrative state, do not update other states
+			return;
+		}
 		// Update distance to nearest NPC each frame
 		nearestNPCDistance = GetNearestNPCDistance();
 		timer -= Time.deltaTime;

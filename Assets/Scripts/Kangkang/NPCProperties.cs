@@ -15,14 +15,18 @@ public class NPCProperties : MonoBehaviour
 
 	[Header("NPC State")]
 	public NPCState currentState = NPCState.Idle; // Current state of the NPC
+	private NPCState _lastState = NPCState.Idle; // Last state of the NPC, used for state change detection
 	public bool narrativeEnabled = false;
 	public NPCAtitude currentAtitude = NPCAtitude.Neutral; // Current attitude towards player or other NPCs
 
 	[Header("NPC Bars")]
 	public float lightValue = 1f;
 
-	void setAtitudeCallBack()
+	private NPCBehavior npcBehavior; // Reference to the NPCBehavior component
+
+	void EnableNPC()
 	{
+		npcBehavior.SetState(_lastState);
 		// 逻辑：一共有8个npc。
 		// 如果reputation >= 3，所有态度都是分享
 		// 如果reputation <= 0，所有态度都是偷窃
@@ -65,23 +69,31 @@ public class NPCProperties : MonoBehaviour
 		}
 	}
 
+	void DisableNPC()
+	{
+		// Reset the NPC properties when simulation is disabled
+		_lastState = currentState; // Store the last state before disabling
+		npcBehavior.SetState(NPCState.Paused); // Set the NPC to a paused state
+	}
+
 	private void Start()
 	{
 		// Initialize any necessary properties or states here
 		anchorPosition = new Vector2(transform.position.x, transform.position.y);
+		npcBehavior = GetComponent<NPCBehavior>(); // Get reference to NPCBehavior
 	}
 
 	private void Update()
 	{
 		// 
-		if (!simulationEnabled)
+		if (!simulationEnabled && _lastSimulationEnabled)
 		{
-			;
+			DisableNPC();
 		}
-		else if (!_lastSimulationEnabled)
+		else if (!_lastSimulationEnabled && simulationEnabled)
 		{
 			// If simulation was just enabled, set the initial attitude
-			setAtitudeCallBack();
+			EnableNPC();
 		}
 		_lastSimulationEnabled = simulationEnabled;
 	}
