@@ -1299,7 +1299,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 168051347}
-  bgNoise: {fileID: 0}
   sfxSource1: {fileID: 168051346}
   sfxSource2: {fileID: 168051345}
   mainBGM: {fileID: 8300000, guid: 16f81f62ecf4ac041b43b27971fe947e, type: 3}
@@ -4201,8 +4200,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b9e57f62e8e2194eac5ca55239e4fed, type: 2}
+  m_sharedMaterial: {fileID: 8004954333817155664, guid: 3b9e57f62e8e2194eac5ca55239e4fed, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4232,7 +4231,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4292,12 +4291,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pleaseLeaveEmpty: []
   NPC1:
-  - 1111
+  - "Listen man, I\u2019m not gonna give it back."
+  - "I\u2019m a thief? I bet you stole them too."
+  - "If you\u2019re really a missionary, you should be more generous. "
+  - Get lost.
+  - "I don\u2019t think you understand how much I need them."
+  - The world fell to darkness after the beacon broke.
+  - ' The shimmerberries soon became unharvestable.'
+  - My sister was poisoned trying to harvest them.
+  - She died yesterday.
+  - ...
+  - "With your power, you can always get more berries, is it too much to ask to spare
+    the ones you have?\u201D"
+  - Please.
+  NPC2:
+  - "I don\u2019t understand, why are you doing this to me?"
+  - "I don\u2019t care about the beacon or saving the land. "
+  - Such noble causes, yet the only thing you do is to take from others.
+  - "Hypocrite, that\u2019s what you are."
+  - "You really don\u2019t have to do this."
+  - "I didn\u2019t want to betray my friend. I know it\u2019ll haunt me for the rest
+    of my life."
+  - "Reality is I\u2019m running out of options. I can\u2019t let my family die in
+    front of my own eyes."
+  - "Reality is I\u2019m running out of options. I can\u2019t let my family die in
+    front of my own eyes."
+  - "Selling out the person who accompanied me for almost all my life\u2026"
+  - What have I become?
+  - Is it so wrong to be someone who just wants to live?
+  - "We weren\u2019t like this when the light shined across the land\u2026"
+  NPC3:
+  - "What did you think you\u2019re trying to do? Not only are you not donating me
+    any berries, you\u2019re asking me to give you mine?"
+  - "It\u2019s one thing to not give, but it\u2019s another thing to demand. What
+    is wrong with you?"
+  - Between the two of us, you sound more desperate than I am.
+  - You can't touch these berries, do you understand?
+  - "They could kill you upon touch, and I\u2019m genetically modifying them to be
+    poisonless."
+  - "This way everyone would be able to access them\u2026but they\u2019re not ready
+    yet."
+  - "Yes, experimenting with them would kill me eventually. But who isn\u2019t dying
+    nowadays?"
+  - "Everyone\u2019s running out of light, and someone has to find a solution."
+  - "Heh, at least I\u2019ll be remembered after I\u2019m gone\u2026"
+  - I only need a few more berries to finalize my experiment.
+  - If it works, this could bring literal light to everyone.
+  - I hope you know the weight of your own choices.
+  NPC4:
+  - "You\u2019re not a child. I can\u2019t give you these."
+  - ...these are from her farm. How did you get them? What did you do to her?
+  - You better leave right now.
+  - You need to give the light to the people who need it. You should know this better
+    than I do.
+  - What kind of world are you lighting up if there is no one to shine for?
+  - "People out there commit atrocious acts when they\u2019re entangled by desperation."
+  - If you try to spend a bit more time listening to what people have to say...
+  - "Maybe you\u2019ll understand them better as living beings."
+  unimportantNPC:
   - 
-  NPC2: []
-  NPC3: []
-  NPC4: []
-  unimportantNPC: []
   changeDuration: 3
 --- !u!1 &1380990873
 GameObject:
@@ -4547,7 +4599,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 736, y: 411}
+  m_AnchoredPosition: {x: 697, y: 404}
   m_SizeDelta: {x: 301.6656, y: 82.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1521934424
@@ -4572,8 +4624,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c301da1ba4c233b428a7800c104141c5, type: 2}
+  m_sharedMaterial: {fileID: -8126969645991789567, guid: c301da1ba4c233b428a7800c104141c5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4597,13 +4649,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
