@@ -69,24 +69,6 @@ public class NPCBehavior : MonoBehaviour
 	[SerializeField][Range(0f, 1f)] private float wanderBias = 0.5f; // Bias towards anchor when wandering
 	public Vector2 AnchorPosition => properties != null ? properties.anchorPosition : new Vector2(transform.position.x, transform.position.y);
 
-	void setAtitude()
-	{
-		// Initialize NPC attitude towards player or other NPCs
-		if (properties == null) return;
-		if (LevelManager.globalReputation == 0)
-		{
-			properties.currentAtitude = NPCAtitude.Neutral;
-		}
-		else if (LevelManager.globalReputation > 0)
-		{
-			properties.currentAtitude = NPCAtitude.Share;
-		}
-		else
-		{
-			properties.currentAtitude = NPCAtitude.Steal;
-		}
-	}
-
 	public float nearestNPCDistance = float.MaxValue; // Distance to the nearest NPC
 	public NPCBehavior GetNearestNPC()
 	{
@@ -129,7 +111,6 @@ public class NPCBehavior : MonoBehaviour
 			Debug.LogWarning("NPCProperties component not found on NPC. Using default values.");
 		}
 		SetState(NPCState.Idle); // Start with Idle state
-		Invoke(nameof(setAtitude), 2f); // Set attitude after a short delay to ensure properties are initialized
 	}
 
 	// Update is called once per frame
