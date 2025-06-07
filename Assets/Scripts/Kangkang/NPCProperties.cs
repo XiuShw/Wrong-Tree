@@ -4,8 +4,6 @@ public class NPCProperties : MonoBehaviour
 {
 	[Header("NPC Properties")]
 	public int npcID = 0; // Unique identifier for the NPC
-	public bool simulationEnabled = false; // make this to be true when we want the NPC to be simulated
-	private bool _lastSimulationEnabled = true; // Used to track changes in simulation state
 	public float walkSpeed = 3f;
 	public float runSpeed = 5f;
 	public float interactionRange = 1.5f;
@@ -22,7 +20,7 @@ public class NPCProperties : MonoBehaviour
 
 	private NPCBehavior npcBehavior; // Reference to the NPCBehavior component
 
-	void EnableNPC()
+	public void EnableNPC()
 	{
 		npcBehavior.SetState(_lastState);
 		// 逻辑：一共有8个npc。
@@ -67,7 +65,7 @@ public class NPCProperties : MonoBehaviour
 		}
 	}
 
-	void DisableNPC()
+	public void DisableNPC()
 	{
 		// Reset the NPC properties when simulation is disabled
 		_lastState = currentState; // Store the last state before disabling
@@ -83,16 +81,6 @@ public class NPCProperties : MonoBehaviour
 
 	private void Update()
 	{
-		// 
-		if (!simulationEnabled && _lastSimulationEnabled)
-		{
-			DisableNPC();
-		}
-		else if (!_lastSimulationEnabled && simulationEnabled)
-		{
-			// If simulation was just enabled, set the initial attitude
-			EnableNPC();
-		}
-		_lastSimulationEnabled = simulationEnabled;
+		;
 	}
 }

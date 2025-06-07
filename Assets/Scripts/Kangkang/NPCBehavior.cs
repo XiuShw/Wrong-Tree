@@ -33,10 +33,8 @@ public class NPCBehavior : MonoBehaviour
 
 
 	// A list storing all NPCs in the scene
-	public static List<NPCBehavior> allNPCs = new List<NPCBehavior>();
-
-	void OnEnable() => allNPCs.Add(this);
-	void OnDisable() => allNPCs.Remove(this);
+	void OnEnable() => GameManager.Instance.allNPCs.Add(this);
+	void OnDisable() => GameManager.Instance.allNPCs.Remove(this);
 
 	public void SetState(NPCState newState)
 	{
@@ -71,7 +69,7 @@ public class NPCBehavior : MonoBehaviour
 		float minDist = float.MaxValue;
 		Vector2 myPos = transform.position;
 
-		foreach (var other in allNPCs)
+		foreach (var other in GameManager.Instance.allNPCs)
 		{
 			if (other == this) continue;
 			float d = Vector2.Distance(myPos, other.transform.position);
