@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class EnableMinigame : MonoBehaviour
 {
-    [SerializeField] Image canInteract;
     [SerializeField] GameObject minigamePlayer;
     [SerializeField] GameObject minigameBackground;
     [SerializeField] FlashText argue1;
@@ -21,21 +20,27 @@ public class EnableMinigame : MonoBehaviour
         {
             EnableInteract(collision);
             LevelManager.isImportantNPC = true;
-            collision.gameObject.transform.Find("speechBubble").gameObject.SetActive(false);
-            collision.gameObject.transform.Find("exclaimationNotice").gameObject.SetActive(true);
+            collision.gameObject.transform.Find("NPC_A_Speech/Canvas/speechBubble").gameObject.SetActive(false);
+            collision.gameObject.transform.Find("NPC_A_Speech/Canvas/exclaimationNotice").gameObject.SetActive(true);
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        canInteract.enabled = false;
+        if (collision.CompareTag("ImportantNPC"))
+        {
+            LevelManager.isImportantNPC = false;
+            collision.gameObject.transform.Find("Pop up").gameObject.SetActive(false);
+            collision.gameObject.transform.Find("NPC_A_Speech/Canvas/speechBubble").gameObject.SetActive(true);
+            collision.gameObject.transform.Find("NPC_A_Speech/Canvas/exclaimationNotice").gameObject.SetActive(false);
+        }
     }
 
     void EnableInteract(Collider2D collision)
     {
-        canInteract.enabled = true;
+        collision.gameObject.transform.Find("Pop up").gameObject.SetActive(true);
         LevelManager.previousMinigameSucceed = 0;
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!LevelManager.isImportantNPC) { argue1.LoadNewText(5); }
             else 

@@ -18,8 +18,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
     public static int circumstance = 0;
 
-    public static float maxLight = 3f;
-    public static float minLight = 1f;
+    public static float maxLight = 5f;
+    public static float minLight = 3f;
     public static float lightOwn = 1;
 
     public static int thoughtsCount = 0;

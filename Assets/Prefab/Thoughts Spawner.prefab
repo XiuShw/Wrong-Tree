@@ -44,6 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdd3183f7cf18c46b8aaeeb649bebbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 0
   thoughts: {fileID: 2895862141459026852, guid: 33e0e0a7af35370458431988503cd706, type: 3}
   circumstance: 0
+  delay1up: 5
+  delay1bottom: 0
+  delay2up: 5
+  delay2bottom: 0
+  delay3up: 5
+  delay3bottom: 0
+  delay4up: 5
+  delay4bottom: 0

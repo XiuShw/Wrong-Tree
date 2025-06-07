@@ -74,7 +74,7 @@ public class FlashText : MonoBehaviour
         if (index == 2) { workingContent = NPC2; }
         if (index == 3) { workingContent = NPC3; }
         if (index == 4) { workingContent = NPC4; }
-        if (index == 4) { workingContent = unimportantNPC; }
+        if (index == 5) { workingContent = unimportantNPC; }
         countText = 0;
         textBox.text = workingContent[countText];
         timeCounter = changeDuration;

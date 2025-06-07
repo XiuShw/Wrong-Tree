@@ -9,11 +9,29 @@ public class ThoughtsSpawner : MonoBehaviour
     [SerializeField] GameObject thoughts;
     public int circumstance = 0;
 
+    [SerializeField] int delay1up;
+    [SerializeField] int delay1bottom;
+
+    [SerializeField] int delay2up;
+    [SerializeField] int delay2bottom;
+
+    [SerializeField] int delay3up;
+    [SerializeField] int delay3bottom;
+
+    [SerializeField] int delay4up;
+    [SerializeField] int delay4bottom;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        timer = Random.Range(0, 5);
+        if (!LevelManager.isImportantNPC) { timer = Random.Range(0, 5); }
+        else
+        {
+            if (LevelManager.countImportantNPC == 0) { timer = Random.Range(delay1bottom, delay1up); }
+            if (LevelManager.countImportantNPC == 1) { timer = Random.Range(delay2bottom, delay2up); }
+            if (LevelManager.countImportantNPC == 2) { timer = Random.Range(delay3bottom, delay3up); }
+            if (LevelManager.countImportantNPC == 3) { timer = Random.Range(delay4bottom, delay4up); }
+        }
     }
 
     // Update is called once per frame
@@ -38,13 +56,13 @@ public class ThoughtsSpawner : MonoBehaviour
         if (circumstance >= 2)
         {
             LevelManager.previousMinigameSucceed = 1;
-            minigameEnd(-4, -2, -2, 1);
+            minigameEnd(-5, -3, -1, 1);
             AudioManager.Instance.PlaySFX("goodResult");
         }
         else if (circumstance <= -2)
         {
             LevelManager.previousMinigameSucceed = -1;
-            minigameEnd(5, 2.5f, 3, -1);
+            minigameEnd(5f, 3f, 1, -1);
             AudioManager.Instance.PlaySFX("badResult");
         }
     }

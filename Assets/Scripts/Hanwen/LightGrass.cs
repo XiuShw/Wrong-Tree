@@ -19,9 +19,9 @@ public class LightGrass : MonoBehaviour
     {
         if (collision.CompareTag("Player") && pointLight.GetComponent<Light>().enabled == true)
         {
-            LevelManager.maxLight += 3f;
-            LevelManager.minLight += 1.5f;
-            LevelManager.lightOwn += 1;
+            LevelManager.maxLight += 0.5f;
+            LevelManager.minLight += 0.3f;
+            LevelManager.lightOwn += 0.1f;
             pointLight.GetComponent<Light>().enabled = false;
             AudioManager.Instance.PlaySFX("grass");
         }
