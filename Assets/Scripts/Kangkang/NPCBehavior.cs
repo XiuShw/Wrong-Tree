@@ -31,11 +31,6 @@ public class NPCBehavior : MonoBehaviour
 
 	public NPCProperties properties; // Reference to the NPCProperties component
 
-
-	// A list storing all NPCs in the scene
-	void OnEnable() => GameManager.Instance.allNPCs.Add(this);
-	void OnDisable() => GameManager.Instance.allNPCs.Remove(this);
-
 	public void SetState(NPCState newState)
 	{
 		CurrentState = newState;
@@ -72,6 +67,8 @@ public class NPCBehavior : MonoBehaviour
 		foreach (var other in GameManager.Instance.allNPCs)
 		{
 			if (other == this) continue;
+			if (other.CurrentState == NPCState.Dead || other.CurrentState == NPCState.Paused)
+				continue; // Skip dead or paused NPCs
 			float d = Vector2.Distance(myPos, other.transform.position);
 			if (d < minDist)
 			{
@@ -97,6 +94,7 @@ public class NPCBehavior : MonoBehaviour
 
 	void Start()
 	{
+		GameManager.Instance.allNPCs.Add(this);
 		animator = GetComponent<Animator>();
 		properties = GetComponent<NPCProperties>(); // Get reference to NPCProperties
 		if (properties == null)

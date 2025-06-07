@@ -38,7 +38,7 @@ public class EnableMinigame : MonoBehaviour
 
     void EnableInteract(Collider2D collision)
     {
-        collision.gameObject.transform.Find("Pop up").gameObject.SetActive(true);
+        // collision.gameObject.transform.Find("Pop up").gameObject.SetActive(true); // I found that there is an error. I commented this out. - Ken
         LevelManager.previousMinigameSucceed = 0;
         if (Input.GetKeyDown(KeyCode.Space))
         {
