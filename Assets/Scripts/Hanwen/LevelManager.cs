@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
     public static bool isImportantNPC = false;
 
     public static bool gameFinished = false;
-    public static bool previousMinigameSucceed = false;
+    public static int previousMinigameSucceed = 0;
 
     [SerializeField] FlashText argue1;
 
