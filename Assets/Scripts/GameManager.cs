@@ -22,11 +22,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (!simulationEnabled && _lastSimulationEnabled)
-        {
-            foreach (var npc in allNPCs)
+	void Update()
+	{
+		// Check for simulation toggle input
+		if (!simulationEnabled && _lastSimulationEnabled)
+		{
+			foreach (var npc in allNPCs)
 			{
 				npc.properties.DisableNPC();
 			}
@@ -38,6 +39,11 @@ public class GameManager : MonoBehaviour
 				npc.properties.EnableNPC();
 			}
 		}
-        _lastSimulationEnabled = simulationEnabled;
-    }
+		_lastSimulationEnabled = simulationEnabled;
+		// Update all NPCs
+		foreach (var npc in allNPCs)
+		{
+			npc.CustomUpdate();
+		}
+	}
 }

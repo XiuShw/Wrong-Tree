@@ -24,8 +24,15 @@ public static class NPCStateUtils
 	static public int playerStealCount = 0;
 	public static NPCState DecideIdleShareSteal(NPCBehavior npc, NPCProperties properties)
 	{
+		NPCBehavior nearestNPC = npc.GetNearestNPC();
+		float nearestNPCDistance = float.MaxValue; // 初始化为最大值
+		if (nearestNPC != null)
+		{
+			nearestNPCDistance = Vector3.Distance(npc.transform.position, nearestNPC.transform.position);
+		}
 		// 根据NPC的属性决定状态
-		if (properties.currentAtitude == NPCAtitude.Neutral || npc.GetNearestNPCDistance() > 3f)
+		if (properties.currentAtitude == NPCAtitude.Neutral || nearestNPCDistance > 3f
+		|| nearestNPC.CurrentState == NPCState.Interact_Steal || nearestNPC.CurrentState == NPCState.Interact_Share)
 		{
 			// 如果没有其他NPC在附近，或者当前态度是中立，则闲逛
 			return NPCState.Idle; // 这里可以根据需要调整为其他状态

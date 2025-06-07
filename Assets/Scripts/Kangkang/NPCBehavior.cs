@@ -105,7 +105,7 @@ public class NPCBehavior : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	public void CustomUpdate()
 	{
 		if (properties == null)
 		{
