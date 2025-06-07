@@ -14,7 +14,16 @@ public enum NPCState
 	Interact_Share = 4,
 	Interact_Steal = 5,
 	Dead = 6,
-	Paused = 7 // Narrative state, for storytelling purposes
+	Paused = 7, // Narrative state, for storytelling purposes
+	Crying = 8
+}
+
+// The list of possible attitudes the NPC can have towards other NPCs or the player
+public enum NPCAtitude
+{
+	Neutral = 0,
+	Share = 1,
+	Steal = 2
 }
 
 public class NPCBehavior : MonoBehaviour
@@ -22,16 +31,20 @@ public class NPCBehavior : MonoBehaviour
 
 	private NPCProperties properties; // Reference to the NPCProperties component
 
-	// Add narrative control fields
-	[SerializeField] public bool narrativeEnabled = false;
+
+	// A list storing all NPCs in the scene
+	public static List<NPCBehavior> allNPCs = new List<NPCBehavior>();
+
+	void OnEnable() => allNPCs.Add(this);
+	void OnDisable() => allNPCs.Remove(this);
 
 	public void SetState(NPCState newState)
 	{
 		// Prevent entering narrative if disabled
-		if (newState == NPCState.Paused && !narrativeEnabled)
+		if (newState == NPCState.Paused && !properties.narrativeEnabled)
 			return;
 
-		currentState = newState;
+		CurrentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
 								 // npcStateText.text = $"{newState}"; // 移除文本更新逻辑
 		animator.SetInteger("State", (int)newState);
@@ -44,7 +57,7 @@ public class NPCBehavior : MonoBehaviour
 	}
 
 	// Some variables / properties
-	[SerializeField] public NPCState currentState { get; private set; } = NPCState.Idle; // Default state is Idle
+	[SerializeField] public NPCState CurrentState { get; private set; } = NPCState.Idle; // Default state is Idle
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
 	// Use properties from NPCProperties instead of local variables
@@ -56,6 +69,57 @@ public class NPCBehavior : MonoBehaviour
 	[SerializeField][Range(0f, 1f)] private float wanderBias = 0.5f; // Bias towards anchor when wandering
 	public Vector2 AnchorPosition => properties != null ? properties.anchorPosition : new Vector2(transform.position.x, transform.position.y);
 
+	void setAtitude()
+	{
+		// Initialize NPC attitude towards player or other NPCs
+		if (properties == null) return;
+		if (LevelManager.globalReputation == 0)
+		{
+			properties.currentAtitude = NPCAtitude.Neutral;
+		}
+		else if (LevelManager.globalReputation > 0)
+		{
+			properties.currentAtitude = NPCAtitude.Share;
+		}
+		else
+		{
+			properties.currentAtitude = NPCAtitude.Steal;
+		}
+	}
+
+	public float nearestNPCDistance = float.MaxValue; // Distance to the nearest NPC
+	public NPCBehavior GetNearestNPC()
+	{
+		NPCBehavior nearest = null;
+		float minDist = float.MaxValue;
+		Vector2 myPos = transform.position;
+
+		foreach (var other in allNPCs)
+		{
+			if (other == this) continue;
+			float d = Vector2.Distance(myPos, other.transform.position);
+			if (d < minDist)
+			{
+				minDist = d;
+				nearest = other;
+			}
+		}
+		nearestNPCDistance = minDist; // Update the nearest NPC distance
+		return nearest;
+	}
+
+	public float GetNearestNPCDistance()
+	{
+		NPCBehavior nearest = GetNearestNPC();
+		if (nearest == null)
+		{
+			nearestNPCDistance = float.MaxValue;
+			return nearestNPCDistance;
+		}
+		nearestNPCDistance = Vector2.Distance(transform.position, nearest.transform.position);
+		return nearestNPCDistance;
+	}
+
 	void Start()
 	{
 		animator = GetComponent<Animator>();
@@ -65,15 +129,18 @@ public class NPCBehavior : MonoBehaviour
 			Debug.LogWarning("NPCProperties component not found on NPC. Using default values.");
 		}
 		SetState(NPCState.Idle); // Start with Idle state
+		Invoke(nameof(setAtitude), 2f); // Set attitude after a short delay to ensure properties are initialized
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		// Update distance to nearest NPC each frame
+		nearestNPCDistance = GetNearestNPCDistance();
 		timer -= Time.deltaTime;
 		bool firstFrameInState = justChangedState;
 		justChangedState = false; // Reset the flag for the next frame
-		switch (currentState)
+		switch (CurrentState)
 		{
 			case NPCState.Idle:
 				// do nothing
@@ -113,7 +180,7 @@ public class NPCBehavior : MonoBehaviour
 				}
 				if (timer <= 0)
 				{
-					NPCState _nextState = NPCStateUtils.DecideIdleShareSteal();
+					NPCState _nextState = NPCStateUtils.DecideIdleShareSteal(this, properties);
 					SetState(_nextState);
 				}
 				break;
@@ -147,7 +214,14 @@ public class NPCBehavior : MonoBehaviour
 					NPCStateUtils.ResetShareFSM(); // Reset the share FSM
 				}
 				// Call the sub FSM for sharing with result handling
-				var shareResult = NPCStateUtils.Share(this, PlayerMovement.Instance);
+				NPCBehavior nearestNPC = GetNearestNPC();
+				if (nearestNPC == null)
+				{
+					Debug.LogWarning("No other NPCs found to share with.");
+					SetState(NPCState.Idle); // No other NPCs to share with, go idle
+					return;
+				}
+				var shareResult = NPCStateUtils.Share(this, nearestNPC.transform.position);
 				if (shareResult == NPCStateUtils.InteractionResult.Success)
 				{
 					SetState(NPCState.Smile);
@@ -163,8 +237,16 @@ public class NPCBehavior : MonoBehaviour
 				{
 					NPCStateUtils.ResetStealFSM(); // Reset the steal FSM
 				}
+				// Get the nearest NPC to steal from
+				nearestNPC = GetNearestNPC();
+				if (nearestNPC == null)
+				{
+					Debug.LogWarning("No other NPCs found to steal from.");
+					SetState(NPCState.Idle); // No other NPCs to steal from, go idle
+					return;
+				}
 				// Call the sub FSM for stealing with result handling
-				var stealResult = NPCStateUtils.Steal(this, PlayerMovement.Instance);
+				var stealResult = NPCStateUtils.Steal(this, nearestNPC.transform.position);
 				if (stealResult == NPCStateUtils.InteractionResult.Success)
 				{
 					SetState(NPCState.Idle);
