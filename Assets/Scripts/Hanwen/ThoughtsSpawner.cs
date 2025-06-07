@@ -35,26 +35,32 @@ public class ThoughtsSpawner : MonoBehaviour
 
         if (circumstance >= 2)
         {
-            LevelManager.minigameStart = false;
-            LevelManager.maxLight -= 4f;
-            LevelManager.minLight -= 2f;
-            LevelManager.globalReputation += 1;
-            circumstance = 0;
+            LevelManager.previousMinigameSucceed = true;
+            minigameEnd(-4, -2, -2, 1);
             AudioManager.Instance.PlaySFX("goodResult");
-            AudioManager.Instance.PlayBGM("mainBGM");
-
         }
         else if (circumstance <= -2)
         {
-            LevelManager.minigameStart = false;
-            LevelManager.maxLight += 5f;
-            LevelManager.minLight += 2.5f;
-            LevelManager.lightOwn += 3;
-            LevelManager.globalReputation -= 1;
-            circumstance = 0;
+            LevelManager.previousMinigameSucceed = false;
+            minigameEnd(5, 2.5f, 3, -1);
             AudioManager.Instance.PlaySFX("badResult");
-            AudioManager.Instance.PlayBGM("mainBGM");
+        }
+    }
 
+    void minigameEnd(float maxLight, float minLight, int lightOwn, int globalReputation)
+    {
+        LevelManager.minigameStart = false;
+        LevelManager.previousMinigameSucceed = true;
+        LevelManager.maxLight += maxLight;
+        LevelManager.minLight += minLight;
+        LevelManager.lightOwn += lightOwn;
+        LevelManager.globalReputation += globalReputation;
+        circumstance = 0;
+        AudioManager.Instance.PlayBGM("mainBGM");
+        if (LevelManager.isImportantNPC)
+        {
+            LevelManager.countImportantNPC++;
+            LevelManager.isImportantNPC = false;
         }
     }
 }

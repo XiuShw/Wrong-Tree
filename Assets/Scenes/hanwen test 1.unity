@@ -239,6 +239,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC_A_Speech
       objectReference: {fileID: 0}
+    - target: {fileID: 9147239065371002981, guid: 0fe5e9cabd3c6e84ab0f0ea11aef9902, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -595,8 +599,6 @@ MonoBehaviour:
   minigamePlayer: {fileID: 791635777}
   minigameBackground: {fileID: 737287010}
   argue1: {fileID: 1288700902}
-  speechBubble: {fileID: 266711265}
-  exclaimationNotice: {fileID: 2008436228}
 --- !u!82 &87006354
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1289,7 +1291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 168051347}
-  bgNoise: {fileID: 168051349}
+  bgNoise: {fileID: 0}
   sfxSource1: {fileID: 168051346}
   sfxSource2: {fileID: 168051345}
   mainBGM: {fileID: 8300000, guid: 16f81f62ecf4ac041b43b27971fe947e, type: 3}
@@ -1453,11 +1455,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &266711265 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9039754452326473573, guid: 0fe5e9cabd3c6e84ab0f0ea11aef9902, type: 3}
-  m_PrefabInstance: {fileID: 19850041}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &272903872
 GameObject:
   m_ObjectHideFlags: 0
@@ -4285,24 +4282,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df6893524400d5409550a490785d2d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content0:
+  pleaseLeaveEmpty: []
+  NPC1:
+  - 1111
   - 
-  content1:
-  - You are right
-  - But Genshin Inpact
-  - Is a open world game
-  content2:
-  - You are right~
-  - But Legend of Zelda
-  - Is also a open world game
-  content3:
-  - You are right,
-  - But Starfield
-  - It just work
-  content4:
-  - You are right!
-  - But Legend of Zelda
-  - Is also a open world game
+  NPC2: []
+  NPC3: []
+  NPC4: []
+  unimportantNPC: []
   changeDuration: 3
 --- !u!1 &1380990873
 GameObject:
@@ -4712,7 +4699,7 @@ GameObject:
   - component: {fileID: 1610063144}
   m_Layer: 0
   m_Name: NPC_A
-  m_TagString: NPC
+  m_TagString: ImportantNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
