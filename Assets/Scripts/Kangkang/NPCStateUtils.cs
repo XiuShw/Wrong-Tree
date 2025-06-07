@@ -22,20 +22,28 @@ public static class NPCStateUtils
 	// 决定闲逛、分享或偷窃的状态
 	static public int playerShareCount = 0;
 	static public int playerStealCount = 0;
-	public static NPCState DecideIdleShareSteal()
+	public static NPCState DecideIdleShareSteal(NPCBehavior npc, NPCProperties properties)
 	{
-		int randomValue = Random.Range(0, 100);
-		if (randomValue < 50)
+		// 根据NPC的属性决定状态
+		if (properties.currentAtitude == NPCAtitude.Neutral || npc.GetNearestNPCDistance() > 3f)
 		{
-			return NPCState.Idle; // 闲逛
+			// 如果没有其他NPC在附近，或者当前态度是中立，则闲逛
+			return NPCState.Idle; // 这里可以根据需要调整为其他状态
 		}
-		else if (randomValue < 75) // Modified to have a better distribution
+		else if (properties.currentAtitude == NPCAtitude.Share && properties.lightValue > 1f)
 		{
-			return NPCState.Interact_Share; // 分享
+			// 如果态度是分享且光值大于1，则进入分享状态
+			return NPCState.Interact_Share;
+		}
+		else if (properties.currentAtitude == NPCAtitude.Steal)
+		{
+			// 如果态度是偷窃，则进入偷窃状态
+			return NPCState.Interact_Steal;
 		}
 		else
 		{
-			return NPCState.Interact_Steal; // 偷窃
+			Debug.LogWarning("Unknown NPC attitude: " + properties.currentAtitude);
+			return NPCState.Idle; // 默认回到闲逛状态
 		}
 	}
 
@@ -48,14 +56,14 @@ public static class NPCStateUtils
 	private static float shareScaleTimer = 0f;
 	private static float shareVisionRange = 3f; // 可视距离超参数
 
-	public static InteractionResult Share(NPCBehavior npc, PlayerMovement target)
+	public static InteractionResult Share(NPCBehavior npc, Vector3 targetPosition)
 	{
 		switch (shareState)
 		{
 			case ShareState.Approaching:
 				// Default interaction range
 				float interactionRange = 1f;
-				float distance = Vector3.Distance(npc.transform.position, target.transform.position);
+				float distance = Vector3.Distance(npc.transform.position, targetPosition);
 				if (distance > shareVisionRange) // 超出可视距离，触发Fail
 				{
 					shareState = ShareState.Done;
@@ -63,7 +71,7 @@ public static class NPCStateUtils
 				}
 				if (distance > interactionRange)
 				{
-					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
+					Vector3 direction = (targetPosition - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.WalkSpeed;
 					return InteractionResult.Running;
 				}
@@ -108,14 +116,14 @@ public static class NPCStateUtils
 	private static float stealScaleTimer = 0f;
 	private static float stealAggroRange = 4f; // 仇恨距离超参数
 
-	public static InteractionResult Steal(NPCBehavior npc, PlayerMovement target)
+	public static InteractionResult Steal(NPCBehavior npc, Vector3 targetPosition)
 	{
 		switch (stealState)
 		{
 			case StealState.Approaching:
 				// Default interaction range
 				float interactionRange = 1f;
-				float distance = Vector3.Distance(npc.transform.position, target.transform.position);
+				float distance = Vector3.Distance(npc.transform.position, targetPosition);
 				if (distance > stealAggroRange) // 超出仇恨距离，触发Fail
 				{
 					stealState = StealState.Done;
@@ -123,7 +131,7 @@ public static class NPCStateUtils
 				}
 				if (distance > interactionRange)
 				{
-					Vector3 direction = (target.transform.position - npc.transform.position).normalized;
+					Vector3 direction = (targetPosition - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.RunSpeed; // 跑步速度
 					return InteractionResult.Running;
 				}

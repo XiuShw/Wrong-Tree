@@ -33,8 +33,9 @@ using Yarn.Unity;
 
 public class NPC_API : MonoBehaviour
 {
-	[SerializeField] private NPCBehavior npc;
-	[SerializeField] private DialogueRunner runner;
+	private NPCBehavior npc;
+	private NPCProperties properties;
+	private DialogueRunner runner;
 	static NPCState prevStateBeforePause;
 
 	[YarnCommand("set_npc_state")]
@@ -51,7 +52,7 @@ public class NPC_API : MonoBehaviour
 	[YarnCommand("start_narrative")]
 	public void EnableNarrative()
 	{
-		npc.narrativeEnabled = true;
+		properties.narrativeEnabled = true;
 		prevStateBeforePause = npc.CurrentState;
 		npc.SetState(NPCState.Paused);
 	}
@@ -59,7 +60,7 @@ public class NPC_API : MonoBehaviour
 	[YarnCommand("end_narrative")]
 	public void DisableNarrative(bool restorePrev = true)
 	{
-		npc.narrativeEnabled = false;
+		properties.narrativeEnabled = false;
 		if (restorePrev && npc.CurrentState == NPCState.Paused)
 		{
 			npc.SetState(prevStateBeforePause);

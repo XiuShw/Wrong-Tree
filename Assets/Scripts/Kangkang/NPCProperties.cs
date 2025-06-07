@@ -12,6 +12,7 @@ public class NPCProperties : MonoBehaviour
 
 	[Header("NPC State")]
 	public NPCState currentState = NPCState.Idle; // Current state of the NPC
+	public bool narrativeEnabled = false;
 	public NPCAtitude currentAtitude = NPCAtitude.Neutral; // Current attitude towards player or other NPCs
 
 	[Header("NPC Bars")]
