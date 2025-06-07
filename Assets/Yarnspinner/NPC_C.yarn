@@ -1,0 +1,31 @@
+title: NPC_C
+---
+
+<<if $hasPlayedMinigame == false>>
+No one can come close to my berries.
+I’m finally cracking the way to produce more of them!
+No way I'm giving these to others though...
+
+<<jump NPC_C>>
+<<endif>>
+
+===
+
+title: MinigameWinC
+---
+I’m not gonna apologize for yelling at you, but I will admit...
+You’re more sensible than I anticipated.
+I will apologize for mistaking you as some sort of cult leader who tries to brainwash people.
+I gave up on the beacon a long while ago. Even if we fixed it, who knows when it’ll break again?
+The berries is the true solution. Take this sample and tell people about my work!
+
+===
+
+title: MinigameLoseC
+---
+You’re right. These berries are better off in your hand.
+I can't save anyone...but you can.
+Glorious is the beacon. Salvation is its light.
+
+
+===

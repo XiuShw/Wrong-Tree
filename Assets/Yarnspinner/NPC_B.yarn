@@ -1,0 +1,33 @@
+title: NPC_B
+---
+
+<<if $hasPlayedMinigame == false>>
+I’ll do it. Just sneak into his place and put it in my bag…
+Easy…He won’t notice a thing.
+I need the light more than he does...
+This can only be the best solution...
+
+<<jump NPC_B>>
+<<endif>>
+
+===
+
+title: MinigameWin
+---
+I......
+I don’t deserve this.
+I was just about to sell my neighbor. My best friend.
+You’ve stopped a man from committing a crime he will regret for life.
+...I guess you’re right, extreme circumstances distort people into doing horrible things.
+You have the power of reigniting the kindness within others.
+I trust that you’re the one who will bring an end to this terrible nightmare.
+
+===
+
+title: MinigameLose
+---
+I take my words back. What you’re doing is for a noble cause.
+My friend would have agreed too. Take both of our portion.
+Glorious is the beacon. Salvation is its light.
+
+===

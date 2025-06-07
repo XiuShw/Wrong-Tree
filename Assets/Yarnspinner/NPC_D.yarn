@@ -1,0 +1,33 @@
+title: NPC_D
+---
+
+<<if $hasPlayedMinigame == false>>
+Here’s your berries of the day.
+There is always hope. Don't give up.
+It's important to stay kind to others.
+Line up this way, everyone will get enough.
+
+
+<<jump NPC_D>>
+<<endif>>
+
+===
+
+title: MinigameWinD
+---
+So you have listened.
+It’s easy to sort people into tidy shades of black-and-white when we’re only skimming the surface
+...and that shallow judgment makes kindness and generosity so much harder to offer.”
+Even knowing that, being generous is hard. You put in all the effort, and there’s no guarantee of rewards.
+Yet it feels different knowing that you made a difference, doesn't it?
+Sometimes, just a bit of generosity can be life-changing.
+Look around us.
+
+===
+
+title: MinigameLoseD
+---
+For a brighter future, for all of us. Light up the land.
+Glorious is the beacon. Salvation is its light.
+
+===
