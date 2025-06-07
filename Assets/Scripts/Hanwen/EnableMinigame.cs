@@ -44,7 +44,6 @@ public class EnableMinigame : MonoBehaviour
                 collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             }
             LevelManager.minigameStart = true;
-            AudioManager.Instance.PlaySFX("lightGrass");
             AudioManager.Instance.PlayBGM("minigame");
             minigamePlayer.transform.position = minigameBackground.transform.position;
         }

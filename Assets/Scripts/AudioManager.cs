@@ -97,7 +97,7 @@ public class AudioManager : MonoBehaviour
 
             case "placeholder": selectedClip2 = placeholder; volume2 = 0.1f; break;
             case "grass": selectedClip2 = grass; volume2 = 1f; break;
-            case "lightGrass": selectedClip2 = lightGrass; volume2 = 1f; break;
+            case "lightGrass": selectedClip2 = lightGrass; volume2 = 0.3f; break;
             default: return;
         }
 

@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     public static bool minigameStart;
 
     [SerializeField] GameObject minigameWindow;
+    [SerializeField] GameObject minigameBG;
     [SerializeField] Camera mainCamera;
     public static int circumstance = 0;
 
@@ -41,6 +42,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Light globalLight;
     [SerializeField] Transform playerLight;
 
+    Color color;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -54,6 +57,12 @@ public class LevelManager : MonoBehaviour
 
         if (minigameStart)
         { 
+            if (minigameBG.GetComponent<SpriteRenderer>().color.a <= 1)
+            {
+                color = minigameBG.GetComponent<SpriteRenderer>().color;
+                color.a += Time.deltaTime;
+                minigameBG.GetComponent<SpriteRenderer>().color = color;
+            }
             minigameWindow.SetActive(true);
             mainCamera.GetUniversalAdditionalCameraData().renderPostProcessing = false;
             canInteract.enabled = false;
@@ -61,7 +70,13 @@ public class LevelManager : MonoBehaviour
             lightValueBG.enabled = false;
         }
         else 
-        { 
+        {
+            if (minigameBG.GetComponent<SpriteRenderer>().color.a >= 0)
+            {
+                color = minigameBG.GetComponent<SpriteRenderer>().color;
+                color.a -= Time.deltaTime;
+                minigameBG.GetComponent<SpriteRenderer>().color = color;
+            }
             minigameWindow.SetActive(false);
             argue1.LoadNewText(0);
             mainCamera.GetUniversalAdditionalCameraData().renderPostProcessing = true;

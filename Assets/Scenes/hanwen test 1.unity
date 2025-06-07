@@ -1440,6 +1440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigameWindow: {fileID: 560441896}
+  minigameBG: {fileID: 737287010}
   mainCamera: {fileID: 330585545}
   argue1: {fileID: 1288700902}
   canInteract: {fileID: 521533150}
