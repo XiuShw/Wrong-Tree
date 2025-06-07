@@ -1,8 +1,32 @@
 title: NPC_A
 ---
+
+<<if $hasPlayedMinigame == false>>
 These could keep me going for months!
 I don’t have to bother picking them up anymore.
-...Who's there?
+...Who's there?!
 Better not be anyone spying on my berries...
+
 <<jump NPC_A>>
+<<endif>>
+
+===
+
+title: MinigameWin
+---
+I...
+Thank you.
+I haven’t felt kindness in so long.
+Everyone is at each other’s throat nowadays.
+People are desperate, you know?
+Without the light, people usually die in a few hours.
+With your help, maybe there is a shimmer of hope for all of us to survive.
+===
+
+title: MinigameLose
+---
+It was wrong of me for stealing what’s yours.
+As an apology, I offer my own light.
+Glorious is the beacon. Salvation is its light.
+
 ===
