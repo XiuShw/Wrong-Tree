@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     public AudioSource bgmSource;
-    public AudioSource bgNoise;
+    //public AudioSource bgNoise;
     public AudioSource sfxSource1;
     public AudioSource sfxSource2;
 
@@ -58,8 +58,6 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         string scene = SceneManager.GetActiveScene().name;
-        if (LevelManager.minigameStart) { bgNoise.enabled = false; }
-        else {  bgNoise.enabled = true; }
     }
 
     public void PlayBGM(string clip)

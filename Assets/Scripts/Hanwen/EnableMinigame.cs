@@ -15,11 +15,11 @@ public class EnableMinigame : MonoBehaviour
     {
         if (collision.CompareTag("NPC"))
         {
-            EnableInteract();
+            EnableInteract(collision);
         }
         if (collision.CompareTag("ImportantNPC"))
         {
-            EnableInteract();
+            EnableInteract(collision);
             LevelManager.isImportantNPC = true;
             collision.gameObject.transform.Find("speechBubble").gameObject.SetActive(false);
             collision.gameObject.transform.Find("exclaimationNotice").gameObject.SetActive(true);
@@ -31,14 +31,18 @@ public class EnableMinigame : MonoBehaviour
         canInteract.enabled = false;
     }
 
-    void EnableInteract()
+    void EnableInteract(Collider2D collision)
     {
         canInteract.enabled = true;
-
+        LevelManager.previousMinigameSucceed = 0;
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (!LevelManager.isImportantNPC) { argue1.LoadNewText(5); }
-            else { argue1.LoadNewText(LevelManager.countImportantNPC + 1); }
+            else 
+            { 
+                argue1.LoadNewText(LevelManager.countImportantNPC + 1);
+                collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            }
             LevelManager.minigameStart = true;
             AudioManager.Instance.PlaySFX("lightGrass");
             AudioManager.Instance.PlayBGM("minigame");

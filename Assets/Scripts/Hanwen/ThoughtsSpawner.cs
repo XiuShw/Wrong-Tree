@@ -35,13 +35,13 @@ public class ThoughtsSpawner : MonoBehaviour
 
         if (circumstance >= 2)
         {
-            LevelManager.previousMinigameSucceed = true;
+            LevelManager.previousMinigameSucceed = 1;
             minigameEnd(-4, -2, -2, 1);
             AudioManager.Instance.PlaySFX("goodResult");
         }
         else if (circumstance <= -2)
         {
-            LevelManager.previousMinigameSucceed = false;
+            LevelManager.previousMinigameSucceed = -1;
             minigameEnd(5, 2.5f, 3, -1);
             AudioManager.Instance.PlaySFX("badResult");
         }
@@ -50,7 +50,6 @@ public class ThoughtsSpawner : MonoBehaviour
     void minigameEnd(float maxLight, float minLight, int lightOwn, int globalReputation)
     {
         LevelManager.minigameStart = false;
-        LevelManager.previousMinigameSucceed = true;
         LevelManager.maxLight += maxLight;
         LevelManager.minLight += minLight;
         LevelManager.lightOwn += lightOwn;
