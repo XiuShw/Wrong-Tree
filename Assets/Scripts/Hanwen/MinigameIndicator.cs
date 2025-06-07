@@ -32,6 +32,7 @@ public class MinigameIndicator : MonoBehaviour
                     {
                         color.g -= Time.deltaTime;
                         color.b -= Time.deltaTime;
+                        textBox.alignment = TextAlignmentOptions.Left;
                     }
                 }
                 if (LevelManager.circumstance > 0)
@@ -41,6 +42,7 @@ public class MinigameIndicator : MonoBehaviour
                     {
                         color.g += Time.deltaTime;
                         color.b += Time.deltaTime;
+                        textBox.alignment = TextAlignmentOptions.Right;
                     }
                 }
             }

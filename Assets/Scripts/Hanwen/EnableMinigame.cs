@@ -47,6 +47,8 @@ public class EnableMinigame : MonoBehaviour
             { 
                 argue1.LoadNewText(LevelManager.countImportantNPC + 1);
                 collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                collision.gameObject.transform.Find("NPC_A_Speech/Canvas/speechBubble").gameObject.SetActive(true);
+                collision.gameObject.transform.Find("NPC_A_Speech/Canvas/exclaimationNotice").gameObject.SetActive(false);
             }
             LevelManager.minigameStart = true;
             AudioManager.Instance.PlayBGM("minigame");
