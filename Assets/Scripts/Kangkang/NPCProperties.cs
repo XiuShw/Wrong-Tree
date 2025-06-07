@@ -5,12 +5,10 @@ public class NPCProperties : MonoBehaviour
 	[Header("NPC Properties")]
 	public int npcID = 0; // Unique identifier for the NPC
 	public bool simulationEnabled = false; // make this to be true when we want the NPC to be simulated
-	private bool _lastSimulationEnabled = false; // Used to track changes in simulation state
-	public float walkSpeed = 0.5f; // NPC's walking speed
-	public float runSpeed = 1f; // NPC's running speed
-	public float interactionRange = 1.5f; // Range for interaction with player
-	public float shareCooldown = 3f; // Cooldown time for sharing action
-	public float stealCooldown = 2f; // Cooldown time for stealing action
+	private bool _lastSimulationEnabled = true; // Used to track changes in simulation state
+	public float walkSpeed = 0.5f;
+	public float runSpeed = 1f;
+	public float interactionRange = 1.5f;
 	public Vector2 anchorPosition;
 
 	[Header("NPC State")]

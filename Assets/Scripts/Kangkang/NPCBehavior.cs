@@ -14,7 +14,7 @@ public enum NPCState
 	Interact_Share = 4,
 	Interact_Steal = 5,
 	Dead = 6,
-	Paused = 7, // Narrative state, for storytelling purposes
+	Paused = 7,
 	Crying = 8
 }
 
@@ -56,8 +56,8 @@ public class NPCBehavior : MonoBehaviour
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
 	// Use properties from NPCProperties instead of local variables
-	public float WalkSpeed => properties != null ? properties.walkSpeed : 2f;
-	public float RunSpeed => properties != null ? properties.runSpeed : 5f;
+	public float WalkSpeed => properties.walkSpeed;
+	public float RunSpeed => properties.runSpeed;
 	[SerializeField] private float timer; // for timing different states
 	[SerializeField] private Vector2 walkDirection = new Vector2(1, 0); // Current walking direction
 	[SerializeField] private float maxWanderDistance = 5f; // Maximum distance from anchor for wandering
@@ -128,6 +128,8 @@ public class NPCBehavior : MonoBehaviour
 		justChangedState = false; // Reset the flag for the next frame
 		switch (CurrentState)
 		{
+			case NPCState.Paused:
+				break;
 			case NPCState.Idle:
 				// do nothing
 				if (firstFrameInState)
