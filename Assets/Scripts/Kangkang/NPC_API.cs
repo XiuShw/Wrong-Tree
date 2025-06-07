@@ -38,80 +38,80 @@ public class NPC_API : MonoBehaviour
 	private DialogueRunner runner;
 	static NPCState prevStateBeforePause;
 
-	[YarnCommand("set_npc_state")]
-	public void SetNPCState(NPCState newState)
-	{
-		npc.SetState(newState);
-	}
+	// [YarnCommand("set_npc_state")]
+	// public void SetNPCState(NPCState newState)
+	// {
+	// 	npc.SetState(newState);
+	// }
 
-	public NPCState GetNPCState()
-	{
-		return npc.CurrentState;
-	}
+	// public NPCState GetNPCState()
+	// {
+	// 	return npc.CurrentState;
+	// }
 
-	[YarnCommand("start_narrative")]
-	public void EnableNarrative()
-	{
-		properties.narrativeEnabled = true;
-		prevStateBeforePause = npc.CurrentState;
-		npc.SetState(NPCState.Paused);
-	}
+	// [YarnCommand("start_narrative")]
+	// public void EnableNarrative()
+	// {
+	// 	properties.narrativeEnabled = true;
+	// 	prevStateBeforePause = npc.CurrentState;
+	// 	npc.SetState(NPCState.Paused);
+	// }
 
-	[YarnCommand("end_narrative")]
-	public void DisableNarrative(bool restorePrev = true)
-	{
-		properties.narrativeEnabled = false;
-		if (restorePrev && npc.CurrentState == NPCState.Paused)
-		{
-			npc.SetState(prevStateBeforePause);
-		}
-	}
+	// [YarnCommand("end_narrative")]
+	// public void DisableNarrative(bool restorePrev = true)
+	// {
+	// 	properties.narrativeEnabled = false;
+	// 	if (restorePrev && npc.CurrentState == NPCState.Paused)
+	// 	{
+	// 		npc.SetState(prevStateBeforePause);
+	// 	}
+	// }
 
-	[YarnCommand("start_casual_conversation")]
-	public void StartCasualConversation()
-	{
-		// CH: 开始NPC的日常对话
-		// EN: Start NPC's casual conversation
-		throw new System.NotImplementedException();
-	}
+	// [YarnCommand("start_casual_conversation")]
+	// public void StartCasualConversation()
+	// {
+	// 	// CH: 开始NPC的日常对话
+	// 	// EN: Start NPC's casual conversation
+	// 	throw new System.NotImplementedException();
+	// }
 
-	[YarnCommand("end_casual_conversation")]
-	public void EndCasualConversation()
-	{
-		// CH: 结束NPC的日常对话
-		// EN: End NPC's casual conversation
-		throw new System.NotImplementedException();
-	}
+	// [YarnCommand("end_casual_conversation")]
+	// public void EndCasualConversation()
+	// {
+	// 	// CH: 结束NPC的日常对话
+	// 	// EN: End NPC's casual conversation
+	// 	throw new System.NotImplementedException();
+	// }
 
-	[YarnCommand("take_damage")]
-	public void TakeDamage(float amount)
-	{
-		// CH: 玩家攻击NPC
-		// EN: Player attacks NPC
-		throw new System.NotImplementedException();
-	}
+	// [YarnCommand("take_damage")]
+	// public void TakeDamage(float amount)
+	// {
+	// 	// CH: 玩家攻击NPC
+	// 	// EN: Player attacks NPC
+	// 	throw new System.NotImplementedException();
+	// }
 
-	[YarnCommand("heal")]
-	public void Heal(float amount)
-	{
-		// CH: 玩家治疗NPC
-		// EN: Player heals NPC
-		throw new System.NotImplementedException();
-	}
+	// [YarnCommand("heal")]
+	// public void Heal(float amount)
+	// {
+	// 	// CH: 玩家治疗NPC
+	// 	// EN: Player heals NPC
+	// 	throw new System.NotImplementedException();
+	// }
 
-	[YarnCommand("steal_light")]
-	public void StealLight(float amount)
-	{
-		// CH: 玩家偷取NPC的光
-		// EN: Player steals light from NPC
-		throw new System.NotImplementedException();
-	}
+	// [YarnCommand("steal_light")]
+	// public void StealLight(float amount)
+	// {
+	// 	// CH: 玩家偷取NPC的光
+	// 	// EN: Player steals light from NPC
+	// 	throw new System.NotImplementedException();
+	// }
 
-	[YarnCommand("give_light")]
-	public void GiveLight(float amount)
-	{
-		// CH: 玩家给予NPC光
-		// EN: Player gives light to NPC
-		throw new System.NotImplementedException();
-	}
+	// [YarnCommand("give_light")]
+	// public void GiveLight(float amount)
+	// {
+	// 	// CH: 玩家给予NPC光
+	// 	// EN: Player gives light to NPC
+	// 	throw new System.NotImplementedException();
+	// }
 }
