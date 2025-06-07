@@ -6,8 +6,8 @@ public class NPCProperties : MonoBehaviour
 	public int npcID = 0; // Unique identifier for the NPC
 	public bool simulationEnabled = false; // make this to be true when we want the NPC to be simulated
 	private bool _lastSimulationEnabled = true; // Used to track changes in simulation state
-	public float walkSpeed = 0.5f;
-	public float runSpeed = 1f;
+	public float walkSpeed = 3f;
+	public float runSpeed = 5f;
 	public float interactionRange = 1.5f;
 	public Vector2 anchorPosition;
 

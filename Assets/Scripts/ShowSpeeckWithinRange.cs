@@ -12,15 +12,15 @@ public class ShowSpeeckWithinRange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Vector3.Distance(transform.position, playerTransform.position));
+        // Debug.Log(Vector3.Distance(transform.position, playerTransform.position));
         if (Vector3.Distance(transform.position, playerTransform.position) < 20f && Vector3.Distance(transform.position, playerTransform.position) > 5f)
         {
-            // Èç¹ûNPCºÍÍæ¼ÒµÄ¾àÀëÐ¡ÓÚ20´óÓÚ5£¬´ò¿ªspeechBubble
+            // ï¿½ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½ÒµÄ¾ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½20ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½ï¿½ï¿½speechBubble
             gameObject.transform.Find("NPC_A_Speech/Canvas/speechBubble").gameObject.SetActive(true);
         }
         else if (Vector3.Distance(transform.position, playerTransform.position) > 20f)
         {
-            // Èç¹ûNPCºÍÍæ¼ÒµÄ¾àÀë´óÓÚ20£¬¹Ø±ÕspeechBubble
+            // ï¿½ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½ÒµÄ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½20ï¿½ï¿½ï¿½Ø±ï¿½speechBubble
             gameObject.transform.Find("NPC_A_Speech/Canvas/speechBubble").gameObject.SetActive(false);
         }
     }

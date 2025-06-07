@@ -165,7 +165,6 @@ public static class NPCStateUtils
 				{
 					npc.transform.localScale = Vector3.one; // 确保回到1x
 					stealState = StealState.Stealing;
-					return InteractionResult.Success;
 				}
 				return InteractionResult.Running;
 			case StealState.Stealing:
