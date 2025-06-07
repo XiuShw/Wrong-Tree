@@ -4289,7 +4289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df6893524400d5409550a490785d2d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pleaseLeaveEmpty: []
+  pleaseLeaveEmpty:
+  - 
   NPC1:
   - "Listen man, I\u2019m not gonna give it back."
   - "I\u2019m a thief? I bet you stole them too."
