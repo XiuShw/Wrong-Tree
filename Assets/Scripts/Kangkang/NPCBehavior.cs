@@ -261,4 +261,36 @@ public class NPCBehavior : MonoBehaviour
 		properties.lightValue = 2;
 		SetState(NPCState.Smile); // Set the NPC state to Smile
 	}
+
+	private NPCBehavior whoSecuredMe = null; // Reference to the NPC that secured this NPC
+	public bool OnSecure(NPCBehavior npc)
+	{
+		Debug.Log($"NPC {npc.name} is trying to secure {name}.");
+		// try to secure this NPC
+		if (whoSecuredMe != null)
+		{
+			Debug.Log($"NPC {name} is already secured by {whoSecuredMe.name}. Cannot secure again.");
+			return false;
+		}
+		if (CurrentState != NPCState.Idle)
+		{
+			Debug.Log($"NPC {name} is not idle. Cannot secure. Current state: {CurrentState}");
+			return false;
+		}
+		whoSecuredMe = npc;
+		Debug.Log($"NPC {name} secured by {whoSecuredMe.name}.");
+		return true;
+	}
+
+	public void OnRelease(NPCBehavior npc)
+	{
+		if (whoSecuredMe == npc)
+		{
+			whoSecuredMe = null;
+		}
+		else 
+		{
+			Debug.LogWarning("NPC " + npc.name + " tried to release " + name + " but it was not secured by them.");
+		}
+	}
 }

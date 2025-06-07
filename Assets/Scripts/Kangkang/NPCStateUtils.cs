@@ -31,27 +31,29 @@ public static class NPCStateUtils
 			nearestNPCDistance = Vector3.Distance(npc.transform.position, nearestNPC.transform.position);
 		}
 		// 根据NPC的属性决定状态
-		if (properties.currentAtitude == NPCAtitude.Neutral || nearestNPCDistance > 3f
-		|| nearestNPC.CurrentState == NPCState.Interact_Steal || nearestNPC.CurrentState == NPCState.Interact_Share)
+		if (properties.currentAtitude == NPCAtitude.Neutral || nearestNPCDistance > 3f)
 		{
-			// 如果没有其他NPC在附近，或者当前态度是中立，则闲逛
-			return NPCState.Idle; // 这里可以根据需要调整为其他状态
+			// 如果没有其他NPC在附近，或者当前态度是中立，则进入闲逛状态
+			return NPCState.Idle;
 		}
-		else if (properties.currentAtitude == NPCAtitude.Share && properties.lightValue > 1f)
+		bool secureResult = nearestNPC.OnSecure(npc);
+		if (!secureResult)
 		{
-			// 如果态度是分享且光值大于1，则进入分享状态
+			// 说明锁定该NPC失败，那就进入闲逛状态
+			return NPCState.Idle;
+		}
+		if (properties.currentAtitude == NPCAtitude.Share)
+		{
+			// 如果态度是分享，则进入分享状态
 			return NPCState.Interact_Share;
 		}
-		else if (properties.currentAtitude == NPCAtitude.Steal)
+		if (properties.currentAtitude == NPCAtitude.Steal)
 		{
 			// 如果态度是偷窃，则进入偷窃状态
 			return NPCState.Interact_Steal;
 		}
-		else
-		{
-			Debug.LogWarning("Unknown NPC attitude: " + properties.currentAtitude);
-			return NPCState.Idle; // 默认回到闲逛状态
-		}
+		Debug.LogWarning("Unknown NPC attitude: " + properties.currentAtitude);
+		return NPCState.Interact_Steal;
 	}
 
 	// Define result type for share/steal sub-FSM
@@ -133,7 +135,7 @@ public static class NPCStateUtils
 		{
 			case StealState.Approaching:
 				// Default interaction range
-				float interactionRange = 1f;
+				float interactionRange = 0.2f;
 				float distance = Vector3.Distance(npc.transform.position, targetPosition);
 				if (distance > stealAggroRange) // 超出仇恨距离，触发Fail
 				{
