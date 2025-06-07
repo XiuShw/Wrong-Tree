@@ -9,6 +9,7 @@ public class ThoughtsSpawner : MonoBehaviour
     [SerializeField] GameObject thoughts;
     public int circumstance = 0;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,6 +29,7 @@ public class ThoughtsSpawner : MonoBehaviour
                 {
                     LevelManager.thoughtsCount++;
                     Instantiate(thoughts, gameObject.transform.position, Quaternion.identity);
+                    AudioManager.Instance.PlaySFX("lightGrass");
                 }
             }
             LevelManager.circumstance = circumstance;
