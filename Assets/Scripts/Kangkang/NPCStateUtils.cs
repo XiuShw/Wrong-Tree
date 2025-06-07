@@ -51,12 +51,12 @@ public static class NPCStateUtils
 	public enum InteractionResult { Running, Success, Fail }
 
 	// 分享逻辑：小型FSM，先接近玩家，再放大缩小，最后结束
-	public enum ShareState { Approaching, Scaling, Done }
+	public enum ShareState { Approaching, Scaling, Sharing, Done }
 	private static ShareState shareState = ShareState.Approaching;
 	private static float shareScaleTimer = 0f;
 	private static float shareVisionRange = 3f; // 可视距离超参数
 
-	public static InteractionResult Share(NPCBehavior npc, Vector3 targetPosition)
+	public static InteractionResult Share(NPCBehavior npc, Vector3 targetPosition, NPCBehavior targetNPC)
 	{
 		switch (shareState)
 		{
@@ -100,9 +100,13 @@ public static class NPCStateUtils
 				if (shareScaleTimer >= totalDuration)
 				{
 					npc.transform.localScale = Vector3.one; // 确保回到1x
-					shareState = ShareState.Done;
-					return InteractionResult.Success;
+					shareState = ShareState.Sharing;
 				}
+				return InteractionResult.Running;
+			case ShareState.Sharing:
+				// 共享光逻辑
+				targetNPC.OnShared(); // 调用目标NPC的共享方法
+				shareState = ShareState.Done;
 				return InteractionResult.Running;
 			case ShareState.Done:
 			default:
@@ -111,12 +115,12 @@ public static class NPCStateUtils
 	}
 
 	// 偷窃逻辑：小型FSM，先跑步接近玩家，再缩小再恢复，最后结束
-	public enum StealState { Approaching, Scaling, Done }
+	public enum StealState { Approaching, Scaling, Stealing, Done }
 	private static StealState stealState = StealState.Approaching;
 	private static float stealScaleTimer = 0f;
 	private static float stealAggroRange = 4f; // 仇恨距离超参数
 
-	public static InteractionResult Steal(NPCBehavior npc, Vector3 targetPosition)
+	public static InteractionResult Steal(NPCBehavior npc, Vector3 targetPosition, NPCBehavior targetNPC)
 	{
 		switch (stealState)
 		{
@@ -160,9 +164,15 @@ public static class NPCStateUtils
 				if (stealScaleTimer >= totalDuration2)
 				{
 					npc.transform.localScale = Vector3.one; // 确保回到1x
-					stealState = StealState.Done;
+					stealState = StealState.Stealing;
 					return InteractionResult.Success;
 				}
+				return InteractionResult.Running;
+			case StealState.Stealing:
+				// 偷窃逻辑
+				targetNPC.OnStolen(); // 调用目标NPC的偷窃方法
+				npc.properties.lightValue = 2;
+				stealState = StealState.Done;
 				return InteractionResult.Running;
 			case StealState.Done:
 			default:

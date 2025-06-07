@@ -595,7 +595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3db90d2dac37c2e4c96f2e44b89c7ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canInteract: {fileID: 521533150}
   minigamePlayer: {fileID: 791635777}
   minigameBackground: {fileID: 737287010}
   argue1: {fileID: 1288700902}
@@ -1291,7 +1290,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 168051347}
-  bgNoise: {fileID: 0}
   sfxSource1: {fileID: 168051346}
   sfxSource2: {fileID: 168051345}
   mainBGM: {fileID: 8300000, guid: 16f81f62ecf4ac041b43b27971fe947e, type: 3}
@@ -1432,6 +1430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigameWindow: {fileID: 560441896}
+  minigameBG: {fileID: 1784748862}
   mainCamera: {fileID: 330585545}
   argue1: {fileID: 1288700902}
   canInteract: {fileID: 521533150}
@@ -3297,7 +3296,7 @@ Transform:
   m_GameObject: {fileID: 880868270}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.38, y: 3.71, z: -4.53}
+  m_LocalPosition: {x: -2.98, y: 3.71, z: -4.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3316,11 +3315,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a586a71a9638c0145a144cb52e13bfaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcID: 0
+  simulationEnabled: 0
   walkSpeed: 0.5
   runSpeed: 1
   interactionRange: 1.5
-  shareCooldown: 3
-  stealCooldown: 2
   anchorPosition: {x: 0, y: 0}
   currentState: 0
   narrativeEnabled: 0
@@ -3338,6 +3337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd327343eb40f954185e0c4f74ec21db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  properties: {fileID: 0}
   timer: 0
   walkDirection: {x: 1, y: 0}
   maxWanderDistance: 5
@@ -5123,7 +5123,7 @@ Transform:
   m_GameObject: {fileID: 1610063137}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.38, y: 3.71, z: -4.53}
+  m_LocalPosition: {x: -0.25, y: 3.71, z: -4.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5210,11 +5210,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a586a71a9638c0145a144cb52e13bfaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcID: 0
+  simulationEnabled: 0
   walkSpeed: 0.5
   runSpeed: 1
   interactionRange: 1.5
-  shareCooldown: 3
-  stealCooldown: 2
   anchorPosition: {x: 0, y: 0}
   currentState: 0
   narrativeEnabled: 0
@@ -5232,6 +5232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd327343eb40f954185e0c4f74ec21db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  properties: {fileID: 0}
   timer: 0
   walkDirection: {x: 1, y: 0}
   maxWanderDistance: 5
@@ -5790,6 +5791,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1784748862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3689665438444896942, guid: 0fe5e9cabd3c6e84ab0f0ea11aef9902, type: 3}
+  m_PrefabInstance: {fileID: 2069108995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1938717715
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public enum NPCAtitude
 public class NPCBehavior : MonoBehaviour
 {
 
-	private NPCProperties properties; // Reference to the NPCProperties component
+	public NPCProperties properties; // Reference to the NPCProperties component
 
 
 	// A list storing all NPCs in the scene
@@ -188,7 +188,6 @@ public class NPCBehavior : MonoBehaviour
 				if (firstFrameInState)
 				{
 					timer = UnityEngine.Random.Range(1f, 2f);
-					walkDirection = -walkDirection; // Reverse direction to flee
 				}
 				if (timer <= 0)
 				{
@@ -209,7 +208,7 @@ public class NPCBehavior : MonoBehaviour
 					SetState(NPCState.Idle); // No other NPCs to share with, go idle
 					return;
 				}
-				var shareResult = NPCStateUtils.Share(this, nearestNPC.transform.position);
+				var shareResult = NPCStateUtils.Share(this, nearestNPC.transform.position, nearestNPC);
 				if (shareResult == NPCStateUtils.InteractionResult.Success)
 				{
 					SetState(NPCState.Smile);
@@ -234,7 +233,7 @@ public class NPCBehavior : MonoBehaviour
 					return;
 				}
 				// Call the sub FSM for stealing with result handling
-				var stealResult = NPCStateUtils.Steal(this, nearestNPC.transform.position);
+				var stealResult = NPCStateUtils.Steal(this, nearestNPC.transform.position, nearestNPC);
 				if (stealResult == NPCStateUtils.InteractionResult.Success)
 				{
 					SetState(NPCState.Idle);
@@ -249,5 +248,21 @@ public class NPCBehavior : MonoBehaviour
 				timer = 0; // Stop the timer
 				break;
 		}
+	}
+
+	// ############################################################
+	// APIs
+	// ############################################################
+	public void OnStolen() // Callback when another is stealing this NPC
+	{
+		// reduce the light value to 0
+		properties.lightValue = 0;
+		SetState(NPCState.Flee); // Set the NPC state to Flee
+	}
+
+	public void OnShared() // Callback when another is sharing with this NPC
+	{
+		properties.lightValue = 2;
+		SetState(NPCState.Smile); // Set the NPC state to Smile
 	}
 }

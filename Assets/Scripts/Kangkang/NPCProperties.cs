@@ -18,7 +18,7 @@ public class NPCProperties : MonoBehaviour
 	public NPCAtitude currentAtitude = NPCAtitude.Neutral; // Current attitude towards player or other NPCs
 
 	[Header("NPC Bars")]
-	public float lightValue = 1f;
+	public int lightValue = 1; // 0 - no light, 1 - some light, 2 - full light
 
 	private NPCBehavior npcBehavior; // Reference to the NPCBehavior component
 
