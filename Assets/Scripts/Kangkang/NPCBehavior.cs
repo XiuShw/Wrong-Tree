@@ -14,7 +14,16 @@ public enum NPCState
 	Interact_Share = 4,
 	Interact_Steal = 5,
 	Dead = 6,
-	Paused = 7 // Narrative state, for storytelling purposes
+	Paused = 7, // Narrative state, for storytelling purposes
+	Crying = 8
+}
+
+// The list of possible attitudes the NPC can have towards other NPCs or the player
+public enum NPCAtitude
+{
+	Neutral = 0,
+	Share = 1,
+	Steal = 2
 }
 
 public class NPCBehavior : MonoBehaviour
@@ -25,13 +34,19 @@ public class NPCBehavior : MonoBehaviour
 	// Add narrative control fields
 	[SerializeField] public bool narrativeEnabled = false;
 
+	// A list storing all NPCs in the scene
+	public static List<NPCBehavior> allNPCs = new List<NPCBehavior>();
+
+	void OnEnable() => allNPCs.Add(this);
+	void OnDisable() => allNPCs.Remove(this);
+
 	public void SetState(NPCState newState)
 	{
 		// Prevent entering narrative if disabled
 		if (newState == NPCState.Paused && !narrativeEnabled)
 			return;
 
-		currentState = newState;
+		CurrentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
 								 // npcStateText.text = $"{newState}"; // 移除文本更新逻辑
 		animator.SetInteger("State", (int)newState);
@@ -44,7 +59,7 @@ public class NPCBehavior : MonoBehaviour
 	}
 
 	// Some variables / properties
-	[SerializeField] public NPCState currentState { get; private set; } = NPCState.Idle; // Default state is Idle
+	[SerializeField] public NPCState CurrentState { get; private set; } = NPCState.Idle; // Default state is Idle
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
 	// Use properties from NPCProperties instead of local variables
@@ -73,7 +88,7 @@ public class NPCBehavior : MonoBehaviour
 		timer -= Time.deltaTime;
 		bool firstFrameInState = justChangedState;
 		justChangedState = false; // Reset the flag for the next frame
-		switch (currentState)
+		switch (CurrentState)
 		{
 			case NPCState.Idle:
 				// do nothing

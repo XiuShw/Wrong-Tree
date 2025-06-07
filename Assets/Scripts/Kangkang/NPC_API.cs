@@ -45,14 +45,14 @@ public class NPC_API : MonoBehaviour
 
 	public NPCState GetNPCState()
 	{
-		return npc.currentState;
+		return npc.CurrentState;
 	}
 
 	[YarnCommand("start_narrative")]
 	public void EnableNarrative()
 	{
 		npc.narrativeEnabled = true;
-		prevStateBeforePause = npc.currentState;
+		prevStateBeforePause = npc.CurrentState;
 		npc.SetState(NPCState.Paused);
 	}
 
@@ -60,7 +60,7 @@ public class NPC_API : MonoBehaviour
 	public void DisableNarrative(bool restorePrev = true)
 	{
 		npc.narrativeEnabled = false;
-		if (restorePrev && npc.currentState == NPCState.Paused)
+		if (restorePrev && npc.CurrentState == NPCState.Paused)
 		{
 			npc.SetState(prevStateBeforePause);
 		}
