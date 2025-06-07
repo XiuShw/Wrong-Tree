@@ -60,9 +60,9 @@ public class FlashText : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 3 && Input.GetKeyDown(KeyCode.R))
+        if ((SceneManager.GetActiveScene().buildIndex == 3 || SceneManager.GetActiveScene().buildIndex == 2) && Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene(0);
         }
     }
 

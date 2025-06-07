@@ -7,6 +7,7 @@ public class Entrance : MonoBehaviour
 {
     Color color;
     public float spd;
+    public string endingScene;
     [SerializeField] float delay = 0;
     [SerializeField] bool isText;
     float count;
@@ -60,7 +61,7 @@ public class Entrance : MonoBehaviour
 
         if (!isText && color.a == 1)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(endingScene);
         }
     }
 }

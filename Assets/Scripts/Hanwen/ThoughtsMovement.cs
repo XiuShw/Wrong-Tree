@@ -7,7 +7,7 @@ public class ThoughtsMovement : MonoBehaviour
 
     Rigidbody2D rb;
     float count;
-    [SerializeField] int threshold;
+    float threshold = 20;
 
     public bool isPositive = false;
 
@@ -56,6 +56,8 @@ public class ThoughtsMovement : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        threshold = 20 - LevelManager.globalReputation * 5;
     }
 
     private void OnDestroy()

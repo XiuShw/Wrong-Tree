@@ -4,6 +4,7 @@ using UnityEngine.Rendering.Universal;
 using TMPro;
 using Yarn.Unity;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.Experimental.GlobalIllumination;
 
 
@@ -45,10 +46,28 @@ public class LevelManager : MonoBehaviour
     Color color;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void Awake()
+    {
+        maxLight = 5f;
+        minLight = 3f;
+        lightOwn = 1;
+
+        thoughtsCount = 0;
+
+        globalReputation = 0;
+
+        countImportantNPC = 0;
+        isImportantNPC = false;
+
+        gameFinished = false;
+        previousMinigameSucceed = 0;
+        minigameStart = false;
+    }
+
     void Start()
     {
         AudioManager.Instance.PlayBGM("mainBGM");
-
     }
 
     // Update is called once per frame
@@ -87,17 +106,29 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             gameFinished = true;
-            AudioManager.Instance.PlayBGM("goodEnding");
-
+            if (globalReputation >= 4)
+            {
+                entrance.endingScene = "Good End";
+                AudioManager.Instance.PlayBGM("goodEnding");
+            }
+            if (globalReputation < 4)
+            {
+                Debug.Log(111);
+                entrance.endingScene = "Bad End";
+                AudioManager.Instance.PlayBGM("badEnding");
+            }
 
         }
 
         if (gameFinished)
         {
+
+
+
             canInteract.enabled = false;
             lightValue.enabled = false;
             lightValueBG.enabled = false;
-            entrance.spd = 0.05f;
+            entrance.spd = 0.048f;
             playerLight.position += Vector3.back * Time.deltaTime;
             //globalLight.enabled = true;
             if (globalLight.transform.rotation.y < -0.25)
