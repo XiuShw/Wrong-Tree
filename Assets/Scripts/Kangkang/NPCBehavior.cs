@@ -52,6 +52,7 @@ public class NPCBehavior : MonoBehaviour
 	public NPCState CurrentState { get; private set; } = NPCState.Idle; // Default state is Idle
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
+	private SpriteRenderer spriteRenderer;
 	// Use properties from NPCProperties instead of local variables
 	public float WalkSpeed => properties.walkSpeed;
 	public float RunSpeed => properties.runSpeed;
@@ -105,6 +106,7 @@ public class NPCBehavior : MonoBehaviour
 	{
 		GameManager.Instance.allNPCs.Add(this);
 		animator = GetComponent<Animator>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		properties = GetComponent<NPCProperties>(); // Get reference to NPCProperties
 		if (properties == null)
 		{
@@ -132,6 +134,18 @@ public class NPCBehavior : MonoBehaviour
 		{
 			// If in narrative state, do not update other states
 			return;
+		}
+		// Take care of the walking direction
+		if (spriteRenderer != null)
+		{
+			if (walkDirection.y > 0)
+			{
+				spriteRenderer.flipX = true;
+			}
+			else if (walkDirection.y < 0)
+			{
+				spriteRenderer.flipX = false;
+			}
 		}
 		// Update distance to nearest NPC each frame
 		nearestNPCDistance = GetNearestNPCDistance();
@@ -271,6 +285,13 @@ public class NPCBehavior : MonoBehaviour
 		if (!IAmPlayer)
 		{
 			SetState(NPCState.Smile); // Set the NPC state to Smile
+		}
+		else
+		{
+			Debug.Log("Player NPC shared with another NPC. Adjusting light values.");
+			LevelManager.lightOwn += 2;
+			LevelManager.minLight += 3;
+			LevelManager.maxLight += 5;
 		}
 	}
 
