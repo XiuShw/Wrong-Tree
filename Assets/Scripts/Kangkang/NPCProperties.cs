@@ -6,8 +6,13 @@ public class NPCProperties : MonoBehaviour
 	public int npcID = 0; // Unique identifier for the NPC
 	public float walkSpeed = 3f;
 	public float runSpeed = 5f;
-	public float interactionRange = 1.5f;
+	public float decideRange = 5f; // 决定范围超参数：NPC在这个范围内会决定是否与玩家分享或偷窃
+	public float shareVisionRange = 5f; // 可视距离超参数：追逐过程中如果距离超过了这个参数，则NPC会停止追逐
+	public float stealAggroRange = 5f; // 仇恨距离超参数
+	public float interactionRange = 0.05f; // 互动距离超参数：NPC与其它对象之间的距离小于这个值时，NPC会与其分享/偷窃
+
 	public Vector2 anchorPosition;
+	public float maxWanderDistance = 10f; // Maximum distance from anchor for wandering
 
 	[Header("NPC State")]
 	public NPCState currentState = NPCState.Idle; // Current state of the NPC
@@ -24,19 +29,23 @@ public class NPCProperties : MonoBehaviour
 	{
 		npcBehavior.SetState(_lastState);
 		// 逻辑：一共有8个npc。
-		// 如果reputation >= 3，所有态度都是分享
-		// 如果reputation <= 0，所有态度都是偷窃
-		// 如果reputation == 1，有4个分享，4个偷窃
-		// 如果reputation == 2，有6个分享，2个偷窃
+		// 如果reputation >= 3，4个分享，4个中立
+		// 如果reputation <= 0，8个偷窃
+		// 如果reputation == 1，有2个分享，4个中立，2个偷窃
+		// 如果reputation == 2，有2个分享，5个中立，1个偷窃
 		// if (LevelManager.globalReputation <= 0)
 		// {
 		// 	currentAtitude = NPCAtitude.Steal;
 		// }
 		// else if (LevelManager.globalReputation == 1)
 		// {
-			if (npcID < 4)
+			if (npcID < 2)
 			{
 				currentAtitude = NPCAtitude.Share;
+			}
+			else if (npcID < 6)
+			{
+				currentAtitude = NPCAtitude.Neutral;
 			}
 			else
 			{

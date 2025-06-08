@@ -53,9 +53,14 @@ public class NPCBehavior : MonoBehaviour
 	public float RunSpeed => properties.runSpeed;
 	[SerializeField] private float timer; // for timing different states
 	[SerializeField] private Vector2 walkDirection = new Vector2(1, 0); // Current walking direction
-	[SerializeField] private float maxWanderDistance = 5f; // Maximum distance from anchor for wandering
 	[SerializeField][Range(0f, 1f)] private float wanderBias = 0.5f; // Bias towards anchor when wandering
 	public Vector2 AnchorPosition => properties != null ? properties.anchorPosition : new Vector2(transform.position.x, transform.position.y);
+
+	// Share & Steal related variables
+	public NPCStateUtils.ShareState shareState;
+	public float shareScaleTimer = 0f;
+	public NPCStateUtils.StealState stealState;
+	public float stealScaleTimer = 0f;
 
 	public float nearestNPCDistance = float.MaxValue; // Distance to the nearest NPC
 	public NPCBehavior GetNearestNPC()
@@ -145,7 +150,7 @@ public class NPCBehavior : MonoBehaviour
 					// Calculate biased random direction towards anchor
 					Vector2 randomDir = NPCStateUtils.GetRandomWalkDirection();
 					Vector2 toAnchor = (AnchorPosition - (Vector2)transform.position).normalized;
-					if (Vector2.Distance(transform.position, AnchorPosition) > maxWanderDistance)
+					if (Vector2.Distance(transform.position, AnchorPosition) > properties.maxWanderDistance)
 						walkDirection = toAnchor;
 					else
 						walkDirection = Vector2.Lerp(randomDir, toAnchor, wanderBias).normalized;
@@ -155,9 +160,9 @@ public class NPCBehavior : MonoBehaviour
 					Vector2 currentPos2D = new Vector2(transform.position.x, transform.position.y);
 					Vector2 newPos2D = currentPos2D + walkDirection * WalkSpeed * Time.deltaTime;
 					Vector2 offset = newPos2D - AnchorPosition;
-					if (offset.magnitude > maxWanderDistance)
+					if (offset.magnitude > properties.maxWanderDistance)
 					{
-						newPos2D = AnchorPosition + offset.normalized * maxWanderDistance;
+						newPos2D = AnchorPosition + offset.normalized * properties.maxWanderDistance;
 						walkDirection = (AnchorPosition - currentPos2D).normalized;
 					}
 					transform.position = new Vector3(newPos2D.x, newPos2D.y, transform.position.z);
@@ -194,7 +199,7 @@ public class NPCBehavior : MonoBehaviour
 				// Interacting to share
 				if (firstFrameInState)
 				{
-					NPCStateUtils.ResetShareFSM(); // Reset the share FSM
+					NPCStateUtils.ResetShareFSM(this); // Reset the share FSM
 				}
 				// Call the sub FSM for sharing with result handling
 				var shareResult = NPCStateUtils.Share(this);
@@ -211,7 +216,7 @@ public class NPCBehavior : MonoBehaviour
 				// Interacting to steal
 				if (firstFrameInState)
 				{
-					NPCStateUtils.ResetStealFSM(); // Reset the steal FSM
+					NPCStateUtils.ResetStealFSM(this); // Reset the steal FSM
 				}
 				// Get the nearest NPC to steal from
 				// Call the sub FSM for stealing with result handling

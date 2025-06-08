@@ -31,7 +31,7 @@ public static class NPCStateUtils
 			nearestNPCDistance = Vector3.Distance(npc.transform.position, nearestNPC.transform.position);
 		}
 		// 根据NPC的属性决定状态
-		if (properties.currentAtitude == NPCAtitude.Neutral || nearestNPCDistance > 3f)
+		if (properties.currentAtitude == NPCAtitude.Neutral || nearestNPCDistance > properties.decideRange)
 		{
 			// 如果没有其他NPC在附近，或者当前态度是中立，则进入闲逛状态
 			return NPCState.Idle;
@@ -61,26 +61,22 @@ public static class NPCStateUtils
 
 	// 分享逻辑：小型FSM，先接近玩家，再放大缩小，最后结束
 	public enum ShareState { Approaching, Scaling, Sharing, Done }
-	private static ShareState shareState = ShareState.Approaching;
-	private static float shareScaleTimer = 0f;
-	private static float shareVisionRange = 3f; // 可视距离超参数
 
 	public static InteractionResult Share(NPCBehavior npc)
 	{
 		NPCBehavior targetNPC = npc.ISecuredWhom;
-		switch (shareState)
+		switch (npc.shareState)
 		{
 			case ShareState.Approaching:
 				// Default interaction range
-				float interactionRange = 0.05f;
 				float distance = Vector3.Distance(npc.transform.position, targetNPC.transform.position);
-				if (distance > shareVisionRange) // 超出可视距离，触发Fail
+				if (distance > targetNPC.properties.shareVisionRange) // 超出可视距离，触发Fail
 				{
-					shareState = ShareState.Done;
+					npc.shareState = ShareState.Done;
 					NPCBehavior.OnReleased(npc, targetNPC);
 					return InteractionResult.Fail;
 				}
-				if (distance > interactionRange)
+				if (distance > targetNPC.properties.interactionRange)
 				{
 					Vector3 direction = (targetNPC.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.WalkSpeed;
@@ -88,16 +84,16 @@ public static class NPCStateUtils
 				}
 				else
 				{
-					shareState = ShareState.Scaling;
-					shareScaleTimer = 0f;
+					npc.shareState = ShareState.Scaling;
+					npc.shareScaleTimer = 0f;
 					return InteractionResult.Running;
 				}
 			case ShareState.Scaling:
 				// 0~0.5秒放大到1.5x，0.5~1秒缩回1x，不再旋转
 				float scaleDuration = 0.5f;
 				float totalDuration = 1f;
-				shareScaleTimer += Time.deltaTime;
-				float t = shareScaleTimer;
+				npc.shareScaleTimer += Time.deltaTime;
+				float t = npc.shareScaleTimer;
 				if (t <= scaleDuration)
 				{
 					float scale = Mathf.Lerp(1f, 1.5f, t / scaleDuration);
@@ -108,16 +104,16 @@ public static class NPCStateUtils
 					float scale = Mathf.Lerp(1.5f, 1f, (t - scaleDuration) / scaleDuration);
 					npc.transform.localScale = new Vector3(scale, scale, 1f);
 				}
-				if (shareScaleTimer >= totalDuration)
+				if (npc.shareScaleTimer >= totalDuration)
 				{
 					npc.transform.localScale = Vector3.one; // 确保回到1x
-					shareState = ShareState.Sharing;
+					npc.shareState = ShareState.Sharing;
 				}
 				return InteractionResult.Running;
 			case ShareState.Sharing:
 				// 共享光逻辑
 				targetNPC.OnShared(); // 调用目标NPC的共享方法
-				shareState = ShareState.Done;
+				npc.shareState = ShareState.Done;
 				return InteractionResult.Running;
 			case ShareState.Done:
 			default:
@@ -128,26 +124,22 @@ public static class NPCStateUtils
 
 	// 偷窃逻辑：小型FSM，先跑步接近玩家，再缩小再恢复，最后结束
 	public enum StealState { Approaching, Scaling, Stealing, Done }
-	private static StealState stealState = StealState.Approaching;
-	private static float stealScaleTimer = 0f;
-	private static float stealAggroRange = 4f; // 仇恨距离超参数
 
 	public static InteractionResult Steal(NPCBehavior npc)
 	{
 		NPCBehavior targetNPC = npc.ISecuredWhom;
-		switch (stealState)
+		switch (npc.stealState)
 		{
 			case StealState.Approaching:
 				// Default interaction range
-				float interactionRange = 0.05f;
 				float distance = Vector3.Distance(npc.transform.position, targetNPC.transform.position);
-				if (distance > stealAggroRange) // 超出仇恨距离，触发Fail
+				if (distance > targetNPC.properties.stealAggroRange) // 超出仇恨距离，触发Fail
 				{
-					stealState = StealState.Done;
+					npc.stealState = StealState.Done;
 					NPCBehavior.OnReleased(npc, targetNPC);
 					return InteractionResult.Fail;
 				}
-				if (distance > interactionRange)
+				if (distance > targetNPC.properties.interactionRange)
 				{
 					Vector3 direction = (targetNPC.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.RunSpeed; // 跑步速度
@@ -155,16 +147,16 @@ public static class NPCStateUtils
 				}
 				else
 				{
-					stealState = StealState.Scaling;
-					stealScaleTimer = 0f;
+					npc.stealState = StealState.Scaling;
+					npc.stealScaleTimer = 0f;
 					return InteractionResult.Running;
 				}
 			case StealState.Scaling:
 				// 0~0.5秒缩小到0.5x，0.5~1秒恢复1x
 				float scaleDuration2 = 0.5f;
 				float totalDuration2 = 1f;
-				stealScaleTimer += Time.deltaTime;
-				float t2 = stealScaleTimer;
+				npc.stealScaleTimer += Time.deltaTime;
+				float t2 = npc.stealScaleTimer;
 				if (t2 <= scaleDuration2)
 				{
 					float scale = Mathf.Lerp(1f, 0.5f, t2 / scaleDuration2);
@@ -175,17 +167,17 @@ public static class NPCStateUtils
 					float scale = Mathf.Lerp(0.5f, 1f, (t2 - scaleDuration2) / scaleDuration2);
 					npc.transform.localScale = new Vector3(scale, scale, 1f);
 				}
-				if (stealScaleTimer >= totalDuration2)
+				if (npc.stealScaleTimer >= totalDuration2)
 				{
 					npc.transform.localScale = Vector3.one; // 确保回到1x
-					stealState = StealState.Stealing;
+					npc.stealState = StealState.Stealing;
 				}
 				return InteractionResult.Running;
 			case StealState.Stealing:
 				// 偷窃逻辑
 				targetNPC.OnStolen(); // 调用目标NPC的偷窃方法
 				npc.properties.lightValue = 2;
-				stealState = StealState.Done;
+				npc.stealState = StealState.Done;
 				return InteractionResult.Running;
 			case StealState.Done:
 			default:
@@ -194,15 +186,15 @@ public static class NPCStateUtils
 		}
 	}
 
-	public static void ResetShareFSM()
+	public static void ResetShareFSM(NPCBehavior npc)
 	{
-		shareState = ShareState.Approaching;
-		shareScaleTimer = 0f;
+		npc.shareState = ShareState.Approaching;
+		npc.shareScaleTimer = 0f;
 	}
 
-	public static void ResetStealFSM()
+	public static void ResetStealFSM(NPCBehavior npc)
 	{
-		stealState = StealState.Approaching;
-		stealScaleTimer = 0f;
+		npc.stealState = StealState.Approaching;
+		npc.stealScaleTimer = 0f;
 	}
 }
