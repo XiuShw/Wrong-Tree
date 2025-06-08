@@ -6866,6 +6866,14 @@ PrefabInstance:
       propertyPath: miniGameResult
       value: 
       objectReference: {fileID: 2124213749}
+    - target: {fileID: 4055234323564433268, guid: dfd722db4c7b0324db1ffa2d7629c2e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754628349323691422, guid: dfd722db4c7b0324db1ffa2d7629c2e9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a9435523ba266247b626d98b5d09f63, type: 3}
     - target: {fileID: 4770175888691668388, guid: dfd722db4c7b0324db1ffa2d7629c2e9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
