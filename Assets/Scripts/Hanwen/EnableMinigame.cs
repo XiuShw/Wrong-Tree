@@ -20,8 +20,12 @@ public class EnableMinigame : MonoBehaviour
          {
              EnableInteract(collision);
              LevelManager.isImportantNPC = true;
-             collision.gameObject.transform.Find("NPC_A_Speech/Canvas/speechBubble").gameObject.SetActive(false);
-             collision.gameObject.transform.Find("NPC_A_Speech/Canvas/exclaimationNotice").gameObject.SetActive(true);
+            if (LevelManager.minigameStart == false)
+            {
+                collision.gameObject.transform.Find("NPC_A_Speech/Canvas/speechBubble").gameObject.SetActive(false);
+                collision.gameObject.transform.Find("NPC_A_Speech/Canvas/exclaimationNotice").gameObject.SetActive(true);
+            }
+
          }
      }
 
