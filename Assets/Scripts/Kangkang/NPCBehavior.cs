@@ -254,7 +254,7 @@ public class NPCBehavior : MonoBehaviour
 	public void OnStolen() // Callback when another is stealing this NPC
 	{
 		// reduce the light value to 0
-		properties.lightValue = 0;
+		properties.SetLightValue(0);
 		if (!IAmPlayer)
 		{
 			SetState(NPCState.Flee); // Set the NPC state to Flee
@@ -263,7 +263,7 @@ public class NPCBehavior : MonoBehaviour
 
 	public void OnShared() // Callback when another is sharing with this NPC
 	{
-		properties.lightValue = 2;
+		properties.SetLightValue(2);
 		if (!IAmPlayer)
 		{
 			SetState(NPCState.Smile); // Set the NPC state to Smile

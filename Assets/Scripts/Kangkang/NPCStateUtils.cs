@@ -177,7 +177,7 @@ public static class NPCStateUtils
 			case StealState.Stealing:
 				// 偷窃逻辑
 				targetNPC.OnStolen(); // 调用目标NPC的偷窃方法
-				npc.properties.lightValue = 2;
+				npc.properties.SetLightValue(2);
 				npc.stealState = StealState.Done;
 				return InteractionResult.Running;
 			case StealState.Done:

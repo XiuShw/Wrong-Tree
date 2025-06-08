@@ -22,6 +22,45 @@ public class NPCProperties : MonoBehaviour
 
 	[Header("NPC Bars")]
 	public int lightValue = 1; // 0 - no light, 1 - some light, 2 - full light
+	public void SetLightValue(int value)
+	{
+		lightValue = value switch
+		{
+			0 => 0, // No light
+			1 => 1, // Some light
+			2 => 2, // Full light
+			_ => throw new System.ArgumentOutOfRangeException(nameof(value), $"Invalid light value: {value}"),
+		};
+		// 找到灯光子物件
+		Transform lightTransform = transform.Find("Point Light");
+		if (lightTransform != null)
+		{
+			Light light = lightTransform.GetComponent<Light>();
+			NPCFlickeringLight flickeringLight = lightTransform.GetComponent<NPCFlickeringLight>();
+
+			if (light != null)
+			{
+				flickeringLight.minIntensity = value switch
+				{
+					0 => 0f, // No light
+					1 => 3f, // Some light
+					2 => 18f, // Full light
+					_ => light.intensity // Default to current intensity if value is out of range
+				};
+				flickeringLight.maxIntensity = value switch
+				{
+					0 => 0f, // No light
+					1 => 3f, // Some light
+					2 => 20f, // Full light
+					_ => light.intensity // Default to current intensity if value is out of range
+				};
+			}
+		}
+		else
+		{
+			Debug.LogWarning("Point Light not found in NPC: " + name);
+		}
+	}
 
 	private NPCBehavior npcBehavior; // Reference to the NPCBehavior component
 
