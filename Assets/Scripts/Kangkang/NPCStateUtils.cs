@@ -28,6 +28,7 @@ public static class NPCStateUtils
 		float nearestNPCDistance = float.MaxValue; // 初始化为最大值
 		if (nearestNPC != null)
 		{
+			Debug.Log("Nearest NPC found: " + nearestNPC.name);
 			nearestNPCDistance = Vector3.Distance(npc.transform.position, nearestNPC.transform.position);
 		}
 		// 根据NPC的属性决定状态

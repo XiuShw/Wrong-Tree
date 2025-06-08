@@ -27,6 +27,7 @@ public class NPCProperties : MonoBehaviour
 
 	public void EnableNPC()
 	{
+		if (npcBehavior.IAmPlayer) return; // If this is the player, do not enable NPC
 		npcBehavior.SetState(_lastState);
 		// 逻辑：一共有8个npc。
 		// 如果reputation >= 3，4个分享，4个中立
@@ -76,6 +77,7 @@ public class NPCProperties : MonoBehaviour
 
 	public void DisableNPC()
 	{
+		if (npcBehavior.IAmPlayer) return; // If this is the player, do not disable NPC
 		// Reset the NPC properties when simulation is disabled
 		_lastState = currentState; // Store the last state before disabling
 		npcBehavior.SetState(NPCState.Paused); // Set the NPC to a paused state

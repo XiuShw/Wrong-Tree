@@ -45,6 +45,7 @@ public class NPCBehavior : MonoBehaviour
 	}
 
 	// Some variables / properties
+	public bool IAmPlayer = false; // Flag to indicate if this NPC is the player
 	public NPCState CurrentState { get; private set; } = NPCState.Idle; // Default state is Idle
 	private bool justChangedState = true; // Flag to check if the state just changed
 	private Animator animator;
@@ -72,8 +73,8 @@ public class NPCBehavior : MonoBehaviour
 		foreach (var other in GameManager.Instance.allNPCs)
 		{
 			if (other == this) continue;
-			if (other.CurrentState == NPCState.Dead || other.CurrentState == NPCState.Paused)
-				continue; // Skip dead or paused NPCs
+			if (other.CurrentState == NPCState.Dead)
+				continue; // Skip dead NPCs
 			float d = Vector2.Distance(myPos, other.transform.position);
 			if (d < minDist)
 			{
@@ -106,7 +107,14 @@ public class NPCBehavior : MonoBehaviour
 		{
 			Debug.LogWarning("NPCProperties component not found on NPC. Using default values.");
 		}
-		SetState(NPCState.Idle); // Start with Idle state
+		if (IAmPlayer)
+		{
+			SetState(NPCState.Paused); // Player NPC starts in Paused state
+		}
+		else
+		{
+			SetState(NPCState.Idle); // Non-player NPCs start in Idle state
+		}
 	}
 
 	// Update is called once per frame
@@ -244,13 +252,19 @@ public class NPCBehavior : MonoBehaviour
 	{
 		// reduce the light value to 0
 		properties.lightValue = 0;
-		SetState(NPCState.Flee); // Set the NPC state to Flee
+		if (!IAmPlayer)
+		{
+			SetState(NPCState.Flee); // Set the NPC state to Flee
+		}
 	}
 
 	public void OnShared() // Callback when another is sharing with this NPC
 	{
 		properties.lightValue = 2;
-		SetState(NPCState.Smile); // Set the NPC state to Smile
+		if (!IAmPlayer)
+		{
+			SetState(NPCState.Smile); // Set the NPC state to Smile
+		}
 	}
 
 	public NPCBehavior whoSecuredMe = null; // Reference to the NPC that secured this NPC
