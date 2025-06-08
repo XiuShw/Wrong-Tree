@@ -53,6 +53,5 @@ public class PlayerMovement : MonoBehaviour
         }
         animator.SetFloat("InputX", stopX);
         animator.SetFloat("InputY", stopY);
-
     }
 }
