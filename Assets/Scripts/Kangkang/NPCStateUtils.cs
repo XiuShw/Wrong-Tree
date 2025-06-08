@@ -36,7 +36,7 @@ public static class NPCStateUtils
 			// 如果没有其他NPC在附近，或者当前态度是中立，则进入闲逛状态
 			return NPCState.Idle;
 		}
-		bool secureResult = nearestNPC.OnSecure(npc);
+		bool secureResult = NPCBehavior.OnSecured(npc, nearestNPC);
 		if (!secureResult)
 		{
 			// 说明锁定该NPC失败，那就进入闲逛状态
@@ -65,22 +65,24 @@ public static class NPCStateUtils
 	private static float shareScaleTimer = 0f;
 	private static float shareVisionRange = 3f; // 可视距离超参数
 
-	public static InteractionResult Share(NPCBehavior npc, Vector3 targetPosition, NPCBehavior targetNPC)
+	public static InteractionResult Share(NPCBehavior npc)
 	{
+		NPCBehavior targetNPC = npc.ISecuredWhom;
 		switch (shareState)
 		{
 			case ShareState.Approaching:
 				// Default interaction range
-				float interactionRange = 1f;
-				float distance = Vector3.Distance(npc.transform.position, targetPosition);
+				float interactionRange = 0.05f;
+				float distance = Vector3.Distance(npc.transform.position, targetNPC.transform.position);
 				if (distance > shareVisionRange) // 超出可视距离，触发Fail
 				{
 					shareState = ShareState.Done;
+					NPCBehavior.OnReleased(npc, targetNPC);
 					return InteractionResult.Fail;
 				}
 				if (distance > interactionRange)
 				{
-					Vector3 direction = (targetPosition - npc.transform.position).normalized;
+					Vector3 direction = (targetNPC.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.WalkSpeed;
 					return InteractionResult.Running;
 				}
@@ -119,6 +121,7 @@ public static class NPCStateUtils
 				return InteractionResult.Running;
 			case ShareState.Done:
 			default:
+				NPCBehavior.OnReleased(npc, targetNPC);
 				return InteractionResult.Success;
 		}
 	}
@@ -129,22 +132,24 @@ public static class NPCStateUtils
 	private static float stealScaleTimer = 0f;
 	private static float stealAggroRange = 4f; // 仇恨距离超参数
 
-	public static InteractionResult Steal(NPCBehavior npc, Vector3 targetPosition, NPCBehavior targetNPC)
+	public static InteractionResult Steal(NPCBehavior npc)
 	{
+		NPCBehavior targetNPC = npc.ISecuredWhom;
 		switch (stealState)
 		{
 			case StealState.Approaching:
 				// Default interaction range
-				float interactionRange = 0.2f;
-				float distance = Vector3.Distance(npc.transform.position, targetPosition);
+				float interactionRange = 0.05f;
+				float distance = Vector3.Distance(npc.transform.position, targetNPC.transform.position);
 				if (distance > stealAggroRange) // 超出仇恨距离，触发Fail
 				{
 					stealState = StealState.Done;
+					NPCBehavior.OnReleased(npc, targetNPC);
 					return InteractionResult.Fail;
 				}
 				if (distance > interactionRange)
 				{
-					Vector3 direction = (targetPosition - npc.transform.position).normalized;
+					Vector3 direction = (targetNPC.transform.position - npc.transform.position).normalized;
 					npc.transform.position += direction * Time.deltaTime * npc.RunSpeed; // 跑步速度
 					return InteractionResult.Running;
 				}
@@ -184,6 +189,7 @@ public static class NPCStateUtils
 				return InteractionResult.Running;
 			case StealState.Done:
 			default:
+				NPCBehavior.OnReleased(npc, targetNPC);
 				return InteractionResult.Success;
 		}
 	}

@@ -197,14 +197,7 @@ public class NPCBehavior : MonoBehaviour
 					NPCStateUtils.ResetShareFSM(); // Reset the share FSM
 				}
 				// Call the sub FSM for sharing with result handling
-				NPCBehavior nearestNPC = GetNearestNPC();
-				if (nearestNPC == null)
-				{
-					Debug.LogWarning("No other NPCs found to share with.");
-					SetState(NPCState.Idle); // No other NPCs to share with, go idle
-					return;
-				}
-				var shareResult = NPCStateUtils.Share(this, nearestNPC.transform.position, nearestNPC);
+				var shareResult = NPCStateUtils.Share(this);
 				if (shareResult == NPCStateUtils.InteractionResult.Success)
 				{
 					SetState(NPCState.Smile);
@@ -221,15 +214,8 @@ public class NPCBehavior : MonoBehaviour
 					NPCStateUtils.ResetStealFSM(); // Reset the steal FSM
 				}
 				// Get the nearest NPC to steal from
-				nearestNPC = GetNearestNPC();
-				if (nearestNPC == null)
-				{
-					Debug.LogWarning("No other NPCs found to steal from.");
-					SetState(NPCState.Idle); // No other NPCs to steal from, go idle
-					return;
-				}
 				// Call the sub FSM for stealing with result handling
-				var stealResult = NPCStateUtils.Steal(this, nearestNPC.transform.position, nearestNPC);
+				var stealResult = NPCStateUtils.Steal(this);
 				if (stealResult == NPCStateUtils.InteractionResult.Success)
 				{
 					SetState(NPCState.Idle);
@@ -262,35 +248,52 @@ public class NPCBehavior : MonoBehaviour
 		SetState(NPCState.Smile); // Set the NPC state to Smile
 	}
 
-	private NPCBehavior whoSecuredMe = null; // Reference to the NPC that secured this NPC
-	public bool OnSecure(NPCBehavior npc)
+	public NPCBehavior whoSecuredMe = null; // Reference to the NPC that secured this NPC
+	public NPCBehavior ISecuredWhom = null;
+	public static bool OnSecured(NPCBehavior activeNPC, NPCBehavior passiveNPC)
 	{
-		Debug.Log($"NPC {npc.name} is trying to secure {name}.");
+		Debug.Log($"NPC {activeNPC.name} is trying to secure {passiveNPC.name}.");
 		// try to secure this NPC
-		if (whoSecuredMe != null)
+		if (activeNPC == passiveNPC)
 		{
-			Debug.Log($"NPC {name} is already secured by {whoSecuredMe.name}. Cannot secure again.");
+			Debug.LogWarning("NPC cannot secure itself.");
 			return false;
 		}
-		if (CurrentState != NPCState.Idle)
+		if (passiveNPC.whoSecuredMe != null)
 		{
-			Debug.Log($"NPC {name} is not idle. Cannot secure. Current state: {CurrentState}");
+			Debug.Log($"NPC {passiveNPC.name} is already secured by {passiveNPC.whoSecuredMe.name}. Cannot secure again.");
 			return false;
 		}
-		whoSecuredMe = npc;
-		Debug.Log($"NPC {name} secured by {whoSecuredMe.name}.");
+		if (passiveNPC.ISecuredWhom != null)
+		{
+			Debug.Log($"NPC {passiveNPC.name} is already pursuing someone else. Cannot secure again.");
+			return false;
+		}
+		if (activeNPC.ISecuredWhom != null)
+		{
+			Debug.Log($"NPC {activeNPC.name} is already pursuing someone else. Cannot secure {passiveNPC.name}.");
+			return false;
+		}
+		if (activeNPC.whoSecuredMe != null)
+		{
+			Debug.Log($"NPC {activeNPC.name} is already secured by {activeNPC.whoSecuredMe.name}. Cannot secure {passiveNPC.name}.");
+			return false;
+		}
+		passiveNPC.whoSecuredMe = activeNPC;
+		activeNPC.ISecuredWhom = passiveNPC;
+		Debug.Log($"NPC {passiveNPC.name} secured by {activeNPC.name}.");
 		return true;
 	}
 
-	public void OnRelease(NPCBehavior npc)
+	public static void OnReleased(NPCBehavior activeNPC, NPCBehavior passiveNPC)
 	{
-		if (whoSecuredMe == npc)
+		if (passiveNPC.whoSecuredMe == activeNPC && activeNPC.ISecuredWhom == passiveNPC)
 		{
-			whoSecuredMe = null;
+			passiveNPC.whoSecuredMe = null;
+			activeNPC.ISecuredWhom = null;
+			Debug.Log($"NPC {passiveNPC.name} released by {activeNPC.name}.");
 		}
-		else 
-		{
-			Debug.LogWarning("NPC " + npc.name + " tried to release " + name + " but it was not secured by them.");
-		}
+		else
+			Debug.LogWarning($"Something bad happened in OnReleased: {activeNPC.name} and {passiveNPC.name} are not in a secured state.");
 	}
 }

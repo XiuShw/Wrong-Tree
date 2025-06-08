@@ -28,12 +28,12 @@ public class NPCProperties : MonoBehaviour
 		// 如果reputation <= 0，所有态度都是偷窃
 		// 如果reputation == 1，有4个分享，4个偷窃
 		// 如果reputation == 2，有6个分享，2个偷窃
-		if (LevelManager.globalReputation <= 0)
-		{
-			currentAtitude = NPCAtitude.Steal;
-		}
-		else if (LevelManager.globalReputation == 1)
-		{
+		// if (LevelManager.globalReputation <= 0)
+		// {
+		// 	currentAtitude = NPCAtitude.Steal;
+		// }
+		// else if (LevelManager.globalReputation == 1)
+		// {
 			if (npcID < 4)
 			{
 				currentAtitude = NPCAtitude.Share;
@@ -42,27 +42,27 @@ public class NPCProperties : MonoBehaviour
 			{
 				currentAtitude = NPCAtitude.Steal;
 			}
-		}
-		else if (LevelManager.globalReputation == 2)
-		{
-			if (npcID < 6)
-			{
-				currentAtitude = NPCAtitude.Share;
-			}
-			else
-			{
-				currentAtitude = NPCAtitude.Steal;
-			}
-		}
-		else if (LevelManager.globalReputation >= 3)
-		{
-			currentAtitude = NPCAtitude.Share;
-		}
-		else
-		{
-			Debug.LogWarning("Unknown global reputation: " + LevelManager.globalReputation);
-			currentAtitude = NPCAtitude.Neutral; // Default attitude
-		}
+		// }
+		// else if (LevelManager.globalReputation == 2)
+		// {
+		// 	if (npcID < 6)
+		// 	{
+		// 		currentAtitude = NPCAtitude.Share;
+		// 	}
+		// 	else
+		// 	{
+		// 		currentAtitude = NPCAtitude.Steal;
+		// 	}
+		// }
+		// else if (LevelManager.globalReputation >= 3)
+		// {
+		// 	currentAtitude = NPCAtitude.Share;
+		// }
+		// else
+		// {
+		// 	Debug.LogWarning("Unknown global reputation: " + LevelManager.globalReputation);
+		// 	currentAtitude = NPCAtitude.Neutral; // Default attitude
+		// }
 	}
 
 	public void DisableNPC()
