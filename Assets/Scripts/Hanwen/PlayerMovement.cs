@@ -60,13 +60,17 @@ public class PlayerMovement : MonoBehaviour
                 // 面向左边 (水平翻转)
                 spriteRenderer.flipX = true;
             }
-            playerWalk.enabled = true;
+            if (!LevelManager.minigameStart) { playerWalk.enabled = true; }
         }
         else
         {
             animator.SetBool("isMoving", false);
-            playerWalk.enabled = false;
+            if (!LevelManager.minigameStart) { playerWalk.enabled = false; }
+        }
 
+        if (gameObject.transform.position.x > 220)
+        {
+            GameManager.Instance.simulationEnabled = true;
         }
     }
 }

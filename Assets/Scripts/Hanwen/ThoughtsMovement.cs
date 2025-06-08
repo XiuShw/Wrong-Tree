@@ -33,17 +33,17 @@ public class ThoughtsMovement : MonoBehaviour
         color.a += 0.5f * Time.deltaTime;
         count += Time.deltaTime;
 
-        if (Vector3.Distance(transform.localScale, new Vector3(3.7f, 0.598f, 2.614f)) > 0.01f)
+        if (Vector3.Distance(transform.localScale, new Vector3(3,3,3)) > 0.01f)
         {
-            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(3.7f, 0.598f, 2.614f), 1 * Time.deltaTime);
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(3,3,3), 1 * Time.deltaTime);
         }
 
         if (count > threshold)
         {
             isPositive = true;
-            gameObject.GetComponent<SpriteRenderer>().sprite = goodThoughts[Random.Range(0, goodThoughts.Count)];
             if (color.g <= 1)
             {
+                gameObject.GetComponent<SpriteRenderer>().sprite = goodThoughts[Random.Range(0, goodThoughts.Count)];
                 color.g += 1f * Time.deltaTime;
                 color.b += 1f * Time.deltaTime;
                 GetComponent<SpriteRenderer>().color = color;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3256544670894673426}
   - component: {fileID: 5114921261191438810}
   - component: {fileID: -6939121704590349862}
-  - component: {fileID: 2776334074652042550}
+  - component: {fileID: 6760808366882998004}
   m_Layer: 0
   m_Name: Thoughts
   m_TagString: Thoughts
@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -6.42, y: 4.01, z: 8.09}
-  m_LocalScale: {x: 3.7, y: 0.598, z: 2.614}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 2b62f169ad6c04c2d9a3fa4e8c3aa694, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 18fd0dcb50e5a6c41bc6f3c05eab4675, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9df7221b9c94aa49be16c28f5479ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialForce: 3.7
+  initialForce: 3
   badThoughts:
   - {fileID: 21300000, guid: 18fd0dcb50e5a6c41bc6f3c05eab4675, type: 3}
   - {fileID: 21300000, guid: 5f424fa13f3a98048a0de605552a5b78, type: 3}
@@ -160,8 +160,8 @@ MonoBehaviour:
   startImmediately: 1
   fadeAmount: 0.7
   flashDuration: 1.5
---- !u!60 &2776334074652042550
-PolygonCollider2D:
+--- !u!61 &6760808366882998004
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -170,7 +170,7 @@ PolygonCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f9812e54aad5d6d40a2c77cc5ef9fa82, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -196,37 +196,13 @@ PolygonCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.53333336, y: 0, z: 0.53333336, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 1.1}
+    oldSize: {x: 1.2595652, y: 0.36839822}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.1866667, y: -0.17666668}
-      - {x: 1.2133334, y: -0.11}
-      - {x: 1.2133334, y: 0.13666667}
-      - {x: 1.1600001, y: 0.23666668}
-      - {x: 1.1333333, y: 0.29000002}
-      - {x: 1, y: 0.4166667}
-      - {x: 0.8866667, y: 0.47}
-      - {x: 0.8, y: 0.48333335}
-      - {x: -0.85333335, y: 0.48333335}
-      - {x: -1.0266666, y: 0.41}
-      - {x: -1.1333333, y: 0.29000002}
-      - {x: -1.1866667, y: 0.19666667}
-      - {x: -1.2133334, y: 0.083333336}
-      - {x: -1.2133334, y: -0.06333333}
-      - {x: -1.1866667, y: -0.17666668}
-      - {x: -1.1133333, y: -0.30333334}
-      - {x: -0.98, y: -0.41}
-      - {x: -0.8933334, y: -0.45000002}
-      - {x: -0.79333335, y: -0.46333334}
-      - {x: 0.79333335, y: -0.46333334}
-      - {x: 0.84000003, y: -0.45666668}
-      - {x: 0.9266667, y: -0.45000002}
-      - {x: 1.12, y: -0.30333334}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 1.2595652, y: 0.36839822}
+  m_EdgeRadius: 0

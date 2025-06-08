@@ -200,7 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialForce: 3.7
-  threshold: 17
+  badThoughts: []
+  goodThoughts: []
   isPositive: 0
 --- !u!114 &-6939121704590349862
 MonoBehaviour:
