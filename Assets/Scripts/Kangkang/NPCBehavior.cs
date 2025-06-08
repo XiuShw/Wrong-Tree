@@ -272,6 +272,13 @@ public class NPCBehavior : MonoBehaviour
 		{
 			SetState(NPCState.Smile); // Set the NPC state to Smile
 		}
+		else
+		{
+			Debug.Log("Player NPC shared with another NPC. Adjusting light values.");
+			LevelManager.lightOwn += 2;
+			LevelManager.minLight += 3;
+			LevelManager.maxLight += 5;
+		}
 	}
 
 	public NPCBehavior whoSecuredMe = null; // Reference to the NPC that secured this NPC
