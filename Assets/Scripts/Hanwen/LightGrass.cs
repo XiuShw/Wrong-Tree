@@ -3,6 +3,7 @@ using UnityEngine;
 public class LightGrass : MonoBehaviour
 {
     public Light pointLight;
+    [SerializeField] Sprite enptyPlant;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +24,7 @@ public class LightGrass : MonoBehaviour
             LevelManager.minLight += 0.3f;
             LevelManager.lightOwn += 0.1f;
             pointLight.GetComponent<Light>().enabled = false;
+            GetComponent<SpriteRenderer>().sprite = enptyPlant;
             AudioManager.Instance.PlaySFX("grass");
         }
     }

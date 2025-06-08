@@ -88,50 +88,50 @@ public class NPCProperties : MonoBehaviour
 		if (npcBehavior.IAmPlayer) return; // If this is the player, do not enable NPC
 		// npcBehavior.SetState(_lastState);
 		npcBehavior.SetState(NPCState.Idle); // Set the NPC to idle state
-		// 逻辑：一共有8个npc。
-		// 如果reputation >= 3，4个分享，4个中立
-		// 如果reputation <= 0，8个偷窃
-		// 如果reputation == 1，有2个分享，4个中立，2个偷窃
-		// 如果reputation == 2，有2个分享，5个中立，1个偷窃
-		// if (LevelManager.globalReputation <= 0)
-		// {
-		// 	currentAtitude = NPCAtitude.Steal;
-		// }
-		// else if (LevelManager.globalReputation == 1)
-		// {
-		if (npcID < 2)
-		{
-			currentAtitude = NPCAtitude.Share;
-		}
-		else if (npcID < 6)
-		{
-			currentAtitude = NPCAtitude.Neutral;
-		}
-		else
+											 // 逻辑：一共有8个npc。
+											 // 如果reputation >= 3，4个分享，4个中立
+											 // 如果reputation <= 0，8个偷窃
+											 // 如果reputation == 1，有2个分享，4个中立，2个偷窃
+											 // 如果reputation == 2，有2个分享，5个中立，1个偷窃
+		if (LevelManager.globalReputation <= 0)
 		{
 			currentAtitude = NPCAtitude.Steal;
 		}
-		// }
-		// else if (LevelManager.globalReputation == 2)
-		// {
-		// 	if (npcID < 6)
-		// 	{
-		// 		currentAtitude = NPCAtitude.Share;
-		// 	}
-		// 	else
-		// 	{
-		// 		currentAtitude = NPCAtitude.Steal;
-		// 	}
-		// }
-		// else if (LevelManager.globalReputation >= 3)
-		// {
-		// 	currentAtitude = NPCAtitude.Share;
-		// }
-		// else
-		// {
-		// 	Debug.LogWarning("Unknown global reputation: " + LevelManager.globalReputation);
-		// 	currentAtitude = NPCAtitude.Neutral; // Default attitude
-		// }
+		else if (LevelManager.globalReputation == 1)
+		{
+			if (npcID < 2)
+			{
+				currentAtitude = NPCAtitude.Share;
+			}
+			else if (npcID < 6)
+			{
+				currentAtitude = NPCAtitude.Neutral;
+			}
+			else
+			{
+				currentAtitude = NPCAtitude.Steal;
+			}
+		}
+		else if (LevelManager.globalReputation == 2)
+		{
+			if (npcID < 6)
+			{
+				currentAtitude = NPCAtitude.Share;
+			}
+			else
+			{
+				currentAtitude = NPCAtitude.Steal;
+			}
+		}
+		else if (LevelManager.globalReputation >= 3)
+		{
+			currentAtitude = NPCAtitude.Share;
+		}
+		else
+		{
+			Debug.LogWarning("Unknown global reputation: " + LevelManager.globalReputation);
+			currentAtitude = NPCAtitude.Neutral; // Default attitude
+		}
 	}
 
 	public void DisableNPC()
