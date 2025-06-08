@@ -35,7 +35,10 @@ public class NPCBehavior : MonoBehaviour
 	{
 		CurrentState = newState;
 		justChangedState = true; // Set the flag to true when changing state
-		animator.SetInteger("State", (int)newState);
+		if (!IAmPlayer)
+		{
+			animator.SetInteger("State", (int)newState);
+		}
 		// Update NPCProperties current state
 		if (properties != null)
 		{
