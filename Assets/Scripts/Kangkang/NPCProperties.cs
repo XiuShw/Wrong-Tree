@@ -33,32 +33,51 @@ public class NPCProperties : MonoBehaviour
 		};
 		// 找到灯光子物件
 		Transform lightTransform = transform.Find("Point Light");
-		if (lightTransform != null)
+		if (lightTransform == null)
 		{
-			Light light = lightTransform.GetComponent<Light>();
-			NPCFlickeringLight flickeringLight = lightTransform.GetComponent<NPCFlickeringLight>();
-
-			if (light != null)
+			Debug.LogWarning("Point Light not found in NPC: " + name);
+			return;
+		}
+		Light light = lightTransform.GetComponent<Light>();
+		NPCFlickeringLight flickeringLight = lightTransform.GetComponent<NPCFlickeringLight>();
+		if (light == null)
+		{
+			Debug.LogWarning("Light component not found in NPC: " + name);
+			return;
+		}
+		if (npcBehavior.IAmPlayer)
+		{
+			LevelManager.minLight = value switch
 			{
-				flickeringLight.minIntensity = value switch
-				{
-					0 => 0f, // No light
-					1 => 3f, // Some light
-					2 => 18f, // Full light
-					_ => light.intensity // Default to current intensity if value is out of range
-				};
-				flickeringLight.maxIntensity = value switch
-				{
-					0 => 0f, // No light
-					1 => 3f, // Some light
-					2 => 20f, // Full light
-					_ => light.intensity // Default to current intensity if value is out of range
-				};
-			}
+				0 => 0f, // No light
+				1 => 3f, // Some light
+				2 => 18f, // Full light
+				_ => light.intensity // Default to current intensity if value is out of range
+			};
+			LevelManager.maxLight = value switch
+			{
+				0 => 0f, // No light
+				1 => 3f, // Some light
+				2 => 20f, // Full light
+				_ => light.intensity // Default to current intensity if value is out of range
+			};
 		}
 		else
 		{
-			Debug.LogWarning("Point Light not found in NPC: " + name);
+			flickeringLight.minIntensity = value switch
+			{
+				0 => 0f, // No light
+				1 => 3f, // Some light
+				2 => 18f, // Full light
+				_ => light.intensity // Default to current intensity if value is out of range
+			};
+			flickeringLight.maxIntensity = value switch
+			{
+				0 => 0f, // No light
+				1 => 3f, // Some light
+				2 => 20f, // Full light
+				_ => light.intensity // Default to current intensity if value is out of range
+			};
 		}
 	}
 
