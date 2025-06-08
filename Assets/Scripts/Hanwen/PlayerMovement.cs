@@ -27,11 +27,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
     void FixedUpdate()
     {
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            inputY = 1f;
+        }
+
         Vector2 moveDirection = ((Vector2)transform.right * inputX + (Vector2)transform.up * inputY).normalized;
         if (LevelManager.minigameStart)
         {

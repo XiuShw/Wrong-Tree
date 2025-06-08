@@ -113,7 +113,6 @@ public class LevelManager : MonoBehaviour
             }
             if (globalReputation < 4)
             {
-                Debug.Log(111);
                 entrance.endingScene = "Bad End";
                 AudioManager.Instance.PlayBGM("badEnding");
             }

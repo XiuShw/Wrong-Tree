@@ -12,9 +12,9 @@ public class FlickeringLight : MonoBehaviour
 
     [Header("Intensity Range Settings")]
     [Tooltip("Minimum light intensity.")]
-    float minIntensity = 3f;
+    public float minIntensity = 3f;
     [Tooltip("Maximum light intensity.")]
-    float maxIntensity = 5f;
+    public float maxIntensity = 5f;
 
     [Header("Range Settings (Optional)")]
     [Tooltip("Whether to also affect the light's range.")]
@@ -38,6 +38,9 @@ public class FlickeringLight : MonoBehaviour
     private float targetIntensity; // Current target intensity for flicker
     private float targetRange;     // Current target range for flicker
     private Coroutine flickerCoroutine; // Coroutine for updating target values
+
+    [SerializeField] bool isNPC;
+    [SerializeField] MiniGameResult miniGameResult;
 
     void Awake()
     {
@@ -100,8 +103,17 @@ public class FlickeringLight : MonoBehaviour
 
     void Update()
     {
-        maxIntensity = LevelManager.maxLight;
-        minIntensity = LevelManager.minLight;
+        if (!isNPC)
+        {
+            maxIntensity = LevelManager.maxLight;
+            minIntensity = LevelManager.minLight;
+        }
+        else
+        {
+            maxIntensity = miniGameResult.maxlight;
+            minIntensity = miniGameResult.minlight;
+        }
+
 
 
         // Do nothing if script is disabled or no valid light
