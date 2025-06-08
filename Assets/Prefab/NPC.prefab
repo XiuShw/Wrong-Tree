@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 2595389918243413132}
   - component: {fileID: 2664183559319204469}
   - component: {fileID: 7802175211489310524}
-  - component: {fileID: 584993897303371829}
+  - component: {fileID: 2814722392942544594}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &584993897303371829
+--- !u!114 &2814722392942544594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,13 +368,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8673324500420954644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52cb81078500a5c418e7d1d99da51105, type: 3}
+  m_Script: {fileID: 11500000, guid: 31062639e43dc8c4c81019e545d77f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointLight: {fileID: 0}
+  pointLight: {fileID: 2664183559319204469}
+  minIntensity: 3
+  maxIntensity: 5
   affectRange: 1
-  minRange: 9
-  maxRange: 11
+  minRange: 10
+  maxRange: 10
   intensityChangeSpeed: 5
   rangeChangeSpeed: 5
   minFlickerInterval: 0.05
