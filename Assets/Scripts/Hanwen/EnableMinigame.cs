@@ -12,10 +12,10 @@ public class EnableMinigame : MonoBehaviour
 
      void OnTriggerStay2D(Collider2D collision)
      {
-         if (collision.CompareTag("NPC"))
-         {
-             EnableInteract(collision);
-         }
+         //if (collision.CompareTag("NPC"))
+         //{
+         //    EnableInteract(collision);
+         //}
          if (collision.CompareTag("ImportantNPC"))
          {
              EnableInteract(collision);

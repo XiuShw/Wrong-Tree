@@ -36,6 +36,7 @@ public class ThoughtsMovement : MonoBehaviour
         if (Vector3.Distance(transform.localScale, new Vector3(3,3,3)) > 0.01f)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(3,3,3), 1 * Time.deltaTime);
+            gameObject.GetComponent<SpriteRenderer>().sprite = badThoughts[Random.Range(0, badThoughts.Count)];
         }
 
         if (count > threshold)

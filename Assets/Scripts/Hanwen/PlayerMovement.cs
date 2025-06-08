@@ -46,26 +46,27 @@ public class PlayerMovement : MonoBehaviour
         rigidbody.linearVelocity = moveDirection * speed;
 
 
-        if (inputX != 0)
+        if (inputX > 0.1f)
+        {
+            // 面向右边 (不翻转)
+            spriteRenderer.flipX = false;
+        }
+        // 如果水平速度小于一个很小的负数（例如-0.1f），我们认为它在向左移动
+        else if (inputX < -0.1f)
+        {
+            // 面向左边 (水平翻转)
+            spriteRenderer.flipX = true;
+        }
+
+        if (!LevelManager.minigameStart && (inputX != 0 || inputY != 0))
         {
             animator.SetBool("isMoving", true);
-            if (inputX > 0.1f)
-            {
-                // 面向右边 (不翻转)
-                spriteRenderer.flipX = false;
-            }
-            // 如果水平速度小于一个很小的负数（例如-0.1f），我们认为它在向左移动
-            else if (inputX < -0.1f)
-            {
-                // 面向左边 (水平翻转)
-                spriteRenderer.flipX = true;
-            }
-            if (!LevelManager.minigameStart) { playerWalk.enabled = true; }
+            playerWalk.enabled = true;
         }
         else
         {
             animator.SetBool("isMoving", false);
-            if (!LevelManager.minigameStart) { playerWalk.enabled = false; }
+            playerWalk.enabled = false;
         }
 
         if (gameObject.transform.position.x > 220)
