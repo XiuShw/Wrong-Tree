@@ -25,26 +25,8 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{
-		// Monitor the minigame status
-		if (LevelManager.minigameStart && !_lastMinigameRunning)
-		{
-			// If the minigame just started running, disable NPC simulation
-			foreach (var npc in allNPCs)
-			{
-				npc.properties.DisableNPC();
-			}
-		}
-		else if (!LevelManager.minigameStart && _lastMinigameRunning)
-		{
-			// If the minigame just ended, enable NPC simulation
-			foreach (var npc in allNPCs)
-			{
-				npc.properties.EnableNPC();
-			}
-			OnFinishMinigame();
-		}
 		// Check for simulation toggle input
-		else if (!simulationEnabled && _lastSimulationEnabled)
+		if (!simulationEnabled && _lastSimulationEnabled)
 		{
 			foreach (var npc in allNPCs)
 			{
@@ -57,6 +39,24 @@ public class GameManager : MonoBehaviour
 			{
 				npc.properties.EnableNPC();
 			}
+		}
+		// Monitor the minigame status
+		else if (LevelManager.minigameStart && !_lastMinigameRunning && simulationEnabled)
+		{
+			// If the minigame just started running, disable NPC simulation
+			foreach (var npc in allNPCs)
+			{
+				npc.properties.DisableNPC();
+			}
+		}
+		else if (!LevelManager.minigameStart && _lastMinigameRunning && simulationEnabled)
+		{
+			// If the minigame just ended, enable NPC simulation
+			foreach (var npc in allNPCs)
+			{
+				npc.properties.EnableNPC();
+			}
+			OnFinishMinigame();
 		}
 		_lastSimulationEnabled = simulationEnabled;
 		_lastMinigameRunning = LevelManager.minigameStart;
