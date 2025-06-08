@@ -86,7 +86,8 @@ public class NPCProperties : MonoBehaviour
 	public void EnableNPC()
 	{
 		if (npcBehavior.IAmPlayer) return; // If this is the player, do not enable NPC
-		npcBehavior.SetState(_lastState);
+		// npcBehavior.SetState(_lastState);
+		npcBehavior.SetState(NPCState.Idle); // Set the NPC to idle state
 		// 逻辑：一共有8个npc。
 		// 如果reputation >= 3，4个分享，4个中立
 		// 如果reputation <= 0，8个偷窃
@@ -98,18 +99,18 @@ public class NPCProperties : MonoBehaviour
 		// }
 		// else if (LevelManager.globalReputation == 1)
 		// {
-			if (npcID < 2)
-			{
-				currentAtitude = NPCAtitude.Share;
-			}
-			else if (npcID < 6)
-			{
-				currentAtitude = NPCAtitude.Neutral;
-			}
-			else
-			{
-				currentAtitude = NPCAtitude.Steal;
-			}
+		if (npcID < 2)
+		{
+			currentAtitude = NPCAtitude.Share;
+		}
+		else if (npcID < 6)
+		{
+			currentAtitude = NPCAtitude.Neutral;
+		}
+		else
+		{
+			currentAtitude = NPCAtitude.Steal;
+		}
 		// }
 		// else if (LevelManager.globalReputation == 2)
 		// {

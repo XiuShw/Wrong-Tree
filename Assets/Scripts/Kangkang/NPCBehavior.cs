@@ -259,6 +259,10 @@ public class NPCBehavior : MonoBehaviour
 		{
 			SetState(NPCState.Flee); // Set the NPC state to Flee
 		}
+		else
+		{
+			LevelManager.minigameStart = true; // If this is the player, start the minigame
+		}
 	}
 
 	public void OnShared() // Callback when another is sharing with this NPC

@@ -80,7 +80,7 @@ public static class NPCStateUtils
 				if (distance > targetNPC.properties.interactionRange)
 				{
 					Vector3 direction = (targetNPC.transform.position - npc.transform.position).normalized;
-					npc.transform.position += direction * Time.deltaTime * npc.WalkSpeed;
+					npc.transform.position += direction * Time.deltaTime * npc.RunSpeed; // 跑步速度
 					return InteractionResult.Running;
 				}
 				else
