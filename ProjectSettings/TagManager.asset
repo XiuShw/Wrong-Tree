@@ -8,6 +8,7 @@ TagManager:
   - Thoughts
   - Light Grass
   - ImportantNPC
+  - Shrubs
   layers:
   - Default
   - TransparentFX

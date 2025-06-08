@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/hanwen test.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Intro.unity
+    guid: 3000794c91ab05f448eb55e4568251b4
+  - enabled: 1
+    path: Assets/Scenes/hanwen test 1.unity
+    guid: 60f80fcae8fabdc4a91da3961e1fab59
+  - enabled: 1
+    path: Assets/Scenes/Good End.unity
+    guid: 22efb474cc92f62479c4bf2eb3237056
+  - enabled: 1
+    path: Assets/Scenes/Bad End.unity
+    guid: 6ee59e112ae292b4ca1314079fad98be
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
