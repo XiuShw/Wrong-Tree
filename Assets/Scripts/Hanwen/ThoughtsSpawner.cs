@@ -24,14 +24,7 @@ public class ThoughtsSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!LevelManager.isImportantNPC) { timer = Random.Range(0, 5); }
-        else
-        {
-            if (LevelManager.countImportantNPC == 0) { timer = Random.Range(delay1bottom, delay1up); }
-            if (LevelManager.countImportantNPC == 1) { timer = Random.Range(delay2bottom, delay2up); }
-            if (LevelManager.countImportantNPC == 2) { timer = Random.Range(delay3bottom, delay3up); }
-            if (LevelManager.countImportantNPC == 3) { timer = Random.Range(delay4bottom, delay4up); }
-        }
+        timer = Random.Range(5, 10);
     }
 
     // Update is called once per frame
@@ -42,7 +35,7 @@ public class ThoughtsSpawner : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer < 0)
             {
-                timer = Random.Range(5, 7);
+                timer = Random.Range(7, 12);
                 if (LevelManager.thoughtsCount <= 2)
                 {
                     LevelManager.thoughtsCount++;
