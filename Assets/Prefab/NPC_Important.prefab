@@ -1315,6 +1315,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointLight: {fileID: 0}
+  minIntensity: 3
+  maxIntensity: 5
   affectRange: 1
   minRange: 9
   maxRange: 11
@@ -1322,6 +1324,8 @@ MonoBehaviour:
   rangeChangeSpeed: 5
   minFlickerInterval: 0.05
   maxFlickerInterval: 0.2
+  isNPC: 0
+  miniGameResult: {fileID: 0}
 --- !u!1 &2740625758311225706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,8 +1943,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueRunner: {fileID: 6886496532144714278}
+  NPCnumber: 0
   winNode: MinigameWinA
   loseNode: MinigameLoseA
+  maxlight: 5
+  minlight: 3
 --- !u!1 &5442973003906329947
 GameObject:
   m_ObjectHideFlags: 0
@@ -2337,7 +2344,7 @@ Animator:
   m_GameObject: {fileID: 6450586430619594595}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ab5ec24975e2a194282c97d46937ea85, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
