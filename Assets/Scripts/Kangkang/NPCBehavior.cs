@@ -29,6 +29,23 @@ public enum NPCAtitude
 public class NPCBehavior : MonoBehaviour
 {
 
+	private int NPCStateAnimationStateMap(NPCState state)
+	{
+		return state switch
+		{
+			NPCState.Idle => 0,
+			NPCState.Wander => 1,
+			NPCState.Smile => 0,
+			NPCState.Flee => 2,
+			NPCState.Interact_Share => 1,
+			NPCState.Interact_Steal => 1,
+			NPCState.Dead => 2,
+			NPCState.Paused => 0,
+			NPCState.Crying => 2,
+			_ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+		};
+	}
+
 	public NPCProperties properties; // Reference to the NPCProperties component
 
 	public void SetState(NPCState newState)
@@ -37,7 +54,7 @@ public class NPCBehavior : MonoBehaviour
 		justChangedState = true; // Set the flag to true when changing state
 		if (!IAmPlayer)
 		{
-			animator.SetInteger("State", (int)newState);
+			animator.SetInteger("State", (int)NPCStateAnimationStateMap(newState));
 		}
 		// Update NPCProperties current state
 		if (properties != null)
