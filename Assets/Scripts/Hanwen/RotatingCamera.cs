@@ -87,7 +87,7 @@ public class RotatingCamera : MonoBehaviour
         else
         {
             //smoothSpeed = 0.03f;
-            transform.DOMove(gameFinishTarget.position, 1f).SetEase(Ease.InCirc);
+            transform.DOMove(gameFinishTarget.position, 0.7f).SetEase(Ease.InCirc);
         }
     }
 }

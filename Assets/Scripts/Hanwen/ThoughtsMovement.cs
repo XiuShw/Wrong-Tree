@@ -33,7 +33,7 @@ public class ThoughtsMovement : MonoBehaviour
         color.a += 0.5f * Time.deltaTime;
         count += Time.deltaTime;
 
-        if (Vector3.Distance(transform.localScale, new Vector3(3,3,3)) > 0.01f)
+        if (Vector3.Distance(transform.localScale, new Vector3(3,3,3)) > 0.5f)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(3,3,3), 1 * Time.deltaTime);
             gameObject.GetComponent<SpriteRenderer>().sprite = badThoughts[Random.Range(0, badThoughts.Count)];

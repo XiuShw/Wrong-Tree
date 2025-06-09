@@ -57,12 +57,14 @@ public class ThoughtsSpawner : MonoBehaviour
                 LevelManager.gameFinished = true;
 
             }
+            circumstance = 0;
         }
         else if (circumstance <= -2)
         {
             LevelManager.previousMinigameSucceed = -1;
             minigameEnd(5f, 3f, 1, -1);
             AudioManager.Instance.PlaySFX("badResult");
+            circumstance = 0;
         }
     }
 

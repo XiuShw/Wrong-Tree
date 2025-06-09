@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     float stopX, stopY;
     public AudioSource playerWalk;
     SpriteRenderer spriteRenderer;
+    bool playBGM = false;
+
 
     public static PlayerMovement Instance { get; private set; }
 
@@ -73,9 +75,10 @@ public class PlayerMovement : MonoBehaviour
         if (gameObject.transform.position.x > 220)
         {
             GameManager.Instance.simulationEnabled = true;
-            if (LevelManager.globalReputation >= 3)
+            if (LevelManager.globalReputation >= 3 && !playBGM)
             {
                 AudioManager.Instance.PlayBGM("beforeGoodEnd");
+                playBGM = true;
             }
         }
     }
