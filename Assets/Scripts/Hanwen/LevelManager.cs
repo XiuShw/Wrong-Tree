@@ -103,26 +103,22 @@ public class LevelManager : MonoBehaviour
             lightValueBG.enabled = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (gameFinished)
         {
+
             gameFinished = true;
             if (globalReputation >= 4)
             {
                 entrance.endingScene = "Good End";
-                AudioManager.Instance.PlayBGM("goodEnding");
             }
             if (globalReputation < 4)
             {
                 entrance.endingScene = "Bad End";
-                AudioManager.Instance.PlayBGM("badEnding");
+                if (globalLight.transform.rotation.y < -0.25)
+                {
+                    globalLight.transform.Rotate(0, 10 * Time.deltaTime, 0, Space.Self);
+                }
             }
-
-        }
-
-        if (gameFinished)
-        {
-
-
 
             canInteract.enabled = false;
             lightValue.enabled = false;
@@ -130,10 +126,7 @@ public class LevelManager : MonoBehaviour
             entrance.spd = 0.048f;
             playerLight.position += Vector3.back * Time.deltaTime;
             //globalLight.enabled = true;
-            if (globalLight.transform.rotation.y < -0.25)
-            {
-                globalLight.transform.Rotate(0, 10 * Time.deltaTime, 0, Space.Self);
-            }
+
         }
     }
 

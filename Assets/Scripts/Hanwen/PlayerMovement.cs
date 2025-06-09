@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 moveDirection = ((Vector2)transform.right * inputX + (Vector2)transform.up * inputY).normalized;
         if (LevelManager.minigameStart)
         {
-            moveDirection = new Vector2 (0, 0);
+            moveDirection = new Vector2(0, 0);
         }
         rigidbody.linearVelocity = moveDirection * speed;
 
@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isMoving", true);
             playerWalk.enabled = true;
+
         }
         else
         {
@@ -72,6 +73,10 @@ public class PlayerMovement : MonoBehaviour
         if (gameObject.transform.position.x > 220)
         {
             GameManager.Instance.simulationEnabled = true;
+            if (LevelManager.globalReputation >= 3)
+            {
+                AudioManager.Instance.PlayBGM("beforeGoodEnd");
+            }
         }
     }
 }

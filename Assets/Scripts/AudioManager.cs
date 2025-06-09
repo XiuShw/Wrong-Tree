@@ -18,6 +18,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip minigame;
     public AudioClip goodEnding;
     public AudioClip badEnding;
+    public AudioClip beforeGoodEnd;
 
 
     [Header("Player Walk SFX")]
@@ -68,7 +69,7 @@ public class AudioManager : MonoBehaviour
             case "minigame": bgmSource.clip = minigame; bgmSource.volume = 0.1f; break;
             case "goodEnding": bgmSource.clip = goodEnding; bgmSource.volume = 0.1f; break;
             case "badEnding": bgmSource.clip = badEnding; bgmSource.volume = 0.1f; break;
-
+            case "beforeGoodEnd": bgmSource.clip = beforeGoodEnd; bgmSource.volume = 0.1f; break;
 
             default: return;
         }

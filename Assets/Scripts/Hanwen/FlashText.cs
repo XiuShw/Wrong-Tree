@@ -55,12 +55,12 @@ public class FlashText : MonoBehaviour
 
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 0 && Input.GetKeyDown(KeyCode.Space))
+        if (SceneManager.GetActiveScene().buildIndex == 1 && Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
-        if ((SceneManager.GetActiveScene().buildIndex == 3 || SceneManager.GetActiveScene().buildIndex == 2) && Input.GetKeyDown(KeyCode.R))
+        if ((SceneManager.GetActiveScene().buildIndex == 4 || SceneManager.GetActiveScene().buildIndex == 3) && Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(0);
         }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -65,7 +66,11 @@ public class GameManager : MonoBehaviour
 		{
 			npc.CustomUpdate();
 		}
-	}
+		if (SceneManager.GetActiveScene().buildIndex != 2)
+		{
+			Destroy(gameObject);
+		}
+    }
 
 	public void OnFinishMinigame() // Callback when the minigame finishes
 	{

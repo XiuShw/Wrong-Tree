@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class EnableMinigame : MonoBehaviour
 {
      [SerializeField] GameObject minigamePlayer;
-     [SerializeField] GameObject minigameBackground;
+    [SerializeField] Image canInteract;
+    [SerializeField] GameObject minigameBackground;
      [SerializeField] FlashText argue1;
      [SerializeField] GameObject speechBubble;
      [SerializeField] GameObject exclaimationNotice;
@@ -27,11 +28,21 @@ public class EnableMinigame : MonoBehaviour
             }
 
          }
+         if (collision.CompareTag("Finish"))
+         {
+             canInteract.enabled = true;
+             if (Input.GetKeyDown(KeyCode.Space))
+             {
+                 LevelManager.gameFinished = true;
+                 AudioManager.Instance.PlayBGM("badEnding");
+            }
+        }
      }
 
      void OnTriggerExit2D(Collider2D collision)
      {
-         if (collision.CompareTag("ImportantNPC"))
+        canInteract.enabled = false;
+        if (collision.CompareTag("ImportantNPC"))
          {
              LevelManager.isImportantNPC = false;
              collision.gameObject.transform.Find("Talk_Prompt_Final").gameObject.SetActive(false);

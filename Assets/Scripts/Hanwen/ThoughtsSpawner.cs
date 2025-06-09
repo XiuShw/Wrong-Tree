@@ -51,6 +51,12 @@ public class ThoughtsSpawner : MonoBehaviour
             LevelManager.previousMinigameSucceed = 1;
             minigameEnd(-5, -3, -1, 1);
             AudioManager.Instance.PlaySFX("goodResult");
+            if (LevelManager.countImportantNPC >= 4 && LevelManager.globalReputation >= 4)
+            {
+                AudioManager.Instance.PlayBGM("goodEnding");
+                LevelManager.gameFinished = true;
+
+            }
         }
         else if (circumstance <= -2)
         {
