@@ -9,6 +9,7 @@ TagManager:
   - Light Grass
   - ImportantNPC
   - Shrubs
+  - Minigame Player
   layers:
   - Default
   - TransparentFX

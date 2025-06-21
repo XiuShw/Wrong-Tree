@@ -84,5 +84,10 @@ public class Entrance : MonoBehaviour
                 Application.Quit();
             }
         }
+
+        if (SceneManager.GetActiveScene().buildIndex == 5  && Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

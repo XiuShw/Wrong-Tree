@@ -270,7 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spd: 1
   endingScene: 
-  delay: 12
+  delay: 18
   isText: 1
 --- !u!1 &656943803
 GameObject:
@@ -403,7 +403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pleaseLeaveEmpty:
   - "The light shines bright on no man\u2019s land."
-  - genshen impact
+  - You sit, alone, atop of the beacon.
+  - "The light shines bright on no man\u2019s land. "
   - 
   NPC1: []
   NPC2: []
@@ -840,8 +841,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1292679829}
-  - {fileID: 333305684}
   - {fileID: 1574651540}
+  - {fileID: 333305684}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -907,7 +908,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e1892fbf3e1c48d4ba7e82f29ef638e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b3a4d16eb4cfe134d9e76e9775f28f16, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -939,7 +940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spd: 0.3
   endingScene: 
-  delay: 12
+  delay: 18
   isText: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

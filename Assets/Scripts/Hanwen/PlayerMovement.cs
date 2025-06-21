@@ -51,13 +51,13 @@ public class PlayerMovement : MonoBehaviour
         if (inputX > 0.1f)
         {
             // 面向右边 (不翻转)
-            spriteRenderer.flipX = false;
+            spriteRenderer.flipX = true;
         }
         // 如果水平速度小于一个很小的负数（例如-0.1f），我们认为它在向左移动
         else if (inputX < -0.1f)
         {
             // 面向左边 (水平翻转)
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = false;
         }
 
         if (!LevelManager.minigameStart && (inputX != 0 || inputY != 0))
